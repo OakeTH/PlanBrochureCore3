@@ -1,0 +1,44 @@
+[
+  {
+    "outputFileName": "wwwroot/css/site.min.css",
+    "inputFiles": [
+      "wwwroot/oak/oak.min.css",
+      "wwwroot/css/site.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/oak/oak.min.css",
+    "inputFiles": [
+      "wwwroot/lib/bootstrap/dist/css/bootstrap.custom.min.css",
+      "wwwroot/oak/oak.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/lib/bootstrap/dist/css/bootstrap.custom.min.css",
+    "inputFiles": [
+      "wwwroot/lib/bootstrap/dist/css/bootstrap.custom.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/oak/oak.min.js",
+    "inputFiles": [
+      "wwwroot/oak/oak.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/oak/libraries/jsGrid/jsgrid.oak.min.js",
+    "inputFiles": [
+      "wwwroot/oak/libraries/jsGrid/jsgrid.oak.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/site.min.js",
+    "inputFiles": [
+      "wwwroot/js/_Layout.js",
+      "wwwroot/js/Plan/Index.js",
+      "wwwroot/js/UploadData/index.js",
+      "wwwroot/js/Admin/index.js",
+      "wwwroot/js/Announce/index.js"
+    ]
+  }
+]

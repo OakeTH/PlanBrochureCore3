@@ -1,0 +1,70 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="wwwroot\lib\bootstrap\dist\js\**" />
+    <Compile Remove="wwwroot\lib\jquery-validation-unobtrusive\**" />
+    <Compile Remove="wwwroot\lib\jquery-validation\**" />
+    <Compile Remove="wwwroot\lib\jquery\**" />
+    <Content Remove="wwwroot\lib\bootstrap\dist\js\**" />
+    <Content Remove="wwwroot\lib\jquery-validation-unobtrusive\**" />
+    <Content Remove="wwwroot\lib\jquery-validation\**" />
+    <Content Remove="wwwroot\lib\jquery\**" />
+    <EmbeddedResource Remove="wwwroot\lib\bootstrap\dist\js\**" />
+    <EmbeddedResource Remove="wwwroot\lib\jquery-validation-unobtrusive\**" />
+    <EmbeddedResource Remove="wwwroot\lib\jquery-validation\**" />
+    <EmbeddedResource Remove="wwwroot\lib\jquery\**" />
+    <None Remove="wwwroot\lib\bootstrap\dist\js\**" />
+    <None Remove="wwwroot\lib\jquery-validation-unobtrusive\**" />
+    <None Remove="wwwroot\lib\jquery-validation\**" />
+    <None Remove="wwwroot\lib\jquery\**" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+   <!--<PackageReference Include="Microsoft.AspNetCore.All" Version="2.2.7" />
+   <PackageReference Include="Microsoft.AspNetCore.App" />-->
+    <PackageReference Include="BuildBundlerMinifier" Version="3.0.415" />
+    <PackageReference Include="ClosedXML" Version="0.92.1" />
+    <PackageReference Include="ExcelDataReader" Version="3.6.0" />
+    <PackageReference Include="ExcelDataReader.DataSet" Version="3.6.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.0.0" />
+
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="3.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Log4Net.AspNetCore" Version="2.2.12" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Web.WebJobs.Publish" Version="2.0.0" />
+    <PackageReference Include="NetEscapades.Extensions.Logging.RollingFile" Version="2.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.7.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.5.0" />
+    <PackageReference Include="System.ServiceModel.Duplex" Version="4.6.0" />
+    <PackageReference Include="System.ServiceModel.Http" Version="4.6.0" />
+    <PackageReference Include="System.ServiceModel.NetTcp" Version="4.6.0" />
+    <PackageReference Include="System.ServiceModel.Security" Version="4.6.0" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="4.6.0" />
+    <PackageReference Include="Z.EntityFramework.Plus.EFCore" Version="3.0.11" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Logs\" />
+    <Folder Include="PDF\PB_PlanDocs\" />
+    <Folder Include="PDF\PB_AnnounceDocs\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="PlanBrochureCore3.sln" />
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="http://json.schemastore.org/babelrc" /></VisualStudio></ProjectExtensions>
+</Project>

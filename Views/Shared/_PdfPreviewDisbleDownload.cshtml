@@ -1,0 +1,61 @@
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
+    Layout = null;
+    ViewBag.Title = "PDF Preview";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>PDF Preview</title>
+    <style type="text/css">
+        @@font-face {
+            /*font-family: Prompt-Light;
+            src: url('Prompt-Light.ttf') format('truetype');*/
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /*.topview span {
+            position: absolute;
+            bottom: 20px;
+            text-align: center;
+            right: 45%;
+            background: transparent;
+            color: #ffffff;
+            padding: 10px;
+            background: rgba(51, 51, 51, 0.8);
+        }
+
+        .topview .full {
+            width: 0;
+            height: 0;
+            background: rgba(233, 57, 57, 0.19);
+        }*/
+    </style>
+
+</head>
+<body>
+
+    @{ string alias = "";}
+    <environment exclude="Development">
+        @{ alias = "/" + @Configuration.GetSection("AppSettings")["ALIAS"];}
+    </environment>
+
+    <embed id="ifrPdfviewer" style="width:100%;height:100%" src="@alias/Plan/GetDocsNameByID?id=@ViewBag.ID#toolbar=0" />
+</body>
+</html>

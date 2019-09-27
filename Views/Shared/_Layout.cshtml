@@ -1,0 +1,76 @@
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Plan Brochure & Plan value</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.4/bluebird.min.js"></script>
+    <script src="~/oak/libraries/Fontawesome/all.js" data-auto-replace-svg="nest"></script>
+    <script src="~/oak/libraries/jsCookie/js.cookie.min.js"></script>
+
+    <environment include="Development">
+        <script src="~/oak/oak.js"></script>
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.custom.min.css" />
+
+        <link rel="stylesheet" href="~/oak/oak.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+        <script src="~/js/_Layout.js" asp-append-version="true"></script>
+        <script src="~/js/Plan/Index.js" asp-append-version="true"></script>
+        <script src="~/js/UploadData/index.js" asp-append-version="true"></script>
+        <script src="~/js/Admin/index.js" asp-append-version="true"></script>
+        <script src="~/js/Announce/Index.js" asp-append-version="true"></script>
+
+    </environment>
+    <environment exclude="Development">
+        <script>
+            window.myALIAS = "@Configuration.GetSection("AppSettings")["ALIAS"]";
+        </script>
+
+        <script src="~/oak/oak.min.js" asp-append-version="true"></script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    </environment>
+
+</head>
+<body>
+    <div class="bar region-header jus-start pl20 al">
+        <div class="region-band jus-center pr20">
+            <span class=""></span>
+            <span class="webname"><i class="fas fa-book-open mr10"></i>ข้อมูลผลิตภัณฑ์</span>
+        </div>
+        <div class="region-line jus-start flex-grow">
+            <span class=""></span>
+            <span class=""></span>
+        </div>
+        <div class="region-user jus-end pl20 pr20">
+            <span class="">
+                <i class="fas fa-user-check"></i>
+                <label id="spanUserFullName"></label>
+            </span>
+        </div>
+    </div>
+    <div class="bar" id="divWebLoading" style="width:100%"></div>
+
+    <div class="bar flex-grow">
+        <div class="navi-root flex-column bd-pale-right bar">
+            <div class="flex-column">
+                <div class="navi-menu-title bar flex-column align-s-stretch">
+                    <div><i class="fas fa-bars"></i>Menu</div>
+                </div>
+                <div class="navi-menu bar flex-column align-s-stretch" id="divUserMenu"></div>
+            </div>
+        </div>
+        <div class="flex-column flex-grow scroll-relative">
+            @RenderBody()
+        </div>
+    </div>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

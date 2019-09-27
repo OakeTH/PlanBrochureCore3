@@ -1,0 +1,102 @@
+﻿@{
+    Layout = null;
+}
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <script>
+        window.myUrl = {
+             Login: '@Url.Action("LoginMember", "authentication", null, Context.Request.Scheme, Context.Request.Host.Value)'
+            };
+    </script>
+
+    <script src="~/oak/libraries/JQuery/jquery-3.3.1.min.js"></script>
+
+    <environment include="Development">
+        <script src="~/oak/oak.js"></script>
+        <link rel="stylesheet" href="~/oak/oak.css" asp-append-version="true" />
+    </environment>
+    <environment exclude="Development">
+        <script>
+            window.myALIAS = "@Configuration.GetSection("AppSettings")["ALIAS"]";
+        </script>
+
+        <script src="~/oak/oak.min.js" asp-append-version="true"></script>
+        <link rel="stylesheet" href="~/oak/oak.min.css" asp-append-version="true" />
+    </environment>
+
+    <script src="~/oak/libraries/jsCookie/js.cookie.min.js"></script>
+    <script defer src="~/js/Login.js"></script>
+
+</head>
+<body>
+    <style>
+        html, body {
+            height: 100vh;
+        }
+
+        .content {
+            width: 400px;
+            height: 200px;
+            background: #fff;
+            box-shadow: 0px 0 2px rgb(66, 66, 66);
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(/img/bg/bg001.jpg), url(/PlanBrochure/img/bg/bg001.jpg);
+            background-size: cover;
+        }
+
+        .font-blue-900 {
+            font-weight: 900;
+            color: #2b72b6;
+        }
+
+        .btn-blue {
+            background: #3856ac;
+            border: 0;
+            color: #fff;
+            cursor: pointer;
+            outline: none;
+            transition: background 1s;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        .wrapper input[type="text"] {
+            position: relative;
+        }
+
+        input[type=text], input[type=password] {
+            font-family: 'FontAwesome','Prompt-Light';
+        }
+    </style>
+
+    <div class="flex-column align-i-center jus-center container">
+        <div class="content bar flex-column txt-1">
+            <div class="p20 flex-column flex-grow align-i-stretch">
+                <div class="pb10">
+                    <label class="font-blue-900">Plan Brochure & Plan value Website</label>
+                </div>
+                <div class="mb10">
+                    <label>ลงชื่อเข้าใช้</label>
+                </div>
+                <div class="flex-column">
+
+                    <input type="text" id="txtUsername" class="mb10" placeholder="&#61447;  User Name" />
+                    <input type="password" id="txtPassword" class="mb10" placeholder="&#xf023;  Password" />
+                </div>
+            </div>
+
+            <input type="button" value="เข้าสู่ระบบ" id="btnLogin" class="btn-blue jus-center" />
+        </div>
+    </div>
+
+</body>
+</html>
