@@ -33,10 +33,6 @@ namespace oak
             if (users == null)
                 users = new Users() { EmployeeCode = employeecode, RoleName = rolename };
 
-            //else if (!string.IsNullOrEmpty(employeecode) && !string.IsNullOrEmpty(rolename))
-            //    users = new Users() { EmployeeCode = employeecode, RoleName = rolename };
-            //if (users == null) return null;
-
             // <--- authentication successful so generate jwt token
             int currentHour = DateTime.Today.Hour;
             int remainHourtoMidNight = 24 - currentHour;
@@ -56,6 +52,32 @@ namespace oak
             var token = tokenHandler.CreateToken(tokenDescriptor);
             users.Token = tokenHandler.WriteToken(token);
             return users;
+        }
+    }
+
+
+    public class JwtServices
+    {
+        public string Create(Action<JWTModel> action)
+        {
+            JWTModel model = new JWTModel();
+            action.Invoke(obj: model);
+
+            int currentHour = DateTime.Today.Hour;
+            int remainHourtoMidNight = model.ExpiresAtMidnight ? (24 - currentHour) : 0;
+
+            byte[] secretKey = Encoding.ASCII.GetBytes(model.SecretKey);
+            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+            ClaimsIdentity claimsIdentity = new ClaimsIdentity(model.Claims);
+            SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = claimsIdentity,
+                Expires = DateTime.UtcNow.AddDays(model.ExpiresDate).AddHours(remainHourtoMidNight),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(secretKey), model.SecurityAlgorithms)
+            };
+
+            SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
         }
     }
 }

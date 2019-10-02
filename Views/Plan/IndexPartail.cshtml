@@ -6,11 +6,11 @@
     <div class="container">
         <div class="content-header"></div>
         <div class="content-body">
-
-
             <div class="txt-2 bar pb30">
-                <input type="text" id="ddlFindPlans" style="width:500px;font-size:1.1rem;" class="p-2" placeholder="กรอก รหัสหรือชื่อแบบประกัน เพื่อค้นหา..." />
-                <input type="button" value="ค้นหา" class="btn-s" />
+                <input type="text" id="ddlFindPlans" style="width:500px;font-size:1rem;" class="p-2" placeholder="กรอก รหัสหรือชื่อแบบประกัน เพื่อค้นหา..." />
+                <label class="btn-eraser pr-2" id="btnClearPlanSearch"><i class="fas fa-times pr-2"></i></label>
+                <label class="btn-search"><i class="fas fa-search"></i></label>
+                <span id="chkOnlyActive"></span>
             </div>
             <div id="divContent" style="display:none">
                 <div class="container" id="containerMenu">
@@ -19,7 +19,6 @@
                 <div class="container" id="container1" style="display:none">
                     <div>
                         <div class="flex-column pt-2">
-
                             <label class="font-s btn" id="lblPdffullscr"><i class="fas fa-external-link-alt pr-1"></i>แสดงแบบเต็มหน้าจอ</label>
                             <div id="divPdfViewer" class="pt-2"></div>
                         </div>
@@ -29,21 +28,17 @@
                     <div>
                         <div class="flex-column pt-2 pb-2 txt-2 select-2">
                             <div>
-                                <label class="font-s ptb-1">- ระบุ อายุและเพศ เพื่อค้นหามูลค่ากรมธรรม์</label>
+                                <label class="lbl-remind  ptb-1">- ระบุ อายุและเพศ เพื่อค้นหามูลค่ากรมธรรม์</label>
                             </div>
-                            <div class="align-i-start flex-column m10">
+                            <div class="align-i-start flex-column ml10 mb10">
                                 <div class="flex-row align-i-center">
-                                    <label class="mr10">อายุ</label>
+                                    <label class="mr10">อายุผู้เอาประกัน</label>
                                     <input type="number" id="txtPovAge" placeholder="0-80 ปี" class="wid100 mr20" min="0" max="80" required />
                                     <label class="mr10">เพศ</label>
                                     <select id="ddlPovGender" class="wid100 mr20"></select>
                                     <label class="mr10">EndYear</label>
-                                    <input type="number" id="txtEndYear" placeholder="EndYear"  class="wid100"/>
+                                    <input type="number" id="txtEndYear" placeholder="EndYear" class="wid100" />
                                 </div>
-                                @*<div class="flex-row">
-                                        <label class="mr20">เพศ</label>
-                                        <select id="ddlPovGender" class="wid150"></select>
-                                    </div>*@
                             </div>
                             <div id="divPolicyValue"></div>
                         </div>
@@ -53,21 +48,29 @@
                     <div>
                         <div class="align-i-start flex-column txt-2 select-2 pt-2 pb-2">
                             <div>
-                                <label class="font-s ptb-1">- ระบุ ทุนประกันภัย อายุผู้เอาประกันภัย ระยะเวลาชำระเบี้ย(ปี) เพื่อค้นหาอัตราค่าบำเหน็จ</label>
+                                <label class="lbl-remind  ptb-1">- ระบุ ทุนประกันภัย อายุผู้เอาประกันภัย ระยะเวลาชำระเบี้ย(ปี) เพื่อค้นหาอัตราค่าบำเหน็จ</label>
                             </div>
-                            <div class="align-i-start flex-column m10 bar">
-                                <div class="flex-row">
-                                    <label class="wid100">ทุนประกันภัย</label>
-                                    <input type="text" id="txtSumAssured" class="wid200" />
+                            <div class="align-i-start flex-column ml10 mb10 bar">
+                                <div class="flex-row align-i-center">
+                                    <label>ทุนประกันภัย</label>
+                                    <input type="text" id="txtSumAssured" class="wid200 mr10" />
+                                    <label>อายุผู้เอาประกัน</label>
+                                    <input type="text" id="txtEntryAge" class="wid100 mr10" />
+                                    <label>ระยะชำระเบี้ย</label>
+                                    <input type="text" id="txtTotalYear" class="wid100" />
                                 </div>
-                                <div class="flex-row">
-                                    <label class="wid100">อายุผู้เอาประกัน</label>
-                                    <input type="text" id="txtEntryAge" class="wid200" />
-                                </div>
-                                <div class="flex-row">
-                                    <label class="wid100">ระยะชำระเบี้ย</label>
-                                    <input type="text" id="txtTotalYear" class="wid200" />
-                                </div>
+                                @*<div class="flex-row">
+                                        <label class="wid100">ทุนประกันภัย</label>
+                                        <input type="text" id="txtSumAssured" class="wid200" />
+                                    </div>
+                                    <div class="flex-row">
+                                        <label class="wid100">อายุผู้เอาประกัน</label>
+                                        <input type="text" id="txtEntryAge" class="wid200" />
+                                    </div>
+                                    <div class="flex-row">
+                                        <label class="wid100">ระยะชำระเบี้ย</label>
+                                        <input type="text" id="txtTotalYear" class="wid200" />
+                                    </div>*@
                             </div>
                             <div id="divCommRate"></div>
                         </div>

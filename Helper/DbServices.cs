@@ -67,7 +67,6 @@ namespace oak
 
             try
 
-
             {
                 using SqlDataAdapter da = new SqlDataAdapter(cmd);
                 da.Fill(ds);
@@ -128,7 +127,7 @@ namespace oak
             if (dataTable == null || dataTable.Rows.Count == 0)
                 return dataTable;
 
-     
+
             //(string name, int orderby)[] UsTypeCols = null;
 
             //List<P> args = new List<P>

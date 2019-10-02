@@ -1,6 +1,4 @@
-﻿//using AgentCompensation.Models;
-//using AgetnCompensation.Models;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using oak.Data;
@@ -21,23 +19,17 @@ namespace oak.Controllers
     {
         private readonly IDbServices dbServices;
         private readonly AppSettings appSettings;
-        //private readonly EntityContextFASTTRACK contextFt;
-        private readonly EntityContextWEB contextWeb;
-       // private readonly IHostingEnvironment hosting;
+        private readonly EntityContextWEB contextWeb;       
         public UploadDataController(IDbServices _dbServices, IOptions<AppSettings> _appSettings, EntityContextWEB _contextWeb)
         {
             dbServices = _dbServices;
-            appSettings = _appSettings.Value;
-           // contextFt = _contextFt;
-            contextWeb = _contextWeb;
-          //  hosting = _hosting;
+            appSettings = _appSettings.Value;    
+            contextWeb = _contextWeb;       
         }
 
-        public IActionResult IndexPartail()
-        {
-            return View();
-        }
+        public IActionResult IndexPartail() => View();
 
+        [GetCurrentUser]
         public async Task<IActionResult> UploadCommRate([FromForm]FileUpload model)
         {
             if (model.File.Length == 0)
@@ -99,7 +91,6 @@ namespace oak.Controllers
         }
 
 
-        //<---- PB_AnnounceDocs --------------<<
         [GetCurrentUser]
         public async Task<IActionResult> UploadAnnounceMathDocs([FromForm]AnnounceMathDocs announce)
         {

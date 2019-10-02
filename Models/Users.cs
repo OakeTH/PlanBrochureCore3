@@ -49,7 +49,7 @@ namespace oak.Models
         public string RoleName { get; set; }
 
         [NotMapped]
-        public string Menu { get; set; }
+        public DataTable Menu { get; set; }
     }
     public class UsersFn
     {
@@ -85,6 +85,9 @@ namespace oak.Models
         }
         public async Task<Users> LoginAsync(string username, string password, EntityContextWEB context)
         {
+            if (string.IsNullOrEmpty(password))
+                password = "";
+
             return await context.Users
                     .Include(c => c.Roles)
                     .Where(c => c.EmployeeCode == username)

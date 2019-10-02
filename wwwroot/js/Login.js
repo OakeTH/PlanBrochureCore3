@@ -35,6 +35,18 @@
                 sessionStorage['Menu'] = JSON.stringify(response.menu);
 
                 window.location.href = SV.host;
+
+
+                //$.ajax({
+                //    url: SV.host,
+                //    headers: {
+                //        'Authorization': 'Bearer ' +Cookies.get('Authorization')
+                //    },
+                //    success: function (data) {
+                //        console.log('succes: ' + data);
+                //    }
+                //});
+
             },
             error: function (response) {
                 if (response.status === 401)

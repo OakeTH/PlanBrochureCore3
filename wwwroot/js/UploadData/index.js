@@ -36,16 +36,13 @@
                         isTemplate: true
                     });
                 });
-
                 btnComRateDownload.addEventListener('click', function () {
                     oak.ajaxget.redirect({
                         url: SV.host + 'uploadData/DownloadCommRate'
                     });
                 });
-
             }
             this.setupButton();
-
         },
         planInfo: function () {
             this.setupInput = function () {
@@ -95,10 +92,7 @@
                                     fieldname: 'errors', forhide: true
                                 }],
                                 onrowclick: function (item) {
-                                    oak.ajaxpost.redirect.newpage({
-                                        url: SV.host + 'plan/_PdfPreviewDisbleDownload',
-                                        fileID: 1
-                                    })
+                                    window.open(SV.host + 'Plan/GetDocsNameByID?id=' + item.data.id, '_blank');
                                 },
                             });
                         }
@@ -145,10 +139,7 @@
                                 }
                             },
                             onrowclick: function (item) {
-                                oak.ajaxpost.redirect.newpage({
-                                    url: SV.host + 'plan/_PdfPreviewDisbleDownload',
-                                    fileID: 1
-                                })
+                                window.open(SV.host + 'Plan/GetDocsNameByID?id=' + item.data.id, '_blank');
                             }
 
                         });
@@ -170,18 +161,17 @@
         },
         announceMath: function () {
             this.setupInput = function () {
-
                 var upload = function (item) {
                     if (!item.files || item.files.length === 0)
                         return;
 
                     var formdata = new FormData();
                     var filename = item.files[0].name;
-                    var docsGroupName = 'Math';
+                    var docsGroupName = 'คณิตศาสตร์ประกันภัย';
 
                     formdata.append('file', item.files[0]);
                     formdata.append('docsGroupName', docsGroupName);
-                    formdata.append('DocsName', filename)
+                    formdata.append('DocsName', filename);
                     $.ajax({
                         url: SV.host + 'uploaddata/uploadAnnounceMathDocs',
                         data: formdata,
@@ -258,7 +248,6 @@
             this.setupInput();
         },
         launch: function () {
-
             window.webFn.uploaddataFn.activeMenu();
             window.webFn.uploaddataFn.commRate();
             window.webFn.uploaddataFn.planInfo();

@@ -32,14 +32,14 @@
     <PackageReference Include="ExcelDataReader" Version="3.6.0" />
     <PackageReference Include="ExcelDataReader.DataSet" Version="3.6.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.0.0" />
 
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="3.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Log4Net.AspNetCore" Version="2.2.12" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Log4Net.AspNetCore" Version="3.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
     <PackageReference Include="Microsoft.Web.WebJobs.Publish" Version="2.0.0" />
     <PackageReference Include="NetEscapades.Extensions.Logging.RollingFile" Version="2.2.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="System.Data.SqlClient" Version="4.7.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.5.0" />
     <PackageReference Include="System.ServiceModel.Duplex" Version="4.6.0" />
@@ -57,10 +57,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Logs\" />
-    <Folder Include="PDF\PB_PlanDocs\" />
-    <Folder Include="PDF\PB_AnnounceDocs\" />
+    <Content Include="PDF\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Logs\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
+  
+
 
   <ItemGroup>
     <None Include="PlanBrochureCore3.sln" />

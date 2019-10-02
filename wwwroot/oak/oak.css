@@ -142,7 +142,7 @@ input[type="checkbox"] {
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
     background: #fdf1cf;
-    width:500px;
+    width: 500px;
 }
 
 .error_label {
@@ -721,7 +721,7 @@ select.select-2 {
 }
 
 .pb30 {
-    padding-bottom: 20px;
+    padding-bottom: 30px;
 }
 
 .pb50 {
@@ -1140,7 +1140,7 @@ div.jsgrid-pager {
     width: 100%;
 }
 
-
+/*#endregion*/
 
 /*<-----------------J s G r i d - Editor ------------------<<*/
 /*<-----------------J s G r i d - Editor ------------------<<*/
@@ -2073,3 +2073,39 @@ input:not([type]) + label:after {
         }
 
 /* #endregion*/
+
+
+/*<-----------------Checkboxes -----------------------------<<*/
+/*<-----------------Checkboxes -----------------------------<<*/
+.chkes {
+    cursor: pointer;
+    font-size: 1rem;
+    user-select: none;
+    display: flex;
+    align-items: center;
+}
+
+    .chkes label {
+        cursor: pointer;
+    }
+
+.checkmark {
+    border-radius: 50%;
+    border: 1px solid #bdbdbd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: .4s background;
+    margin-right: .3rem;
+    color: #fff;
+}
+
+    .checkmark.checked {
+        border: 1px solid transparent;
+    }
+
+.chkes .checkmark:hover {
+    border: 1px solid #cc5c5c;
+    animation: pulse 1s;
+    box-shadow: 0 0 0 5px rgba(255, 255, 255, 0);
+}

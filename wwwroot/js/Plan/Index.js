@@ -6,7 +6,7 @@
                     resolve(window.webFn.plans)
                 else
                     $.ajax({
-                        url: SV.host + "plan/getPlans",
+                        url: SV.host + 'plan/getPlans',
                         success: function (response) {
                             window.webFn.plans = response;
                             resolve(response);
@@ -19,12 +19,38 @@
                 buttons: '.content-sub-menu label',
                 activecss: 'active'
             });
+
+            $(chkOnlyActive).checkboxes({
+                source: [{ text: 'แสดงเฉพาะแผนประกันที่ยังขายอยู่' }],
+                onchange: function (item) {
+                    window.webFn.planFn.ddlPlanSearch();
+                    $(ddlFindPlans).trigger('focus');
+
+                }
+            });
+
+            $(btnClearPlanSearch).on('click', function () {
+                ddlFindPlans.value = '';
+                var e = jQuery.Event("keydown", { keyCode: 20 });
+                $(ddlFindPlans).trigger(e);
+            });
+
         },
         ddlPlanSearch: function (data) {
+            if (!data)
+                data = window.webFn.plans;
+
+            if ($(chkOnlyActive).checkboxes('get').all[0].checked) {
+                data = data.filter(function (item) {
+                    return !item.planShortNameTh.includes('error_msg');
+                });
+            };
+
             $(ddlFindPlans)
                 .dropdown({
                     source: data,
                     height: '500px',
+                    width: '560px',
                     groupby: 'prodGrpDescTh',
                     fixposition: true
                 })
@@ -46,7 +72,7 @@
                     }
                     else {
                         content = '<embed id="ifrPdfviewer" class="pdf-inline" src='
-                            + SV.host + '/Plan/GetDocsNameByID?id='
+                            + SV.host + 'Plan/GetDocsNameByID?id='
                             + response[0].id + '#toolbar=0&view=fitH; />';
                         lblPdffullscr.style.display = '';
                     }
@@ -59,7 +85,7 @@
                     ifrPdfviewer.style.height = pdfHeight + 'px';
 
                     $(lblPdffullscr).off('click').on('click', function () {
-                        window.open(SV.host + "/Plan/GetDocsNameByID?id=" + response[0].id, '_blank');
+                        window.open(SV.host + 'Plan/GetDocsNameByID?id=' + response[0].id, '_blank');
                     });
 
 
@@ -113,12 +139,9 @@
             this.renderGrid = function (args) {
                 window.webFn.planFn.divPolicyValue.prototype.getCVRateAsync(args).then(function (response) {
 
-                    response = response.filter(function (item) { return item.insuresex === ddlPovGender.value; });
-
-                    //if (ddlPovGender.value === 'ชาย')
-                    //    response = response.filter(function (item) { return item.insuresex === 'M'; });
-                    //else if (ddlPovGender.value === 'หญิง')
-                    //    response = response.filter(function (item) { return item.insuresex === 'F'; });
+                    response = response.filter(function (item) {
+                        return item.insuresex === ddlPovGender.value;
+                    });
 
                     if (txtEndYear.value) {
                         var endYearInt = parseInt(txtEndYear.value);
@@ -174,7 +197,7 @@
 
                         if (suma !== '')
                             data = data.filter(function (item) {
-                                return item['ทุนประกันภัย(บาท)'] == suma
+                                return item['ทุนประกันภัย'] == suma
                             });
 
                         if (entry !== '')
@@ -187,18 +210,55 @@
                                 return item['ระยะชำระเบี้ย(ปี)'] == year
                             });
 
+
+
                     };
                     var renderGrid = function () {
                         //<-- add data to Grid --<<                    
                         $(divCommRate).grid({
                             source: data,
+                            hideinternalsearch: true,
                             gridcss: 'align-s-start',
+
                             fields: [{
-                                fieldname: 'รหัสแบบประกันภัย', width: 150
+                                fieldname: 'รหัสแบบประกันภัย', hide: true
                             },
                             {
-                                fieldname: 'ทุนประกันภัย(บาท)', width: 150
-                            }]
+                                fieldname: 'ทุนประกันภัย', width: 150
+                            },
+                            {
+                                fieldname: 'ปีที่ 1', width: 70
+                            },
+                            {
+                                fieldname: 'ปีที่ 2', width: 70
+                            },
+                            {
+                                fieldname: 'ปีที่ 3', width: 70
+                            },
+                            {
+                                fieldname: 'ปีที่ 4', width: 70
+                            },
+                            {
+                                fieldname: 'ปีที่ 5', width: 70
+                            },
+                            {
+                                fieldname: 'ปีที่ 6', width: 70
+                            },
+                            {
+                                fieldname: 'ปีที่ 7', width: 70
+                            },
+                            {
+                                fieldname: 'ปีที่ 8', width: 70
+                            },
+                            {
+                                fieldname: 'ปีที่ 9', width: 70
+                            },
+                            {
+                                fieldname: 'ปีที่ 10', width: 70
+                            },
+                            {
+                                fieldname: 'ปีที่ 11+', width: 70
+                            },]
                         });
                     };
                     var isEmptyData = function () {
@@ -209,13 +269,12 @@
 
                     };
 
-
                     if (isEmptyData())
                         return;
 
                     //<-- add unique data to input autocomplete (sumAssured) --<<
                     var sumAssured = response.map(function (item) {
-                        return item['ทุนประกันภัย(บาท)']
+                        return item['ทุนประกันภัย']
                     });
                     var uniqueSumAssured = sumAssured.filter(function (item, i, ar) {
                         return ar.indexOf(item) === i

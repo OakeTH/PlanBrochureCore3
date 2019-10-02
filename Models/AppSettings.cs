@@ -20,10 +20,11 @@
         public string WEBConnectionString { get; set; }
     }
 
-    public class FileSetting {
+    public class FileSetting
+    {
         public string PB_PlanDocsInitialPath { get; set; }
         public string PB_AnnounceDocsInitialPath { get; set; }
     }
 
-   
+
 }

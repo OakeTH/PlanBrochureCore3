@@ -10,13 +10,9 @@ namespace oak.Controllers
     public class AdminController : Controller
     {
         private readonly EntityContextWEB contextWeb;
-        public IActionResult IndexPartail()
-        {
-            return View();
+        public IActionResult IndexPartail() => View();
 
-        }
-
-        public AdminController(EntityContextWEB _contextWeb) => contextWeb = _contextWeb;
+        public AdminController(EntityContextWEB contextWeb) => this.contextWeb = contextWeb;
 
         [HttpGet]
         public async Task<IActionResult> GetUsers()
@@ -27,6 +23,7 @@ namespace oak.Controllers
             }
             catch (Exception ex)
             {
+                // throw ex.Message;dd
                 return BadRequest(ex.Message);
             }
         }
@@ -35,8 +32,8 @@ namespace oak.Controllers
         public async Task<IActionResult> InsertUsers([FromForm]Users users)
         {
             try
-            {               
-                return Ok( await new Users().InsertAsync(users, contextWeb));
+            {
+                return Ok(await new Users().InsertAsync(users, contextWeb));
             }
             catch (Exception ex)
             {

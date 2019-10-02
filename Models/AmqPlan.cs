@@ -31,27 +31,25 @@ namespace oak.Models
     }
     public class AmqPlanFn
     {
+        private const string MsgNotSale = " <label class='error_msg'>(ไม่ขายแล้ว)</label>";
+
         public async Task<List<AmqPlan>> GetAsync(EntityContextFASTTRACK context)
         {
-            return
-                await context.AmqPlan
-                       .Join(context.AmqProduct, plan => plan.ProdId, product => product.ProdId, (plan, product) => new { plan, product })
-                       .Join(context.AmqProductGroup, B => B.product.ProdGrpId, planGr => planGr.ProdGrpId,
-                       (B, planGr) => new AmqPlan
-                       {
-                           PlanCode = B.plan.PlanCode,
-                           PlanShortNameTh = (B.plan.IsActive == "I" ? " <label class='error_msg'> (ไม่ขายแล้ว) </label> " : "") + B.plan.PlanCode + " : " + B.plan.PlanShortNameTh,
-                           ProdGrpDescTh = planGr.ProdGrpDescTh,
-                           IsActive = B.plan.IsActive
-                       })                 
-                       .ToListAsync();
+            return await context.AmqPlan
+                .Join(context.AmqProduct, plan => plan.ProdId, product => product.ProdId, (plan, product) => new { plan, product })
+                .Join(context.AmqProductGroup, B => B.product.ProdGrpId, planGr => planGr.ProdGrpId,
+                (B, planGr) => new AmqPlan
+                {
+                    PlanCode = B.plan.PlanCode,
+                    PlanShortNameTh = (B.plan.IsActive == "I" ? MsgNotSale : "") + B.plan.PlanCode + " : " + B.plan.PlanShortNameTh,
+                    ProdGrpDescTh = planGr.ProdGrpDescTh,
+                    IsActive = B.plan.IsActive
+                })
+                .ToListAsync();
         }
 
-        public async Task<bool> IsActivePlan(string PlanCode, EntityContextFASTTRACK context) {
-            return await context.AmqPlan
-                .Where(c => c.PlanCode == PlanCode && c.IsActive == "A")
-                .AnyAsync();
-        } 
+        public async Task<bool> IsActivePlan(string PlanCode, EntityContextFASTTRACK context) =>
+            await context.AmqPlan.Where(c => c.PlanCode == PlanCode && c.IsActive == "A").AnyAsync();
 
     }
 

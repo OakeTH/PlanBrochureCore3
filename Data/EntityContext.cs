@@ -29,7 +29,7 @@ namespace oak.Data
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-           optionsBuilder.UseLazyLoadingProxies();
+            optionsBuilder.UseLazyLoadingProxies();
         }
         public DbSet<PlanDocs> PlanDocs { get; set; }
         public DbSet<CommRates> CommRates { get; set; }

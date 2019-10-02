@@ -28,35 +28,37 @@ namespace PlanBrochureCore3
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            //services.Configure<CookiePolicyOptions>(options =>
+            //{
+            //    options.CheckConsentNeeded = context => true;
+            //    options.MinimumSameSitePolicy = SameSiteMode.None;
+            //});
 
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
-            services.AddCors();
-            services.AddMvc();
+            //services.AddCors();
 
+            //Chnage default json converter to Newtonsoft
+            services.AddControllersWithViews().AddNewtonsoftJson();
 
             //Binding AppSettings.json with AppSettings
             var appSettingsSection = Configuration.GetSection(nameof(AppSettings));
             services.Configure<AppSettings>(appSettingsSection);
 
-
             // configure jwt authentication
             var app = appSettingsSection.Get<AppSettings>();
             var key = System.Text.Encoding.ASCII.GetBytes(app.JWT.SecretKey);
-            services.AddAuthentication(x =>
+
+
+
+           services.AddAuthentication(opt =>
             {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-            .AddJwtBearer(x =>
+            .AddJwtBearer(opt =>
             {
-                x.RequireHttpsMetadata = false;
-                x.SaveToken = false;
-                x.TokenValidationParameters = new TokenValidationParameters
+                opt.RequireHttpsMetadata = false;
+                opt.SaveToken = false;
+                opt.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
@@ -64,7 +66,7 @@ namespace PlanBrochureCore3
                     ValidateLifetime = true,
                     ValidateAudience = false
                 };
-                x.Events = new JwtBearerEvents
+                opt.Events = new JwtBearerEvents
                 {
                     OnMessageReceived = context =>
                     {
@@ -81,23 +83,20 @@ namespace PlanBrochureCore3
             // configure DI for application services
             services.AddScoped<oak.IUserService, oak.UserService>();
             services.AddScoped<oak.IDbServices, oak.DbServices>();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory, IConfiguration configuration)
+        public static void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory, IConfiguration configuration)
         {
-            if (env.IsDevelopment())
-                app.UseDeveloperExceptionPage();
-            else
-                app.UseExceptionHandler("/Home/Error");
+            //if (env.IsDevelopment())
+            //    app.UseDeveloperExceptionPage();
+            //else
+            //    app.UseExceptionHandler("/Home/Error");
 
-
-
-            //<-- Redirect to another page if Response HTTP Status is not 200
+            //<-- Redirect to another page if Response HTTP Status  400-5xx
             app.UseStatusCodePages(async context =>
             {
-                await Task.CompletedTask;
+                await Task.CompletedTask.ConfigureAwait(false);
                 var response = context.HttpContext.Response;
                 var ALIAS = "";
                 if (!env.IsDevelopment())
@@ -107,18 +106,17 @@ namespace PlanBrochureCore3
                     response.Redirect(ALIAS + nameof(AuthenticationController.Login));
             });
 
-
             app.UseRouting();
+            app.UseAuthentication();
             app.UseAuthorization();
             app.UseStaticFiles();
-
 
             //<-- Setup Routing
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Authentication}/{action=login}/{id?}");
             });
 
             //<-- Logging

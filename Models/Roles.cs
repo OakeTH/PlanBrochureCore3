@@ -10,7 +10,7 @@ namespace oak.Models
         [Column("ID")]
         public int RoleID { get; set; }
         public string RoleName { get; set; }
-    
+
 
     }
 }

@@ -1,24 +1,24 @@
 ﻿
-       ★★★★★ v.3.0 Beta1 ★★★★★★
+	   ★★★★★ v.3.0 Beta1 ★★★★★★
 
 <------------------Current version v.2.17.01 01/04/2017----------------------<<
 ☂ [Oak.vb/JsonQuery JsonDDLSource JsonGridSource] 
 		↑ Change Method convert datatable to Json String [ from:serializer > to:JsonConvert ] ,In order to Improve performance speed
 		[Old]
-        'Dim serializer As New System.Web.Script.Serialization.JavaScriptSerializer()
-        'Dim rows As New List(Of Dictionary(Of String, Object))()
-        'Dim row As Dictionary(Of String, Object)
-        'For Each dr As DataRow In _DataTable.Rows
-        '    row = New Dictionary(Of String, Object)()
-        '    For Each col As DataColumn In _DataTable.Columns
-        '        row.Add(col.ColumnName, dr(col))
-        '    Next
-        '    rows.Add(row)
-        'Next
-        'Return serializer.Serialize(rows) 
+		'Dim serializer As New System.Web.Script.Serialization.JavaScriptSerializer()
+		'Dim rows As New List(Of Dictionary(Of String, Object))()
+		'Dim row As Dictionary(Of String, Object)
+		'For Each dr As DataRow In _DataTable.Rows
+		'    row = New Dictionary(Of String, Object)()
+		'    For Each col As DataColumn In _DataTable.Columns
+		'        row.Add(col.ColumnName, dr(col))
+		'    Next
+		'    rows.Add(row)
+		'Next
+		'Return serializer.Serialize(rows) 
 
 		 [New]
-         Return JSONString = JsonConvert.SerializeObject(_DataTable)
+		 Return JSONString = JsonConvert.SerializeObject(_DataTable)
  
 ☂ [Oak.vb/JsonQuery] 
 		✂ remove automatic add new row when datatable.rows.count = 0
@@ -27,8 +27,8 @@
 
 <------------------Current version v.2.17.02 04/04/2017----------------------<<
 ☂ [OakQuery.js]
-	    ✔Add New function: addGridData_DB		
- 			 Feed data from sp then display those data in GridView
+		✔Add New function: addGridData_DB		
+			 Feed data from sp then display those data in GridView
 
 			 Syntax Example
 				 In sp: Exp. select [STATUS^,chk,w80] ,[Batch^,w100,cen] , [C_Phone^,w200] from table001
@@ -50,7 +50,7 @@
 						,C_FName        AS C_FName
 				 FROM   imp.impNewCust
 
-   				In HTML:  <div id="gridCustInfo"></div>
+				In HTML:  <div id="gridCustInfo"></div>
 				In Javascript: $("#gridCustInfo").addGridData_DB({ url: 'imp.sptmpCust', If: 'GetImpCust' });
 
 <------------------Current version v.2.17.03 07/04/2017----------------------<<		
@@ -64,14 +64,14 @@
 
 <------------------Current version v.2.17.04 19/04/2017----------------------<<
 ☂ [Oak.vb]
- 		✂ Deprecated[Oak.vb/JsonGridSource]
+		✂ Deprecated[Oak.vb/JsonGridSource]
 		✂ Deprecated[Oak.vb/DDLSource]
 		✔ Add New [Oak.vb/DDLQuery]
 
 <------------------Current version v.2.17.05 04/05/2017----------------------<<
 ☂ [OakQuery.js]
 		↑ Update function :addGridData_DB
-		    1. Automatically add Fields in datagrid reference by datasource from sp
+			1. Automatically add Fields in datagrid reference by datasource from sp
 			2. Support manual adding Fields in data datagrid 
 				Example :	   Fields:
 								[{
@@ -103,14 +103,14 @@
 								url: 'spTempPolicyPrefixDealerPlan',
 								If: 'datafor_girdPrefixInfo',
 								fields: [{
-								    name: 'PromotionName', type: 'text', width: 150,
-								    itemTemplate: function (value) { return $('<div>').addClass((value == 'All' ? 'lbl07' : '')).append(value); }
+									name: 'PromotionName', type: 'text', width: 150,
+									itemTemplate: function (value) { return $('<div>').addClass((value == 'All' ? 'lbl07' : '')).append(value); }
 								}, {
-								    name: 'PlanName', type: 'text', width: 150,
-								    itemTemplate: function (value) { return $('<div>').addClass((value == 'All' ? 'lbl07' : '')).append(value); }
+									name: 'PlanName', type: 'text', width: 150,
+									itemTemplate: function (value) { return $('<div>').addClass((value == 'All' ? 'lbl07' : '')).append(value); }
 								}, {
-								    name: 'DealerName', type: 'text', width: 150,
-								    itemTemplate: function (value) { return $('<div>').addClass((value == 'All' ? 'lbl07' : '')).append(value); }
+									name: 'DealerName', type: 'text', width: 150,
+									itemTemplate: function (value) { return $('<div>').addClass((value == 'All' ? 'lbl07' : '')).append(value); }
 								}],
 								width: '100%'
 							});
@@ -145,12 +145,12 @@
 		✔ Add New [OakQuery.js/SendEmail]
 				Example
 
-		        oak.SendEmail({
-                    url: 'mcy2010_AppCancel_Export',
-                    If: 'GetData_Cancel_Manual',
-                    _smtp: '123456',
-                    _priority:'normal'
-                });
+				oak.SendEmail({
+					url: 'mcy2010_AppCancel_Export',
+					If: 'GetData_Cancel_Manual',
+					_smtp: '123456',
+					_priority:'normal'
+				});
 
 ☂ [Oak.vb]	
 		↑ update SendEmail new overload  2 functions (attach excel ,No attach excel )	
@@ -159,25 +159,25 @@
 <------------------Current version v.2.17.10 29/06/2017----------------------<<		
 ☂ [OakQuery.js] now the name was changed to [oak.js] ^_^
 		↑ update addOption_DB (textbox)    , remove search function $map 
-		    $('#txtEditSearch').addOption_DB({
-                url: 'spAppEdit'
-                , If: 'ddlEditSearch'
-                , EditSearch: 'value' <-- Current Search text
-                , minLength: 3
-             })
+			$('#txtEditSearch').addOption_DB({
+				url: 'spAppEdit'
+				, If: 'ddlEditSearch'
+				, EditSearch: 'value' <-- Current Search text
+				, minLength: 3
+			 })
 
 
 <------------------Current version v.2.17.11 17/07/2017----------------------<<		
-     ✔ Add New [OakQuery.js/QueryString]
-	        AID: QueryString().AID,
-            UserID: QueryString().user,
+	 ✔ Add New [OakQuery.js/QueryString]
+			AID: QueryString().AID,
+			UserID: QueryString().user,
 
 
 
 <------------------Current version v.2.17.12 01/08/2017----------------------<<	
 ☂ [oak.js]	
 	↑ update addGridData_DB 
-		     Add function  'Insert','Updtae' on grid
+			 Add function  'Insert','Updtae' on grid
 			 exaimple:
 			 gridPlanMappings.addGridData_DB({
 						url: 'spTempPolicyPrefixDealerPlan',
@@ -212,7 +212,7 @@
 							}
 						}],
 						width: '100%'
-		     });
+			 });
 
 
 		✔ Add New [OakQuery.js/window]
@@ -254,12 +254,12 @@
 						// width:100%,
 						//fileds:....
 					});
-                }      
-            });
+				}      
+			});
 
 
 	↑ update addGridData_DB 	
-	    In case of there are already DATA** and need to ignore calling sp preocess				
+		In case of there are already DATA** and need to ignore calling sp preocess				
 			gridPremiumInfo.addGridData_DB({
 			haddata: data123,<---< DATA** which json format
 			width:100%,
@@ -294,18 +294,18 @@
 	☂ [oak.js/dropdown]
 
 	  oak.dropdown({
-        optiontype: 'provinces',
-        d: 'txtDistrict_Ship',
-        a: 'txtAmphur_Ship',
-        p: 'txtProvince_Ship',
-        z: 'txtZipcode_Ship'
-    });
+		optiontype: 'provinces',
+		d: 'txtDistrict_Ship',
+		a: 'txtAmphur_Ship',
+		p: 'txtProvince_Ship',
+		z: 'txtZipcode_Ship'
+	});
 
 
 
 <------------------Current version v.2.17.14 30/08/2017----------------------<<	
 	☂ [oak.js/upload]
-	    add new param  args.acceptedfiles || ",.xls,.xlsx,.csv"
+		add new param  args.acceptedfiles || ",.xls,.xlsx,.csv"
 		add new param  args.uploadpath || "~//UploadTmp"
 		add new param  args.uploadfor, there are 2 options: ('import','savefile').by default = 'import'
 		Delete upload's file instantly if args.uploadfor is 'import'
@@ -314,133 +314,133 @@
 	   add new params args.filepath usage in order to download a file from server
 	   example:
 		oak.download({
-            filepath: 'sysadmDealer/DealerAE_excel/การแนบFILEmasterMCY.pdf'
-        })
+			filepath: 'sysadmDealer/DealerAE_excel/การแนบFILEmasterMCY.pdf'
+		})
 
 
 
 <------------------Current version v.2.20 29/01/2018----------------------<<	
-    ↑ combined 2 function (addOption_DB,addOption_Json)  to 'dropdown'
+	↑ combined 2 function (addOption_DB,addOption_Json)  to 'dropdown'
 	↑ change function's name of 'addGridData_DB' to 'grid'
 	↑  [oak.js/grid]
 		  gridPlanMappings.grid({
-                url: 'spTempPolicyPrefixDealerPlan',
-                If: 'datafor_girdPrefixInfo',
-                width: '100%',
+				url: 'spTempPolicyPrefixDealerPlan',
+				If: 'datafor_girdPrefixInfo',
+				width: '100%',
 				defaulfeildwidth:200 //Defalut 80
-			    pagesize:10,
-                dialog: [{
-                    update: {
-					    dialogwidth: 400,
-					    topicwidth: 70,
-                        source: {
-                            name: 'ProjectID',
-                            url: 'Create_ddlList',
-                            pIf: 'Project'
-                        },
-                        onsave: {
-                            url: 'spTempPolicyPrefixDealerPlan',
-                            If: 'update_FAL',
-                            user: $('#ctl00_LoginName1').text(),
-                            fields: 'AutoId',
-                            preupdate: function (i) {
-                                i.Prefix.value == '' && (i.Prefix.errormessage = 'Prefix ต้องไม่เป็นค่าว่าง');
-                                i.MasterPolicy.value == '' && (i.MasterPolicy.errormessage = 'MasterPolicy ต้องไม่เป็นค่าว่าง');
-                                return i;
-                            },
-                            postupdate: function (i) { },
-                            onerror: function (i) { }
-                        }
-                    },
-                    insert: {
-                        initial: {
-                            url: 'spTempPolicyPrefixDealerPlan',
-                            If: 'datafor_insert_FAL'
-                        },
-                        source: [{
-                            name: 'DealerCode',
-                            url: 'spTempPolicyPrefixDealerPlan',
-                            If: 'datafor_DealerCode',
-                            msg: true
-                        },
-                        {
-                            name: 'PromotionID',
-                            url: 'spTempPolicyPrefixDealerPlan',
-                            If: 'datafor_PromotionId',
-                            msg: true
-                        }],
-                        onsave: {
-                            url: 'spTempPolicyPrefixDealerPlan',
-                            If: 'insert_FAL',
-                            user: $('#ctl00_LoginName1').text(),
-                            preinsert: function (i) {
-                                i.Prefix.value == '' && (i.Prefix.errormessage = 'Prefix ต้องไม่เป็นค่าว่าง');
-                                i.MasterPolicy.value == '' && (i.MasterPolicy.errormessage = 'MasterPolicy ต้องไม่เป็นค่าว่าง');
-                                i.DealerCode.value == '-1' && (i.DealerCode.errormessage = 'DealerCode ต้องไม่เป็นค่าว่าง');
-                                i.PromotionID.value == '-1' && (i.PromotionID.errormessage = 'PromotionID ต้องไม่เป็นค่าว่าง');
-                            },
-                            postinsert: function (i) { }
-                        }
-                    },
-				    remove: {
-                        onsave: {
-                            url: 'spAppEdit',
-                            If: 'deleteEndorse',
-                            preremove: function (i) {
-                                return i
-                            },
-                            postremove: function (i) {
-                            }
-                        }
-                    }
-                }]
-            }); 
+				pagesize:10,
+				dialog: [{
+					update: {
+						dialogwidth: 400,
+						topicwidth: 70,
+						source: {
+							name: 'ProjectID',
+							url: 'Create_ddlList',
+							pIf: 'Project'
+						},
+						onsave: {
+							url: 'spTempPolicyPrefixDealerPlan',
+							If: 'update_FAL',
+							user: $('#ctl00_LoginName1').text(),
+							fields: 'AutoId',
+							preupdate: function (i) {
+								i.Prefix.value == '' && (i.Prefix.errormessage = 'Prefix ต้องไม่เป็นค่าว่าง');
+								i.MasterPolicy.value == '' && (i.MasterPolicy.errormessage = 'MasterPolicy ต้องไม่เป็นค่าว่าง');
+								return i;
+							},
+							postupdate: function (i) { },
+							onerror: function (i) { }
+						}
+					},
+					insert: {
+						initial: {
+							url: 'spTempPolicyPrefixDealerPlan',
+							If: 'datafor_insert_FAL'
+						},
+						source: [{
+							name: 'DealerCode',
+							url: 'spTempPolicyPrefixDealerPlan',
+							If: 'datafor_DealerCode',
+							msg: true
+						},
+						{
+							name: 'PromotionID',
+							url: 'spTempPolicyPrefixDealerPlan',
+							If: 'datafor_PromotionId',
+							msg: true
+						}],
+						onsave: {
+							url: 'spTempPolicyPrefixDealerPlan',
+							If: 'insert_FAL',
+							user: $('#ctl00_LoginName1').text(),
+							preinsert: function (i) {
+								i.Prefix.value == '' && (i.Prefix.errormessage = 'Prefix ต้องไม่เป็นค่าว่าง');
+								i.MasterPolicy.value == '' && (i.MasterPolicy.errormessage = 'MasterPolicy ต้องไม่เป็นค่าว่าง');
+								i.DealerCode.value == '-1' && (i.DealerCode.errormessage = 'DealerCode ต้องไม่เป็นค่าว่าง');
+								i.PromotionID.value == '-1' && (i.PromotionID.errormessage = 'PromotionID ต้องไม่เป็นค่าว่าง');
+							},
+							postinsert: function (i) { }
+						}
+					},
+					remove: {
+						onsave: {
+							url: 'spAppEdit',
+							If: 'deleteEndorse',
+							preremove: function (i) {
+								return i
+							},
+							postremove: function (i) {
+							}
+						}
+					}
+				}]
+			}); 
 
 
 <------------------Current version v.2.21 19/02/2018----------------------<<	
 
 	↑ All new upload functionally, No longer used dropzone.js
 
-	    var start = performance.now()
-    var end = performance.now()
-    ssssssssssss.text(parseFloat((end - start) / 1000).toFixed(2) + ' Second')
+		var start = performance.now()
+	var end = performance.now()
+	ssssssssssss.text(parseFloat((end - start) / 1000).toFixed(2) + ' Second')
 
-    btnuplaod02.upload2({
-        source: {
-            url: 'spAppEdit',
-            If: 'imp',
-            AddBy: $('#ctl00_LoginName1').text(),
-            IsIMP: 1,
-        },
-        sheet: 'หน้าแก้ไข',
-        tbtype: 'appEdit',
-        //  responseto: 'girdimpAppEdit',
-        onsuccess: function (source) {
-            girdimpAppEdit.grid({
-                haddata: source,
-                width: '100%',
-                fields: [{
-                    name: 'Msg', type: 'text', width: 250, Title: 'สถานะ',
-                    itemTemplate: function (value) {
-                        var cls = (value == '-- บันทึกสำเร็จ --' ? 'green1' : 'red01')
-                        return $('<div>').addClass(cls).append(value);
-                    }
-                }]
-            });
-        }
-    })
+	btnuplaod02.upload2({
+		source: {
+			url: 'spAppEdit',
+			If: 'imp',
+			AddBy: $('#ctl00_LoginName1').text(),
+			IsIMP: 1,
+		},
+		sheet: 'หน้าแก้ไข',
+		tbtype: 'appEdit',
+		//  responseto: 'girdimpAppEdit',
+		onsuccess: function (source) {
+			girdimpAppEdit.grid({
+				haddata: source,
+				width: '100%',
+				fields: [{
+					name: 'Msg', type: 'text', width: 250, Title: 'สถานะ',
+					itemTemplate: function (value) {
+						var cls = (value == '-- บันทึกสำเร็จ --' ? 'green1' : 'red01')
+						return $('<div>').addClass(cls).append(value);
+					}
+				}]
+			});
+		}
+	})
 
 		------------------>>>>>>>>>>>>>-----------------------------------------
 		SELECT  '-->> Write data after this to next Excel sheet -->' AS gotonextsheet;
 		------------------>>>>>>>>>>>>>-----------------------------------------
 		For Each dt In dsExlData.Tables
-                If dt.Columns.count = 1 Then
-                    If dt.Columns(0).ColumnName = "gotonextsheet" Then
-                        index += 1
-                        wSheet = wb.Worksheets.Add(Sheets_Name(index))
-                        Continue For
-                    End If
-                End If
+				If dt.Columns.count = 1 Then
+					If dt.Columns(0).ColumnName = "gotonextsheet" Then
+						index += 1
+						wSheet = wb.Worksheets.Add(Sheets_Name(index))
+						Continue For
+					End If
+				End If
 
 
 <------------------Current version v.3.1 beta1 7/06/2018----------------------<<	
@@ -460,61 +460,61 @@
 	//<--- Upload file to server---<<
 	
 	//<-- upload file to azurestorage account
-    uploadto: 'lwtupload/subfolder',
-        source: {
-            url: 'Plan_Master',
-            if: 'AllPremium'
-        },
-        onsuccess: function (obj) {
-            alert('success')
-        },
-        onerror: function (obj, b, c) {
-            alert('onerror')
-        }
+	uploadto: 'lwtupload/subfolder',
+		source: {
+			url: 'Plan_Master',
+			if: 'AllPremium'
+		},
+		onsuccess: function (obj) {
+			alert('success')
+		},
+		onerror: function (obj, b, c) {
+			alert('onerror')
+		}
 
 	  //<--- Import Excel to server
-      btnImpCoverage.upload({
-            source: {
-                url: 'Plan_Master',
-                if: 'AllPremium'
-            },
-            importto: 'PLN.Import_Cover',
-            sheet: 'Sheet1',
-            converttostring: true, //<-- Default false
-            onsuccess: function (obj) {
-                var sss = 'ddd'
-            },
-            onerror: function (a, b, c) { }
-        });
+	  btnImpCoverage.upload({
+			source: {
+				url: 'Plan_Master',
+				if: 'AllPremium'
+			},
+			importto: 'PLN.Import_Cover',
+			sheet: 'Sheet1',
+			converttostring: true, //<-- Default false
+			onsuccess: function (obj) {
+				var sss = 'ddd'
+			},
+			onerror: function (a, b, c) { }
+		});
 
 		//<--- Send Email
 		 oak.emailing({
-            config: {
-                emailfrom: 'Pachara@asia.lockton.com',
-                emailto: ['Pachara@asia.lockton.com', 'oake_trivium@hotmail.com', 'oake2trivium@gmail.com'],
-                emailcc: 'Pachara@asia.lockton.com'
-            },
-            body: { url: 'Quotation_Approval', If: 'emailsubject + emailbody' },
-            excel: { url: 'Quotation_Approval', If: 'Email Attached' }
-          });
+			config: {
+				emailfrom: 'Pachara@asia.lockton.com',
+				emailto: ['Pachara@asia.lockton.com', 'oake_trivium@hotmail.com', 'oake2trivium@gmail.com'],
+				emailcc: 'Pachara@asia.lockton.com'
+			},
+			body: { url: 'Quotation_Approval', If: 'emailsubject + emailbody' },
+			excel: { url: 'Quotation_Approval', If: 'Email Attached' }
+		  });
 
 		  OR 
 
 		  oak.emailing({
-            config: {	  url: 'Quotation_Approval', If: 'emailsubject + emailbody'},
-            body: { emailsubject: 'subjectsubjectsubjectsubjectsubjectsubject', 
-				    emailbody:'bodybodybodybodybodybodybodybodybody' 
+			config: {	  url: 'Quotation_Approval', If: 'emailsubject + emailbody'},
+			body: { emailsubject: 'subjectsubjectsubjectsubjectsubjectsubject', 
+					emailbody:'bodybodybodybodybodybodybodybodybody' 
 				   },
-            excel: { url: 'Quotation_Approval', If: 'Email Attached' }
-          });
+			excel: { url: 'Quotation_Approval', If: 'Email Attached' }
+		  });
 
 		 //<--- download file
 		btntestDownload.on('click', function () {
-        oak.downloadfile({
-            source: {
-                url: 'Plan_Master',
-                if: 'AllPremium1'
-            },
+		oak.downloadfile({
+			source: {
+				url: 'Plan_Master',
+				if: 'AllPremium1'
+			},
 				downloadfrom: 'lwtupload/subfolder/WallpaperStudio10-49451.jpg'        
 			});
 		});
@@ -522,18 +522,18 @@
 
 
 		
-    btntestupload.upload({
-        uploadto: 'lwtupload/subfolder',
-        source: {
-            url: 'Plan_Master',
-            if: 'AllPremium'
-        },
-        onsuccess: function (obj) {
+	btntestupload.upload({
+		uploadto: 'lwtupload/subfolder',
+		source: {
+			url: 'Plan_Master',
+			if: 'AllPremium'
+		},
+		onsuccess: function (obj) {
 
-        },
-        onerror: function (obj, b, c) {
+		},
+		onerror: function (obj, b, c) {
 
-        }
+		}
 
 <------------------Current version v.3.1 beta2 23/07/2018----------------------<<	
 	Send (GET)request to server;
@@ -543,41 +543,41 @@
 	3.same number 2 but open newpage --use--> oak.ajaxget.redirect.newpage
 
 	 oak.ajaxget({
-        url: 'Pages/test01',
-        params1: '11111',
-        params2: '222',
+		url: 'Pages/test01',
+		params1: '11111',
+		params2: '222',
 		param....
-    });
-    oak.ajaxget.redirect({
-        url: 'Pages/test01',
-        params1: '11111',
-        params2: '222',
+	});
+	oak.ajaxget.redirect({
+		url: 'Pages/test01',
+		params1: '11111',
+		params2: '222',
 		param....
-    });
+	});
 	oak.ajaxget.redirect.newpage({
-        url: 'Pages/test01',
-        params1: '11111',
-        params2: '222',
+		url: 'Pages/test01',
+		params1: '11111',
+		params2: '222',
 		param....
-    });	
+	});	
 
-    oak.downloadpdf({
-        html: divComparator[0].innerHTML,
-        title: 'Title',
-        islandscape: false,
-        CSS: ['~/css/site.css', '~/oak/oak.css']
-    });
+	oak.downloadpdf({
+		html: divComparator[0].innerHTML,
+		title: 'Title',
+		islandscape: false,
+		CSS: ['~/css/site.css', '~/oak/oak.css']
+	});
 
 	  !!Do not forget
 	  !!Do not forget
 	  !!Do not forget
 	  !!Do not forget
-      Startuo.cs ---> Configure--->RotativaConfiguration.Setup(env);
+	  Startuo.cs ---> Configure--->RotativaConfiguration.Setup(env);
 
  var w = window.open();
-     w.document.write('<html><head><title></title></head><body style="margin:0">'
-        + '<embed width="100%" height="100%" name="plugin" src="' + pdf_url + '" '
-        + 'type="application/pdf"></body></html>');
+	 w.document.write('<html><head><title></title></head><body style="margin:0">'
+		+ '<embed width="100%" height="100%" name="plugin" src="' + pdf_url + '" '
+		+ 'type="application/pdf"></body></html>');
 	 w.document.close();
 
 
@@ -587,44 +587,44 @@
 
  //<--- https://documentation.onesignal.com/reference#section-example-code-create-notification --<<
   oak.onesignal.initial({
-            addtags: { username: username01, level: '1', job: 'job01' },
-            onsuccess: function (response) {
+			addtags: { username: username01, level: '1', job: 'job01' },
+			onsuccess: function (response) {
 
-                oak.ajaxpost({
-                    url: 'OneSignal/CreateNotificationfn',
+				oak.ajaxpost({
+					url: 'OneSignal/CreateNotificationfn',
 					Web_icon: "http://icons.iconarchive.com/icons/graphicloads/100-flat/256/home-icon.png",
-                    message: 'Message for 111111111111111111111111111',
-                    filters: [
-                        { "field": "tag", "key": "level", "relation": ">", "value": "10" },
-                        { "field": "amount_spent", "relation": ">", "value": "0" }
-                       //<---OR---<<
-                        { "field": "tag", "key": "level", "relation": "=", "value": "10" },
-                        { "operator": "OR" }, { "field": "tag", "key": "level", "relation": "=", "value": "20" }
-                    ],
-                    tagsfilters: [
-                        { "key": "username", "relation": "=", "value": $('#txttag').val() }
-                    ],
-                    include_player_ids: ['ID001', 'ID002'],
-                    included_segments: ["All", "Customize segment001"],
-                    link: "www.google.com" //<-- open a browser when a user clicks on the notification 
-                    //**** all the filter and include cannot be raised by simultaneously
-                    onsuccess: function (response_2) {
-                        console.log(JSON.stringify(response_2));
-                    }
-                });
-            }
-        });
+					message: 'Message for 111111111111111111111111111',
+					filters: [
+						{ "field": "tag", "key": "level", "relation": ">", "value": "10" },
+						{ "field": "amount_spent", "relation": ">", "value": "0" }
+					   //<---OR---<<
+						{ "field": "tag", "key": "level", "relation": "=", "value": "10" },
+						{ "operator": "OR" }, { "field": "tag", "key": "level", "relation": "=", "value": "20" }
+					],
+					tagsfilters: [
+						{ "key": "username", "relation": "=", "value": $('#txttag').val() }
+					],
+					include_player_ids: ['ID001', 'ID002'],
+					included_segments: ["All", "Customize segment001"],
+					link: "www.google.com" //<-- open a browser when a user clicks on the notification 
+					//**** all the filter and include cannot be raised by simultaneously
+					onsuccess: function (response_2) {
+						console.log(JSON.stringify(response_2));
+					}
+				});
+			}
+		});
 
 		
-    var player_info = oak.onesignal.getplayers({
-        playerid: 'adba44e7-b338-46b7-b430-dcc400c2768c'
-    });
+	var player_info = oak.onesignal.getplayers({
+		playerid: 'adba44e7-b338-46b7-b430-dcc400c2768c'
+	});
 
 
   ☂ Add Fackbook authentication  <script src="~/oak/oak.facebookapi_auth.js"></script>
   ☂ Add Google authentication    <script src="~/oak/oak.googleapi_auth.js"></script>
 
-		    oak.facebookapi_auth.then = function (response) {
+			oak.facebookapi_auth.then = function (response) {
 				if (response.status == 'connected') { }
 				else { }
 				console.log(response)
@@ -697,35 +697,35 @@
 				}
 
 	☂ Add Create Excel file by geting source(datatable/dataset) from stored procedure
-		    oak.downloadexcel({
-                source: {
-                    url: 'Plan_Master',
-                    If: 'Export PLN.Cover'
-                },
-                excelname: 'ความคุ้มครอง_' + getDate().fulldate,
-                excelsheetsname: 'Benefit Comparison,Condtion'
-            });	
+			oak.downloadexcel({
+				source: {
+					url: 'Plan_Master',
+					If: 'Export PLN.Cover'
+				},
+				excelname: 'ความคุ้มครอง_' + getDate().fulldate,
+				excelsheetsname: 'Benefit Comparison,Condtion'
+			});	
 			
 			   oak.ajaxpost.redirect.newpage({
-                    url: WEBAPI.DownloadExcelFromJsonfn,
-                    fields: fields,
-                    data: data
-                });
+					url: WEBAPI.DownloadExcelFromJsonfn,
+					fields: fields,
+					data: data
+				});
 
 	
 <------------------Current version v.3.2 21/09/2018----------------------<<	
   ☂ Add Goolge Map API  - setcontent
 	let divmap = $('#divGoogleMap');
-    $('#btnLoadMap').on('click', function () {
-        divmap.googleapi_map('setlocation', {
-            lat: 'mylocation',
-            lng: 'mylocation',
-            zoom: txtmap_zoom.value,
-            setcontent: { value: 'this text will appear at top of a marked point' }
-        });
-    });
+	$('#btnLoadMap').on('click', function () {
+		divmap.googleapi_map('setlocation', {
+			lat: 'mylocation',
+			lng: 'mylocation',
+			zoom: txtmap_zoom.value,
+			setcontent: { value: 'this text will appear at top of a marked point' }
+		});
+	});
 	   
-    ☂ Add Goolge Map API  - getmylocation
+	☂ Add Goolge Map API  - getmylocation
 		oak.googleapi_map('getmylocation', function (response) {
 			txtmap_lat.value = response.lat;
 			txtmap_lng.value = response.lng;
@@ -733,56 +733,56 @@
    
 
    ☂ Add Goolge Map API - Change streetview visible and disble
-        divmap.googleapi_map('streetview_visible', this.checked)
-              .then(function (response) {})
-    
+		divmap.googleapi_map('streetview_visible', this.checked)
+			  .then(function (response) {})
+	
    ☂ Add Goolge Map API - setlocation And addcontent
-      divmap.googleapi_map('setlocation', {
-            lat: txtmap_lat.value,
-            lng: txtmap_lng.value,
-            zoom: txtmap_zoom.value,//<--(1-20) Default =15
-            addcontent:
-                [{
-                    value: txtmap_content.value,//<-- Default = 'Your location'
-                    lat: 13.7273322,//<-- Default = lat at above
-                    lng: 100.5312//<-- Default = lng at above
-                }, {
-                    value: txtmap_content.value,
-                    lat: 13.7373322,
-                    lng: 100.5412
-                }]
-     });
+	  divmap.googleapi_map('setlocation', {
+			lat: txtmap_lat.value,
+			lng: txtmap_lng.value,
+			zoom: txtmap_zoom.value,//<--(1-20) Default =15
+			addcontent:
+				[{
+					value: txtmap_content.value,//<-- Default = 'Your location'
+					lat: 13.7273322,//<-- Default = lat at above
+					lng: 100.5312//<-- Default = lng at above
+				}, {
+					value: txtmap_content.value,
+					lat: 13.7373322,
+					lng: 100.5412
+				}]
+	 });
 
 
-    ☂ Add Goolge Map API - setlocation And addmarker
-        divmap.googleapi_map('setlocation', {
-            lat: txtmap_lat.value,
-            lng: txtmap_lng.value,
-            zoom: txtmap_zoom.value, //<--(1-20) Default =15
-            addmarker:
-                [{
-                    label: txtmap_content.value, //<--Default =''
-                    title: 'this text will appear when hold mouse on PIN', //<-- Default = 'Your location'
-                    lat: 13.7273322,//<-- Default = lat at above
-                    lng: 100.5312//<-- Default = lng at above
-                }, {
-                    label: txtmap_content.value, //<--Default =''
-                    title: '',
-                    lat: 13.7373322,
-                    lng: 100.5332
-                }]
-       });
+	☂ Add Goolge Map API - setlocation And addmarker
+		divmap.googleapi_map('setlocation', {
+			lat: txtmap_lat.value,
+			lng: txtmap_lng.value,
+			zoom: txtmap_zoom.value, //<--(1-20) Default =15
+			addmarker:
+				[{
+					label: txtmap_content.value, //<--Default =''
+					title: 'this text will appear when hold mouse on PIN', //<-- Default = 'Your location'
+					lat: 13.7273322,//<-- Default = lat at above
+					lng: 100.5312//<-- Default = lng at above
+				}, {
+					label: txtmap_content.value, //<--Default =''
+					title: '',
+					lat: 13.7373322,
+					lng: 100.5332
+				}]
+	   });
  
-    ☂ Add Goolge Map API - setlocation And setmarker
-       divmap.googleapi_map('setlocation', {
-            lat: txtmap_lat.value,
-            lng: txtmap_lng.value,
-            zoom: txtmap_zoom.value, //<--(1-20) Default =15
-            setmarker: {
-                label: 'A', //<--Default =''
-                title: ''// 'this text will appear when hold mouse on PIN' //<-- Default = 'Your location'
-            }
-        });
+	☂ Add Goolge Map API - setlocation And setmarker
+	   divmap.googleapi_map('setlocation', {
+			lat: txtmap_lat.value,
+			lng: txtmap_lng.value,
+			zoom: txtmap_zoom.value, //<--(1-20) Default =15
+			setmarker: {
+				label: 'A', //<--Default =''
+				title: ''// 'this text will appear when hold mouse on PIN' //<-- Default = 'Your location'
+			}
+		});
 
 
 <------------------Current version v.3.2 12/10/18----------------------<<	
@@ -791,165 +791,165 @@
 	↑ Change style of grid column editor
 	✂ Deprecated some grid property
 	   window['_' + this[0].id] = {};
-       window['_' + this[0].id].Data = DS.Data;
-       window['_' + this[0].id].length = DS.Data.length;
+	   window['_' + this[0].id].Data = DS.Data;
+	   window['_' + this[0].id].length = DS.Data.length;
 	   grid_txtHeight = 32
 	   grid_lblHeight = 25.3
-       grid_unitwidth = 55
+	   grid_unitwidth = 55
 	   grid_topicwidth_default = 100
 	   grid.dialog.source.unit
 
 
 <------------------Current version v.3.3 30/10/18----------------------<<	
-    ↑ All new dropdown function 
+	↑ All new dropdown function 
 	  <-- 'Select2' no longer to be a service provider--<<
-      <--  use 'oak.dropdown.core' instead  ---------<<
+	  <--  use 'oak.dropdown.core' instead  ---------<<
 
 	  <select id="select01" class="calssname" /*[0R]style="width:300px"*/></select>
 	  All classes and styles will be copy to new textbox that was created by .dropdown()
 
-    select01
-        //[OR].on('change', function (me) {
-        //    console.log(this.value + ' ' + this.text);
-        //})
-        .addClass('calssname')
-        .dropdown({
-            //[OR]source: ['111', '2222', '33333', '44444', '5555', '6666', '77777', '88888', '99999'], 
-            //[OR]source: [{ val: 1, text: 'AA' }, { val: 2, text: 'BB' }, { val: 3, text: 'CC' }],
-            source: {
-                url: 'LWT_Member',
-                if: 'DDDDD'
-            },
-            onchange: function () {
-                console.log(this.value + ' ' + this.text);
-            },
-            height: '300',//<-- Options container's height --<<
-            width: '300', //<-- Select's width
-            placeholder: '--- Placeholder ---'
-        })
-    //[Optional] .additional jquery function... 
+	select01
+		//[OR].on('change', function (me) {
+		//    console.log(this.value + ' ' + this.text);
+		//})
+		.addClass('calssname')
+		.dropdown({
+			//[OR]source: ['111', '2222', '33333', '44444', '5555', '6666', '77777', '88888', '99999'], 
+			//[OR]source: [{ val: 1, text: 'AA' }, { val: 2, text: 'BB' }, { val: 3, text: 'CC' }],
+			source: {
+				url: 'LWT_Member',
+				if: 'DDDDD'
+			},
+			onchange: function () {
+				console.log(this.value + ' ' + this.text);
+			},
+			height: '300',//<-- Options container's height --<<
+			width: '300', //<-- Select's width
+			placeholder: '--- Placeholder ---'
+		})
+	//[Optional] .additional jquery function... 
 
-    btn222.on('click', function () {
-        select01.dropdown({ text: 'option:value' })
-        //[OR]  select01.dropdown({ text: 'option:text' })
-    });
+	btn222.on('click', function () {
+		select01.dropdown({ text: 'option:value' })
+		//[OR]  select01.dropdown({ text: 'option:text' })
+	});
 
-    btn333.on('click', function () {
-        select01.val('option:value').trigger('change')
-    });
+	btn333.on('click', function () {
+		select01.val('option:value').trigger('change')
+	});
 
 	 text01
-        .dropdown({
-            source: {
-                url: 'LWT_Member',
-                if: 'DDDDD'
-            },
-            minlength: 3, //Default 0,
-            width: '400'
-        })
-	    //[Optional] .additional jquery function... 
+		.dropdown({
+			source: {
+				url: 'LWT_Member',
+				if: 'DDDDD'
+			},
+			minlength: 3, //Default 0,
+			width: '400'
+		})
+		//[Optional] .additional jquery function... 
 
 
 
 <------------------Current version v.3.4 13/11/18----------------------<<	
 			☂ [jsgrid.oak.js] All new data editor function
 
-            Master.diaOptions.grid({
-                    source: source,
-                    pagesize: 7,
-                    dialog: [{
-                        updater: {
-                            dialogwidth: 600,
-                            topicwidth: 120,
-                            onsave: {
-                                url: 'Quotation_UIConfig',
-                                If: 'edit_UI_UWmaster',                                   
-                            },
-                            onvalidate: function (data) {
-                                return data;
-                            },
-                            onsuccess: function (response) {
+			Master.diaOptions.grid({
+					source: source,
+					pagesize: 7,
+					dialog: [{
+						updater: {
+							dialogwidth: 600,
+							topicwidth: 120,
+							onsave: {
+								url: 'Quotation_UIConfig',
+								If: 'edit_UI_UWmaster',                                   
+							},
+							onvalidate: function (data) {
+								return data;
+							},
+							onsuccess: function (response) {
 
-                                var sds = 'ddd';
-                            }
-                        }
-                    }]
-                });
+								var sds = 'ddd';
+							}
+						}
+					}]
+				});
 
 <------------------Current version v.3.4 25/11/18----------------------<<	
 		☂ [jsgrid.oak.js] new function this.getcolumnname <--- Change colum's name from index to title ---<<
-            grid001.grid({
-                source: {
-                    url: 'AppForm_Initials',
-                    if: 'GET:APP.Master(appsearch)'
-                },
-                onrowclick: function(){
+			grid001.grid({
+				source: {
+					url: 'AppForm_Initials',
+					if: 'GET:APP.Master(appsearch)'
+				},
+				onrowclick: function(){
 				  var realcolumnname = this.getcolumnname(e.item)
 				}
-            });
+			});
 
 <------------------Current version v.3.4 25/11/18----------------------<<	
 ☂ [oak.js / downloadpdf]
-    oak.downloadpdf({
-        html: 'Cert_Templates/Cert_Falcon_01',//<-actual's path View/shared/Cert_Templates/Cert_Falcon_01
-        title: 'Title_top_of_PDF_viewer', //<--Remind!! support only english for now ---<<
-        islandscape: false,//<-- แนวตั้ง
-        isgrayscale:false,
-        css: ['oak/oak.A4Paper.css','css002.css','css003.css'],
-        filename: '',//<-- Default '' //<--if filename is defined browser will force to download the pdf file. whereas, display PDF viewer.  
-        size:'A4'
-    });   
+	oak.downloadpdf({
+		html: 'Cert_Templates/Cert_Falcon_01',//<-actual's path View/shared/Cert_Templates/Cert_Falcon_01
+		title: 'Title_top_of_PDF_viewer', //<--Remind!! support only english for now ---<<
+		islandscape: false,//<-- แนวตั้ง
+		isgrayscale:false,
+		css: ['oak/oak.A4Paper.css','css002.css','css003.css'],
+		filename: '',//<-- Default '' //<--if filename is defined browser will force to download the pdf file. whereas, display PDF viewer.  
+		size:'A4'
+	});   
 	// A0 ,    A1,    A2 ,    A3 ,    A4 ,    A5,    A6 ,    A7 ,
-    // A8 ,    A9 ,    B0 ,    B1 ,    B2 ,    B3 ,    B4 ,    B5,
+	// A8 ,    A9 ,    B0 ,    B1 ,    B2 ,    B3 ,    B4 ,    B5,
    // B6 ,    B7,    B8,    B9 ,    B10 ,    C5E,    Comm10E ,    Dle,
    // Executive,    Folio,    Ledger,    Legal ,    Letter,    Tabloid
 
 
    <------------------Current version v.3.4 29/11/18----------------------<<	
-       $(div).dialog({ show: false, backdrop: true, title: 'เข้าสู้ระบบ'  });
+	   $(div).dialog({ show: false, backdrop: true, title: 'เข้าสู้ระบบ'  });
 
-       $(this).confirm({
-            title: 'ยืนยันการยกเลิกรายการ',
-            position: { margin_top: 50 },
-            buttons: [{
-                text: 'ยืนยันการยกเลิก',
-                css: 'btn-red btn-mid-size',
-                onclick: function () {}
-            },
-            {
-                text: 'ไม่ยกเลิก',
-                css: 'btn-red',
+	   $(this).confirm({
+			title: 'ยืนยันการยกเลิกรายการ',
+			position: { margin_top: 50 },
+			buttons: [{
+				text: 'ยืนยันการยกเลิก',
+				css: 'btn-red btn-mid-size',
+				onclick: function () {}
+			},
+			{
+				text: 'ไม่ยกเลิก',
+				css: 'btn-red',
 				onclick: function () {}
 			});
 
 
 		 div_ClaimReq_Upload_Pic.upload({
-                containername: 'claimreq', //<-- Default as appsetting.json //<-- can be add at 'uploading' method
-                uploadto: '11',			   //<-- Initials upload path(*request)  //<-- can be add at 'uploading' method
-                placeholder: 'คลิ้ก หรือ ลากไฟล์ที่ต้องการ Upload มาวางที่นี้',
-                width: 780,
-                height: 80,
-                responseto: div_ClaimReq_Upload_Display,
-                onuploaded: function (result) {},  //<-- onuploaded can be add at 'uploading' method
-                onuploadfailed: function (result) {},//<-- onuploadfailed can be add at 'uploading' method
-                onremoved: function (result) {
-                    //return { errormessage: 'errormessage', error: 1 }; //<-- return errormessage if need to prevent removing
-                }
-            }); 
+				containername: 'claimreq', //<-- Default as appsetting.json //<-- can be add at 'uploading' method
+				uploadto: '11',			   //<-- Initials upload path(*request)  //<-- can be add at 'uploading' method
+				placeholder: 'คลิ้ก หรือ ลากไฟล์ที่ต้องการ Upload มาวางที่นี้',
+				width: 780,
+				height: 80,
+				responseto: div_ClaimReq_Upload_Display,
+				onuploaded: function (result) {},  //<-- onuploaded can be add at 'uploading' method
+				onuploadfailed: function (result) {},//<-- onuploadfailed can be add at 'uploading' method
+				onremoved: function (result) {
+					//return { errormessage: 'errormessage', error: 1 }; //<-- return errormessage if need to prevent removing
+				}
+			}); 
 
-            div_ClaimReq_Upload_Pic.upload('uploading', {//<-- Start uplaoding ---<<
-			    containername: 'claimreq',
-                uploadto: ID_ClaimReq,
-                onuploaded: function (result) {},
-                onuploadfailed: function (result) {}
-            });
+			div_ClaimReq_Upload_Pic.upload('uploading', {//<-- Start uplaoding ---<<
+				containername: 'claimreq',
+				uploadto: ID_ClaimReq,
+				onuploaded: function (result) {},
+				onuploadfailed: function (result) {}
+			});
 
 			//<-- Get current files in fileLayout  ------------------<<
 		   div_ClaimReq_Upload_Pic[0].files; //OR
 		   div_ClaimReq_Upload_Pic.upload('getfilesinfo');
 
-	     	//<-- clear all data and layout  -------------------------<<
-	         div_ClaimReq_Upload.upload('clear');
+			//<-- clear all data and layout  -------------------------<<
+			 div_ClaimReq_Upload.upload('clear');
 
 			//<-- clear all data and layout  -------------------------<<
 			  div_ClaimReq_Upload.upload('getfileschanged');
@@ -960,70 +960,70 @@
 				newfilesname: ['111','2222','333'],
 				deletedfiles: [{1},{2},{3}],
 				newfiles:  [{1},{2},{3}]
-              }
+			  }
 			  
 
 <------------------Current version v.3.4 23/12/18----------------------<<	
-	     dialog: {
-                    remover: {
-                        onsave: {
-                            url: 'LWTAdmin_Editor',
-                            if: 'DELETE:ClaimReq Email',
-                            token: document.lwtew.cookie.Token
-                        },
-                        onsuccess: function (reponse) {
-                            oak.minidialog({ value: 'ลบอีเมล์ ' + reponse[0].Email_Address + ' แล้ว' });
-                        }
-                    },
-                    updater: {
-                        itemtemplate: [{
-                            field: 'ID_UW',
-                            type: 'dropdown',
-                            source: shared.insurer
-                        },
-                        {
-                            field: 'Email_Type',
-                            type: 'dropdown',
-                            source: shared.emailType
-                        },
-                        {
-                            field: 'ID_Plan',
-                            type: 'dropdown',
-                            source: shared.plans,
+		 dialog: {
+					remover: {
+						onsave: {
+							url: 'LWTAdmin_Editor',
+							if: 'DELETE:ClaimReq Email',
+							token: document.lwtew.cookie.Token
+						},
+						onsuccess: function (reponse) {
+							oak.minidialog({ value: 'ลบอีเมล์ ' + reponse[0].Email_Address + ' แล้ว' });
+						}
+					},
+					updater: {
+						itemtemplate: [{
+							field: 'ID_UW',
+							type: 'dropdown',
+							source: shared.insurer
+						},
+						{
+							field: 'Email_Type',
+							type: 'dropdown',
+							source: shared.emailType
+						},
+						{
+							field: 'ID_Plan',
+							type: 'dropdown',
+							source: shared.plans,
 
-                        }],
-                        onsave: function (item, itemInArray) {
+						}],
+						onsave: function (item, itemInArray) {
 
-                            var s = 'ddd'
-                        }
-                    },
-                    inserter: {
-                        itemtemplate: [{
-                            field: 'ID_UW',
-                            type: 'dropdown',
-                            source: shared.insurer
-                        },
-                        {
-                            field: 'Email_Address',
-                            required:true
-                        },
-                        {
-                            field: 'Email_Type',
-                            type: 'dropdown',
-                            placeholder: 'ส่งอีเมล์เป็นแบบ TO หรือ CC',
-                            source: shared.emailType
-                        },
-                        {
-                            field: 'ID_Plan',
-                            type: 'dropdown',
-                            source: shared.plans,
-                            value: '0' //<-- - All - ---<<
-                        }],
-                        onsave: function (item) {
+							var s = 'ddd'
+						}
+					},
+					inserter: {
+						itemtemplate: [{
+							field: 'ID_UW',
+							type: 'dropdown',
+							source: shared.insurer
+						},
+						{
+							field: 'Email_Address',
+							required:true
+						},
+						{
+							field: 'Email_Type',
+							type: 'dropdown',
+							placeholder: 'ส่งอีเมล์เป็นแบบ TO หรือ CC',
+							source: shared.emailType
+						},
+						{
+							field: 'ID_Plan',
+							type: 'dropdown',
+							source: shared.plans,
+							value: '0' //<-- - All - ---<<
+						}],
+						onsave: function (item) {
 							  var sds=''
-                        }
-                    }
-                }
+						}
+					}
+				}
 
 <------------------Current version v.3.4 27/12/18----------------------<<
 ☂ [oak.js / minidialog]
@@ -1035,76 +1035,76 @@
 
 
 	   divInf_Upload.upload({
-                placeholder: 'text',//<-- default คลิ้ก หรือ ลากไฟล์ที่ต้องการ Upload มาวางที่นี้'
-                width: 780,
-                height: 10, //<--default 80
-                maxfilesize:10, //<--default 20
+				placeholder: 'text',//<-- default คลิ้ก หรือ ลากไฟล์ที่ต้องการ Upload มาวางที่นี้'
+				width: 780,
+				height: 10, //<--default 80
+				maxfilesize:10, //<--default 20
 				maxfileamount:10 //<default 10
-                responseto: div_Upload_Display //<-- add 'responseto' automatically as below if 'responseto'is undefined 
-            });
+				responseto: div_Upload_Display //<-- add 'responseto' automatically as below if 'responseto'is undefined 
+			});
 
-            //oakdef.upload_height = 80;
-            //oakdef.upload_maxfile_amount = 10;
-            //oakdef.upload_maxfile_size = 20;//<-MB
-            //oakdef.upload_placeholder = 'คลิ้ก หรือ ลากไฟล์ที่ต้องการ Upload มาวางที่นี้';
+			//oakdef.upload_height = 80;
+			//oakdef.upload_maxfile_amount = 10;
+			//oakdef.upload_maxfile_size = 20;//<-MB
+			//oakdef.upload_placeholder = 'คลิ้ก หรือ ลากไฟล์ที่ต้องการ Upload มาวางที่นี้';
 
 
 <------------------Current version v.3.4 21/01/19----------------------<<
  domtoimage.toJpeg(document.body)
-                    .then(function (dataUrl) {
-                        var img = new Image();
-                        img.src = dataUrl;
+					.then(function (dataUrl) {
+						var img = new Image();
+						img.src = dataUrl;
 
-                        let pdf = new jsPDF(); // using defaults: orientation=portrait, unit=mm, size=A4
-                        let width = pdf.internal.pageSize.width + 10;
-                        let height = pdf.internal.pageSize.height;
-                                          
-                        pdf.addImage(img.src, 'JPEG', marginleft-right, margintop-bottom, width, height);
+						let pdf = new jsPDF(); // using defaults: orientation=portrait, unit=mm, size=A4
+						let width = pdf.internal.pageSize.width + 10;
+						let height = pdf.internal.pageSize.height;
+										  
+						pdf.addImage(img.src, 'JPEG', marginleft-right, margintop-bottom, width, height);
 
-                        oak.ajaxpost({
-                            url: 'email/Emailing',
-                            attachfiles: [
-                                {
-                                    dataurl: img.src,
-                                    name: filename + '.png'
-                                },
-                                {
-                                    dataurl: pdf.output("datauri"),
-                                    name: filename + '.pdf'
-                                }],
+						oak.ajaxpost({
+							url: 'email/Emailing',
+							attachfiles: [
+								{
+									dataurl: img.src,
+									name: filename + '.png'
+								},
+								{
+									dataurl: pdf.output("datauri"),
+									name: filename + '.pdf'
+								}],
    
-                            config: {
-                                emailfrom: 'oake2trivium@gmail.com',//<-- emailFrom
-                                emailto: certInfo.Cus_Email,
-                                port: '587',
-                                enablessl: true,
-                                smtpserver: 'smtp.gmail.com'
-                            },
-                            body: {
-                                emailbody: emailBody,
-                                emailsubject: emailSubject
-                            }
-                        });
+							config: {
+								emailfrom: 'oake2trivium@gmail.com',//<-- emailFrom
+								emailto: certInfo.Cus_Email,
+								port: '587',
+								enablessl: true,
+								smtpserver: 'smtp.gmail.com'
+							},
+							body: {
+								emailbody: emailBody,
+								emailsubject: emailSubject
+							}
+						});
 
-                        window.setTimeout(function () { window.close(); }, 500);
-                    });
+						window.setTimeout(function () { window.close(); }, 500);
+					});
 
 	<------------------Current version v.3.4 07/03/19----------------------<<	
 
 		☂ [downloadexcel.oak.js] add new function  lastrowissummary
 
-        oak.downloadexcel({
-            source: {
-                url: 'Reporting',
-                If: 'GET:All Reports',
-                From: txtRepAddFrom[0].value,
-                To: txtRepAddTo[0].value,
-                AddBy: ddlRepAddBy[0].value
-            },
-            excelname: 'SMECARE_Report_' + getDate().fulldate,
-            excelsheetsname: ['AAA', 'BBB', 'CCC','DDDD'], // OR 'AAAA,BBBBB,CCCC,DDDDD',
-            lastrowissummary: ['AAA','BBB'] //'AAA,BBB' //<-- allsheets
-        });
+		oak.downloadexcel({
+			source: {
+				url: 'Reporting',
+				If: 'GET:All Reports',
+				From: txtRepAddFrom[0].value,
+				To: txtRepAddTo[0].value,
+				AddBy: ddlRepAddBy[0].value
+			},
+			excelname: 'SMECARE_Report_' + getDate().fulldate,
+			excelsheetsname: ['AAA', 'BBB', 'CCC','DDDD'], // OR 'AAAA,BBBBB,CCCC,DDDDD',
+			lastrowissummary: ['AAA','BBB'] //'AAA,BBB' //<-- allsheets
+		});
 
 		  let shadowThemes123 = {
 				yellow: 'rgba(255, 242, 5, 0.8)',
@@ -1117,16 +1117,27 @@
 		   btn1234.processingButton(false)
 
 
-		    $(divCommRate).grid({
-            source: divCommRate.data,
-            theme: 'clear',
-            gridcss: 'align-s-start',
-            fields: [{
-                fieldname: 'รหัสแบบประกันภัย', width: 150
-            },
-            {
-                fieldname: 'ทุนประกันภัย(บาท)', width: 150
-            }],
-            useexternalsearch: { at: divCommRateSearch, fields: ['ระยะชำระเบี้ย(ปี)', 'ทุนประกันภัย(บาท)', 'อายุผู้เอาประกัน'] },
-            excelbutton: false
+			$(divCommRate).grid({
+			source: divCommRate.data,
+			theme: 'clear',
+			gridcss: 'align-s-start',
+			fields: [{
+				fieldname: 'รหัสแบบประกันภัย', width: 150
+			},
+			{
+				fieldname: 'ทุนประกันภัย(บาท)', width: 150
+			}],
+			useexternalsearch: { at: divCommRateSearch, fields: ['ระยะชำระเบี้ย(ปี)', 'ทุนประกันภัย(บาท)', 'อายุผู้เอาประกัน'] },
+			excelbutton: false
+		});
+
+
+        $(sdsdsdsdsdsd).checkboxes({
+            source: [{ text: 'text01', value: 'value', checked: true }, { text: 'text02', value: 'value3', checked: false }, { text: 'text03', value: 'value3', checked: true }],
+            fontsize: '2rem',
+            checkboxsize: '3rem',
+            chekedcolor: '#50e6ff',
+            unchekedcolor: '#efd48d'
         });
+
+		 $(sdsdsdsdsdsd).checkboxes('get');

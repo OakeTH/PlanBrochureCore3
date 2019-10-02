@@ -124,7 +124,7 @@ html {
         align-items: center;
         align-self: stretch;
         display: flex;
-        color: #1499c5;
+        color: #347ec5;
         font-size: 1.1rem;
     }
 
@@ -179,6 +179,25 @@ html {
 .pdf-inline {
     width: 100%;
 }
+
+
+.btn-eraser {
+    color: #cc5c5c;
+    border-bottom: 1px solid var( --txt-br);
+    cursor:pointer;
+}
+
+.btn-search {
+    color: #555555;
+    cursor: pointer;
+    border-bottom: 1px solid var( --txt-br);
+}
+
+.lbl-remind {
+    font-size: .85rem;
+    color: #808080;
+}
+
 /*#region <------------------ @Media roles -------------------------<<*/
 @media screen and (max-width: 800px) {
     .navi-root {

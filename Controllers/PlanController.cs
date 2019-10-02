@@ -14,17 +14,15 @@ namespace oak.Controllers
     public class PlanController : Controller
     {
 
-        private readonly IDbServices dbServices;
+   
         private readonly AppSettings appSettings;
         private readonly EntityContextFASTTRACK contextFt;
         private readonly EntityContextWEB contextWeb;
-        public PlanController(IDbServices _dbServices, IOptions<AppSettings> _appSettings, EntityContextFASTTRACK _contextFt, EntityContextWEB _contextWeb)
-        {
-            dbServices = _dbServices;
+        public PlanController(IOptions<AppSettings> _appSettings, EntityContextFASTTRACK _contextFt, EntityContextWEB _contextWeb)
+        {  
             appSettings = _appSettings.Value;
             contextFt = _contextFt;
             contextWeb = _contextWeb;
-
         }
 
         public IActionResult IndexPartail()
@@ -114,7 +112,7 @@ namespace oak.Controllers
             {
                 var docPath = appSettings.File.PB_PlanDocsInitialPath;
                 var docsName = await new PlanDocs().GetDocsNameByIDAsync(id, contextWeb);
-       
+
                 docsName = "10HL1N_แฮปปี้ไลฟ์ชำระเบี้ย10ปี(@9010).PDF";
 
                 var fullPath = Path.Combine(docPath, docsName);
@@ -138,11 +136,11 @@ namespace oak.Controllers
         }
 
 
-        public IActionResult _PdfPreviewDisbleDownload([FromForm]int id)
-        {
-            ViewBag.ID = id.ToString();
-            return View();
-        }
+        //public IActionResult _PdfPreviewDisbleDownload([FromForm]int id)
+        //{
+        //    ViewBag.ID = id.ToString();
+        //    return View();
+        //}
 
     }
 }
