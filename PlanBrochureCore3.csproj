@@ -2,33 +2,39 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
+    <UserSecretsId>b74c59dc-46da-4879-8403-1278d988c242</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>.</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Components\**" />
     <Compile Remove="wwwroot\lib\bootstrap\dist\js\**" />
     <Compile Remove="wwwroot\lib\jquery-validation-unobtrusive\**" />
     <Compile Remove="wwwroot\lib\jquery-validation\**" />
     <Compile Remove="wwwroot\lib\jquery\**" />
+    <Content Remove="Components\**" />
     <Content Remove="wwwroot\lib\bootstrap\dist\js\**" />
     <Content Remove="wwwroot\lib\jquery-validation-unobtrusive\**" />
     <Content Remove="wwwroot\lib\jquery-validation\**" />
     <Content Remove="wwwroot\lib\jquery\**" />
+    <EmbeddedResource Remove="Components\**" />
     <EmbeddedResource Remove="wwwroot\lib\bootstrap\dist\js\**" />
     <EmbeddedResource Remove="wwwroot\lib\jquery-validation-unobtrusive\**" />
     <EmbeddedResource Remove="wwwroot\lib\jquery-validation\**" />
     <EmbeddedResource Remove="wwwroot\lib\jquery\**" />
+    <None Remove="Components\**" />
     <None Remove="wwwroot\lib\bootstrap\dist\js\**" />
     <None Remove="wwwroot\lib\jquery-validation-unobtrusive\**" />
     <None Remove="wwwroot\lib\jquery-validation\**" />
     <None Remove="wwwroot\lib\jquery\**" />
+    <TypeScriptCompile Remove="Components\**" />
   </ItemGroup>
 
 
   <ItemGroup>
-   <!--<PackageReference Include="Microsoft.AspNetCore.All" Version="2.2.7" />
-   <PackageReference Include="Microsoft.AspNetCore.App" />-->
     <PackageReference Include="BuildBundlerMinifier" Version="3.0.415" />
-    <PackageReference Include="ClosedXML" Version="0.92.1" />
+    <PackageReference Include="ClosedXML" Version="0.94.2" />
     <PackageReference Include="ExcelDataReader" Version="3.6.0" />
     <PackageReference Include="ExcelDataReader.DataSet" Version="3.6.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.0.0" />
@@ -37,6 +43,11 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="3.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Log4Net.AspNetCore" Version="3.0.0" />
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="3.6.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.5" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
     <PackageReference Include="Microsoft.Web.WebJobs.Publish" Version="2.0.0" />
     <PackageReference Include="NetEscapades.Extensions.Logging.RollingFile" Version="2.2.0" />
@@ -64,12 +75,20 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  
+
+  <ItemGroup>
+    <None Remove="testts.ts" />
+  </ItemGroup>
+
 
 
   <ItemGroup>
     <None Include="PlanBrochureCore3.sln" />
   </ItemGroup>
 
-  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="http://json.schemastore.org/babelrc" /></VisualStudio></ProjectExtensions>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties appsettings_1json__JsonSchema="http://json.schemastore.org/babelrc" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

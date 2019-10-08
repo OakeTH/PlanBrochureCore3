@@ -134,7 +134,6 @@
 
                 $(txtEndYear).on('input', function () { renderGrid({ ignoreGetDataFromSV: true }) });
 
-
             }
             this.renderGrid = function (args) {
                 window.webFn.planFn.divPolicyValue.prototype.getCVRateAsync(args).then(function (response) {
@@ -209,8 +208,6 @@
                             data = data.filter(function (item) {
                                 return item['ระยะชำระเบี้ย(ปี)'] == year
                             });
-
-
 
                     };
                     var renderGrid = function () {
@@ -356,7 +353,27 @@
                 window.webFn.planFn.divPolicyValue();
                 window.webFn.planFn.divCommRate();
             });
+
+
+
+
+            $('#button1').on('click', function () {
+                $.ajax({
+                    url: SV.host + 'plan/aaaa',
+                    success: function (response) {
+                        var sds = '';
+
+                    }
+                })
+
+            })
+
+
         }
     }
+
+
+
+
 });
 

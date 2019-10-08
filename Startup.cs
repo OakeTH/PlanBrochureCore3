@@ -49,32 +49,34 @@ namespace PlanBrochureCore3
 
 
 
-           services.AddAuthentication(opt =>
-            {
-                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(opt =>
-            {
-                opt.RequireHttpsMetadata = false;
-                opt.SaveToken = false;
-                opt.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false,
-                    ValidateLifetime = true,
-                    ValidateAudience = false
-                };
-                opt.Events = new JwtBearerEvents
-                {
-                    OnMessageReceived = context =>
-                    {
-                        context.Token = context.Request.Cookies["Authorization"];
-                        return Task.CompletedTask;
-                    }
-                };
-            });
+
+
+            services.AddAuthentication(opt =>
+             {
+                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                 opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+             })
+             .AddJwtBearer(opt =>
+             {
+                 opt.RequireHttpsMetadata = false;
+                 opt.SaveToken = false;
+                 opt.TokenValidationParameters = new TokenValidationParameters
+                 {
+                     ValidateIssuerSigningKey = true,
+                     IssuerSigningKey = new SymmetricSecurityKey(key),
+                     ValidateIssuer = false,
+                     ValidateLifetime = true,
+                     ValidateAudience = false
+                 };
+                 opt.Events = new JwtBearerEvents
+                 {
+                     OnMessageReceived = context =>
+                     {
+                         context.Token = context.Request.Cookies["Authorization"];
+                         return Task.CompletedTask;
+                     }
+                 };
+             });
 
             // Entity framework - Serup connectionstring.
             services.AddDbContext<EntityContextFASTTRACK>(options => options.UseSqlServer(app.Database.FASTTRACKConnectionString));
@@ -83,6 +85,11 @@ namespace PlanBrochureCore3
             // configure DI for application services
             services.AddScoped<oak.IUserService, oak.UserService>();
             services.AddScoped<oak.IDbServices, oak.DbServices>();
+
+
+            // Register Blazor service.
+            // services.AddRazorPages();
+            // services.AddServerSideBlazor();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -114,6 +121,8 @@ namespace PlanBrochureCore3
             //<-- Setup Routing
             app.UseEndpoints(endpoints =>
             {
+                //   endpoints.MapBlazorHub();
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Authentication}/{action=login}/{id?}");

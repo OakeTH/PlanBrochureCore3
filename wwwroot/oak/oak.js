@@ -1011,63 +1011,63 @@ $.fn.downloadfile = function(args) {
     window.location.href = SV.host + SV.Downloadfilefn + objtoquerystr(obj);
 };
 //<-- Legacy--<<//
-$.fn.downloadpdf = function(args) {
-    let title = args.title || 'PDF Preview';
-    let islandscape = args.islandscape || false;
-    let isgrayscale = args.isgrayscale || false;
-    let _css = args.css;
-    let size = args.size || 'A4';
-    let filename = args.filename || 'PDF ' + getDate().fulldate;
-    let css = [];
-    let html = args.html;
-    let onsuccess = args.onsuccess || $.noop;
-    let onerror = args.onerror || $.noop;
-    if (typeof _css === 'string') css.push(_css)
-    else if (_css instanceof Array) css = _css;
+//$.fn.downloadpdf = function(args) {
+//    let title = args.title || 'PDF Preview';
+//    let islandscape = args.islandscape || false;
+//    let isgrayscale = args.isgrayscale || false;
+//    let _css = args.css;
+//    let size = args.size || 'A4';
+//    let filename = args.filename || 'PDF ' + getDate().fulldate;
+//    let css = [];
+//    let html = args.html;
+//    let onsuccess = args.onsuccess || $.noop;
+//    let onerror = args.onerror || $.noop;
+//    if (typeof _css === 'string') css.push(_css)
+//    else if (_css instanceof Array) css = _css;
 
-    if (!html)
-        return;
+//    if (!html)
+//        return;
 
-    if (html instanceof Element)
-        html = html.innerHTML
+//    if (html instanceof Element)
+//        html = html.innerHTML
 
-    else if (html instanceof jQuery)
-        html = html[0].innerHTML
+//    else if (html instanceof jQuery)
+//        html = html[0].innerHTML
 
-    if (filename && filename.endsWith !== '.pdf')
-        filename += '.pdf'
+//    if (filename && filename.endsWith !== '.pdf')
+//        filename += '.pdf'
 
-    for (i = 0; i < css.length; i++) {
-        if (!css[i].startsWith('http'))
-            css[i] = window.host + css[i]
-    }
+//    for (i = 0; i < css.length; i++) {
+//        if (!css[i].startsWith('http'))
+//            css[i] = window.host + css[i]
+//    }
 
-    let options = {
-        url: SV.DownloadPDFfn,
-        html: html,
-        title: title,
-        size: size,
-        islandscape: islandscape,
-        isgrayscale: isgrayscale,
-        css: css,
-        filename: filename,
-        onsuccess: onsuccess,
-        onerror: onerror
-    };
+//    let options = {
+//        url: SV.DownloadPDFfn,
+//        html: html,
+//        title: title,
+//        size: size,
+//        islandscape: islandscape,
+//        isgrayscale: isgrayscale,
+//        css: css,
+//        filename: filename,
+//        onsuccess: onsuccess,
+//        onerror: onerror
+//    };
 
-    oak.downloadpdf.rotativaCaller(options);
+//    oak.downloadpdf.rotativaCaller(options);
 
-};
-//<-- Legacy--<<//
-oak.downloadpdf.rotativaCaller = function(options) {
-    let prm = new Promise(function(resolve) {
-        oak.ajaxpost.redirect(options);
-        resolve();
-    });
+//};
+////<-- Legacy--<<//
+//oak.downloadpdf.rotativaCaller = function(options) {
+//    let prm = new Promise(function(resolve) {
+//        oak.ajaxpost.redirect(options);
+//        resolve();
+//    });
 
-    prm.then(function(a) { options.onsuccess(a); })
+//    prm.then(function(a) { options.onsuccess(a); })
 
-}
+//}
 //<--New---<<//
 oak.pdftemplate = SV.host + 'PDF/GetHTMPTemplate?templatepath=';
 
@@ -3756,8 +3756,6 @@ $.fn.checkboxes = function(args) {
         oakdef.checkboxesSetup = {};
 
     var setup = oakdef.checkboxesSetup;
-
-
 
     if (typeof args === 'string') {
         if (args === 'get') return oak.checkboxes.get(this[0]);

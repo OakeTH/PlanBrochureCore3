@@ -35,7 +35,6 @@ namespace oak.Data
         public DbSet<CommRates> CommRates { get; set; }
         public DbSet<Users> Users { get; set; }
         public DbSet<Roles> Roles { get; set; }
-
         public DbSet<AnnounceMathDocs> AnnounceDocs { get; set; }
 
     }

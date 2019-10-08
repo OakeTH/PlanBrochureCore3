@@ -289,7 +289,7 @@ namespace oak
                             continue;
                         }
                     }
-                    CreateAdvancedExcFm(wSheet, dt);
+                  //  CreateAdvancedExcFm(wSheet, dt);
 
                 }
             }
@@ -319,407 +319,407 @@ namespace oak
             item.Style.Alignment.SetVertical(XLAlignmentVerticalValues.Center);
             item.Height = 25;
         }
-        private static void CreateAdvancedExcFm(IXLWorksheet ws, DataTable dt /*bool IsFirstDataTable*/)
-        {
-            Int32 rowCount;
-            Int32 rowCurrent;
-            Int32 usedHeader = 0;
-            Int32 rowCurrent_d;
-            rowCount = dt.Rows.Count;
-            //if (IsFirstDataTable)
-            //    rowCurrent = 0;
-            //else
-            rowCurrent = ws.RowsUsed().Count();
+        //private static void CreateAdvancedExcFm(IXLWorksheet ws, DataTable dt /*bool IsFirstDataTable*/)
+        //{
+        //    Int32 rowCount;
+        //    Int32 rowCurrent;
+        //    Int32 usedHeader = 0;
+        //    Int32 rowCurrent_d;
+        //    rowCount = dt.Rows.Count;
+        //    //if (IsFirstDataTable)
+        //    //    rowCurrent = 0;
+        //    //else
+        //    rowCurrent = ws.RowsUsed().Count();
 
-            dt = CreateAdvancedExcFm_applyStylebyfirstCol(dt);
-            foreach (DataColumn c in dt.Columns)
-            {
-                string markup = Substr(c.ColumnName, "^", "");
-                if (c.ColumnName.Contains(",hd"))
-                {
-                    IXLCell _ws = ws.Cell(rowCurrent + 1, c.Ordinal + 1);
-                    _ws.Value = Substr(c.ColumnName, "", "^");
-                    usedHeader = 1;
-                    if (markup.Contains(",hdfont-size"))
-                        _ws.Style.Font.FontSize = Convert.ToDouble(Substr(markup, ",hdfont-size", ","));
-                    if (markup.Contains(",hdfont-bold"))
-                        _ws.Style.Font.SetBold();
-                    if (markup.Contains(",hdcolor#"))
-                        _ws.Style.Font.FontColor = XLColor.FromHtml(Substr(markup, ",hdcolor", ","));
-                    if (markup.Contains(",hdcen"))
-                        _ws.Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
-                    if (markup.Contains(",hdright"))
-                        _ws.Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Right);
-                    if (markup.Contains(",hdbg#"))
-                        _ws.Style.Fill.BackgroundColor = XLColor.FromHtml(Substr(markup, ",hdbg", ","));
-                    if (markup.Contains(",hdheight"))
-                        ws.Row(rowCurrent + 1).Height = Convert.ToDouble(Substr(markup, ",hdheight", ","));
-                    if (markup.Contains(",hdbd"))
-                        CreateAdvancedExcFm_border(_ws, markup, "1");
-                }
-                rowCurrent_d = usedHeader + rowCurrent;
+        //    dt = CreateAdvancedExcFm_applyStylebyfirstCol(dt);
+        //    foreach (DataColumn c in dt.Columns)
+        //    {
+        //        string markup = Substr(c.ColumnName, "^", "");
+        //        if (c.ColumnName.Contains(",hd"))
+        //        {
+        //            IXLCell _ws = ws.Cell(rowCurrent + 1, c.Ordinal + 1);
+        //            _ws.Value = Substr(c.ColumnName, "", "^");
+        //            usedHeader = 1;
+        //            if (markup.Contains(",hdfont-size"))
+        //                _ws.Style.Font.FontSize = Convert.ToDouble(Substr(markup, ",hdfont-size", ","));
+        //            if (markup.Contains(",hdfont-bold"))
+        //                _ws.Style.Font.SetBold();
+        //            if (markup.Contains(",hdcolor#"))
+        //                _ws.Style.Font.FontColor = XLColor.FromHtml(Substr(markup, ",hdcolor", ","));
+        //            if (markup.Contains(",hdcen"))
+        //                _ws.Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+        //            if (markup.Contains(",hdright"))
+        //                _ws.Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Right);
+        //            if (markup.Contains(",hdbg#"))
+        //                _ws.Style.Fill.BackgroundColor = XLColor.FromHtml(Substr(markup, ",hdbg", ","));
+        //            if (markup.Contains(",hdheight"))
+        //                ws.Row(rowCurrent + 1).Height = Convert.ToDouble(Substr(markup, ",hdheight", ","));
+        //            if (markup.Contains(",hdbd"))
+        //                CreateAdvancedExcFm_border(_ws, markup, "1");
+        //        }
+        //        rowCurrent_d = usedHeader + rowCurrent;
 
-                double fontsize = 0;
-                bool bold = false;
-                string color = null;
-                Int16 align = 0;
-                string background = null;
-                bool width = false;
-                double height = 0;
-                int[] cellposition = new int[2];
-                if (markup.Contains(",font-size")) fontsize = Convert.ToDouble(Substr(markup, ",font-size", ","));
-                if (markup.Contains(",font-bold")) bold = true;
-                if (markup.Contains(",color")) color = Substr(markup, ",color", ",");
-                if (markup.Contains(",cen")) align = 1;
-                else if (markup.Contains(",right")) align = 2;
-                if (markup.Contains(",bg")) background = Substr(markup, ",bg", ",");
-                if (markup.Contains(",cell"))
-                {
-                    string cl = Substr(markup.Replace("(", "").Replace(")", ""), ",cell", ",");
-                    string[] arryc = cl.Split(":");
-                    if (arryc.Length == 1)
-                        cellposition[0] = Convert.ToInt32(arryc[0]);
+        //        double fontsize = 0;
+        //        bool bold = false;
+        //        string color = null;
+        //        Int16 align = 0;
+        //        string background = null;
+        //        bool width = false;
+        //        double height = 0;
+        //        int[] cellposition = new int[2];
+        //        if (markup.Contains(",font-size")) fontsize = Convert.ToDouble(Substr(markup, ",font-size", ","));
+        //        if (markup.Contains(",font-bold")) bold = true;
+        //        if (markup.Contains(",color")) color = Substr(markup, ",color", ",");
+        //        if (markup.Contains(",cen")) align = 1;
+        //        else if (markup.Contains(",right")) align = 2;
+        //        if (markup.Contains(",bg")) background = Substr(markup, ",bg", ",");
+        //        if (markup.Contains(",cell"))
+        //        {
+        //            string cl = Substr(markup.Replace("(", "").Replace(")", ""), ",cell", ",");
+        //            string[] arryc = cl.Split(":");
+        //            if (arryc.Length == 1)
+        //                cellposition[0] = Convert.ToInt32(arryc[0]);
 
-                    else if (arryc.Length == 2)
-                    {
-                        cellposition[0] = Convert.ToInt32(arryc[0]);
-                        cellposition[1] = Convert.ToInt32(arryc[1]);
-                    }
-                }
-                if (markup.Contains(",w"))
-                {
-                    ws.Column(c.Ordinal + 1).Width = Convert.ToDouble(Substr(markup, ",w", ","));
-                    width = true;//<--width---<<
-                }
-                if (markup.Contains(",height")) height = Convert.ToDouble(Substr(markup, ",height", ","));
-                if (c.ColumnName.Contains("addimage"))
-                {
-                    var impagepage = dt.Rows[0][c.Ordinal].ToString();
-                    impagepage = impagepage.Replace("/", @"\");
-                    string path = $"{Directory.GetCurrentDirectory()}{@"\wwwroot\" + impagepage }";
-                    if (markup != "")
-                    {
-                        markup = Substr(markup, ",", "");
-                        markup = markup.Replace("(", "").Replace(")", "");
-                        if (int.TryParse(markup, out int n))
-                            ws.AddPicture(path).MoveTo(ws.Cell(rowCurrent_d + 1, markup).Address);
-                        else if (markup.Contains(","))
-                        {
-                            string[] markupArray = markup.Split(",");
-                            ws.AddPicture(path).MoveTo(ws.Cell(Convert.ToInt32(markupArray[0]), Convert.ToInt32(markupArray[1])).Address);
-                        }
-                        else
-                            ws.AddPicture(path).MoveTo(ws.Cell(markup).Address);
-                    }
-                    else
-                        ws.AddPicture(path).MoveTo(ws.Cell(rowCurrent_d + 1, 1).Address);
-                    continue;
-                } //<--- Add Image ----<<
-                else if (dt.Rows[0][c.Ordinal].ToString() == "" && dt.Columns.Count == 1)
-                {
-                    ws.Cell(rowCurrent_d + 1, c.Ordinal + 1).RichText.AddNewLine();
-                    continue;
-                } //<--- New line ----<<
+        //            else if (arryc.Length == 2)
+        //            {
+        //                cellposition[0] = Convert.ToInt32(arryc[0]);
+        //                cellposition[1] = Convert.ToInt32(arryc[1]);
+        //            }
+        //        }
+        //        if (markup.Contains(",w"))
+        //        {
+        //            ws.Column(c.Ordinal + 1).Width = Convert.ToDouble(Substr(markup, ",w", ","));
+        //            width = true;//<--width---<<
+        //        }
+        //        if (markup.Contains(",height")) height = Convert.ToDouble(Substr(markup, ",height", ","));
+        //        if (c.ColumnName.Contains("addimage"))
+        //        {
+        //            var impagepage = dt.Rows[0][c.Ordinal].ToString();
+        //            impagepage = impagepage.Replace("/", @"\");
+        //            string path = $"{Directory.GetCurrentDirectory()}{@"\wwwroot\" + impagepage }";
+        //            if (markup != "")
+        //            {
+        //                markup = Substr(markup, ",", "");
+        //                markup = markup.Replace("(", "").Replace(")", "");
+        //                if (int.TryParse(markup, out int n))
+        //                    ws.AddPicture(path).MoveTo(ws.Cell(rowCurrent_d + 1, markup).Address);
+        //                else if (markup.Contains(","))
+        //                {
+        //                    string[] markupArray = markup.Split(",");
+        //                    ws.AddPicture(path).MoveTo(ws.Cell(Convert.ToInt32(markupArray[0]), Convert.ToInt32(markupArray[1])).Address);
+        //                }
+        //                else
+        //                    ws.AddPicture(path).MoveTo(ws.Cell(markup).Address);
+        //            }
+        //            else
+        //                ws.AddPicture(path).MoveTo(ws.Cell(rowCurrent_d + 1, 1).Address);
+        //            continue;
+        //        } //<--- Add Image ----<<
+        //        else if (dt.Rows[0][c.Ordinal].ToString() == "" && dt.Columns.Count == 1)
+        //        {
+        //            ws.Cell(rowCurrent_d + 1, c.Ordinal + 1).RichText.AddNewLine();
+        //            continue;
+        //        } //<--- New line ----<<
 
-                for (Int16 i = 1; i <= rowCount; i++)
-                {
-                    IXLCell cell = null;
-                    if (cellposition[0] > 0 && cellposition[1] > 0)
-                        cell = ws.Cell(cellposition[0], cellposition[1]);
+        //        for (Int16 i = 1; i <= rowCount; i++)
+        //        {
+        //            IXLCell cell = null;
+        //            if (cellposition[0] > 0 && cellposition[1] > 0)
+        //                cell = ws.Cell(cellposition[0], cellposition[1]);
 
-                    else if (cellposition[0] > 0)
-                        cell = ws.Cell(cellposition[0], c.Ordinal + 1);
+        //            else if (cellposition[0] > 0)
+        //                cell = ws.Cell(cellposition[0], c.Ordinal + 1);
 
-                    else
-                        cell = ws.Cell(rowCurrent_d + i, c.Ordinal + 1);
+        //            else
+        //                cell = ws.Cell(rowCurrent_d + i, c.Ordinal + 1);
 
-                    string inline = dt.Rows[i - 1][c.Ordinal].ToString();
-                    string inlinemarkup = "";
-                    cell.Value = Substr(inline, "", "^");
+        //            string inline = dt.Rows[i - 1][c.Ordinal].ToString();
+        //            string inlinemarkup = "";
+        //            cell.Value = Substr(inline, "", "^");
 
-                    if (inline.Contains("^"))
-                        inlinemarkup = Substr(inline, "^", "");
+        //            if (inline.Contains("^"))
+        //                inlinemarkup = Substr(inline, "^", "");
 
-                    if (markup != "")
-                    {
-                        if (fontsize > 0) cell.Style.Font.FontSize = fontsize;
-                        if (bold) cell.Style.Font.SetBold();
-                        if (width == true) cell.Style.Alignment.WrapText = true;
-                        if (color != null) cell.Style.Font.FontColor = XLColor.FromHtml(color);
-                        if (align == 1) cell.Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
-                        else if (align == 2) cell.Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Right);
-                        if (background != null) cell.Style.Fill.BackgroundColor = XLColor.FromHtml(background);
-                        if (height > 0) ws.Row(rowCurrent_d + i).Height = height;
+        //            if (markup != "")
+        //            {
+        //                if (fontsize > 0) cell.Style.Font.FontSize = fontsize;
+        //                if (bold) cell.Style.Font.SetBold();
+        //                if (width == true) cell.Style.Alignment.WrapText = true;
+        //                if (color != null) cell.Style.Font.FontColor = XLColor.FromHtml(color);
+        //                if (align == 1) cell.Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+        //                else if (align == 2) cell.Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Right);
+        //                if (background != null) cell.Style.Fill.BackgroundColor = XLColor.FromHtml(background);
+        //                if (height > 0) ws.Row(rowCurrent_d + i).Height = height;
 
-                        //if (mergedcols > 0)
-                        //{
-                        //    if (inlinemarkup.Contains(",mergedc"))
-                        //        ws.Range(rowCurrent_d + i, c.Ordinal + 1, rowCurrent_d + i, mergedcols).Merge();
-                        //}
+        //                //if (mergedcols > 0)
+        //                //{
+        //                //    if (inlinemarkup.Contains(",mergedc"))
+        //                //        ws.Range(rowCurrent_d + i, c.Ordinal + 1, rowCurrent_d + i, mergedcols).Merge();
+        //                //}
 
-                        if (markup.Contains(",bd"))
-                        {
-                            string useStylebyData = inlinemarkup;
-                            CreateAdvancedExcFm_border(_ws: cell, style: markup, IsHeader: "0", useStylebyData: useStylebyData);
-                        }
+        //                if (markup.Contains(",bd"))
+        //                {
+        //                    string useStylebyData = inlinemarkup;
+        //                    CreateAdvancedExcFm_border(_ws: cell, style: markup, IsHeader: "0", useStylebyData: useStylebyData);
+        //                }
 
-                        //<------ Inline Markup ----------<<
-                        if (inlinemarkup != "")
-                        {
-                            if (inlinemarkup.Contains(",bg#"))
-                                cell.Style.Fill.BackgroundColor = XLColor.FromHtml(Substr(inlinemarkup, ",bg", ","));
-                            if (inlinemarkup.Contains(",height"))
-                                ws.Row(rowCurrent_d + i).Height = Convert.ToDouble(Substr(inlinemarkup, ",height", ","));
-                            if (inlinemarkup.Contains(",right"))
-                                cell.Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Right);
-                            if (inlinemarkup.Contains(",merged"))
-                            {
-                                string[] to_array = Substr(
-                                 word: inlinemarkup.Replace("(", "").Replace(")", ""),
-                                 startAs: ",merged",
-                                 endAs: ",").Split(',');
+        //                //<------ Inline Markup ----------<<
+        //                if (inlinemarkup != "")
+        //                {
+        //                    if (inlinemarkup.Contains(",bg#"))
+        //                        cell.Style.Fill.BackgroundColor = XLColor.FromHtml(Substr(inlinemarkup, ",bg", ","));
+        //                    if (inlinemarkup.Contains(",height"))
+        //                        ws.Row(rowCurrent_d + i).Height = Convert.ToDouble(Substr(inlinemarkup, ",height", ","));
+        //                    if (inlinemarkup.Contains(",right"))
+        //                        cell.Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Right);
+        //                    if (inlinemarkup.Contains(",merged"))
+        //                    {
+        //                        string[] to_array = Substr(
+        //                         word: inlinemarkup.Replace("(", "").Replace(")", ""),
+        //                         startAs: ",merged",
+        //                         endAs: ",").Split(',');
 
-                                int addi_to_row = 0;
-                                int addi_to_col = 0;
-                                if (to_array[0] == "lastcol")
-                                    addi_to_col = Convert.ToInt32(dt.Columns.Count) - Convert.ToInt32(c.Ordinal) - 1;
-                                else
-                                    addi_to_col = Convert.ToInt16(to_array[0]);
+        //                        int addi_to_row = 0;
+        //                        int addi_to_col = 0;
+        //                        if (to_array[0] == "lastcol")
+        //                            addi_to_col = Convert.ToInt32(dt.Columns.Count) - Convert.ToInt32(c.Ordinal) - 1;
+        //                        else
+        //                            addi_to_col = Convert.ToInt16(to_array[0]);
 
-                                if (to_array.Length == 2) addi_to_row = Convert.ToInt16(to_array[1]);
+        //                        if (to_array.Length == 2) addi_to_row = Convert.ToInt16(to_array[1]);
 
-                                int from_row = rowCurrent_d + i;
-                                int from_col = c.Ordinal + 1;
-                                int to_row = rowCurrent_d + i + addi_to_row;
-                                int to_col = c.Ordinal + 1 + addi_to_col;
-                                ws.Range(from_row, from_col, to_row, to_col).Merge();
-                            }
-                        }
+        //                        int from_row = rowCurrent_d + i;
+        //                        int from_col = c.Ordinal + 1;
+        //                        int to_row = rowCurrent_d + i + addi_to_row;
+        //                        int to_col = c.Ordinal + 1 + addi_to_col;
+        //                        ws.Range(from_row, from_col, to_row, to_col).Merge();
+        //                    }
+        //                }
 
-                        //<---- Last Row ----<<
-                        if (i == rowCount)
-                        {
-                            if (markup.Contains(",bd")) CreateAdvancedExcFm_border(_ws: cell, style: markup, IsHeader: "", useStylebyData: "", lastRow: true);
-                            //if (markup.Contains(",mergedrows"))
-                            //{
-                            //    Int16 mergedPer_rows = System.Convert.ToInt16(Substr(markup, ",mergedrows", ","));
-                            //    Double iterate_Nm = Math.Floor(rowCount / (double)mergedPer_rows);
-                            //    Int32 mergedPer_Fm;
-                            //    Int32 mergedPer_To;
-                            //    for (var a = 1; a <= iterate_Nm; a++)
-                            //    {
-                            //        mergedPer_Fm = (mergedPer_rows * a) - mergedPer_rows + 1 + rowCurrent_d;
-                            //        mergedPer_To = (mergedPer_rows * a) + rowCurrent_d;
-                            //        ws.Range(mergedPer_Fm, c.Ordinal + 1, mergedPer_To, c.Ordinal + 1).Merge();
-                            //        ws.Cell(mergedPer_Fm + 1, c.Ordinal + 1).Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
-                            //    }
-                            //}
-                            //else if (markup.Contains(",mergedto"))
-                            //{
-                            //    int n = 0;
-                            //    int maxn = 0;
-                            //    List<int> Lists = new List<int>();
-                            //    foreach (DataRow dtRow in dt.Rows)
-                            //    {
-                            //        n += 1;
-                            //        if (dtRow[c.Ordinal].ToString().Contains(",mergedto"))
-                            //            Lists.Add(n + rowCurrent_d);
-                            //    }
+        //                //<---- Last Row ----<<
+        //                if (i == rowCount)
+        //                {
+        //                    if (markup.Contains(",bd")) CreateAdvancedExcFm_border(_ws: cell, style: markup, IsHeader: "", useStylebyData: "", lastRow: true);
+        //                    //if (markup.Contains(",mergedrows"))
+        //                    //{
+        //                    //    Int16 mergedPer_rows = System.Convert.ToInt16(Substr(markup, ",mergedrows", ","));
+        //                    //    Double iterate_Nm = Math.Floor(rowCount / (double)mergedPer_rows);
+        //                    //    Int32 mergedPer_Fm;
+        //                    //    Int32 mergedPer_To;
+        //                    //    for (var a = 1; a <= iterate_Nm; a++)
+        //                    //    {
+        //                    //        mergedPer_Fm = (mergedPer_rows * a) - mergedPer_rows + 1 + rowCurrent_d;
+        //                    //        mergedPer_To = (mergedPer_rows * a) + rowCurrent_d;
+        //                    //        ws.Range(mergedPer_Fm, c.Ordinal + 1, mergedPer_To, c.Ordinal + 1).Merge();
+        //                    //        ws.Cell(mergedPer_Fm + 1, c.Ordinal + 1).Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
+        //                    //    }
+        //                    //}
+        //                    //else if (markup.Contains(",mergedto"))
+        //                    //{
+        //                    //    int n = 0;
+        //                    //    int maxn = 0;
+        //                    //    List<int> Lists = new List<int>();
+        //                    //    foreach (DataRow dtRow in dt.Rows)
+        //                    //    {
+        //                    //        n += 1;
+        //                    //        if (dtRow[c.Ordinal].ToString().Contains(",mergedto"))
+        //                    //            Lists.Add(n + rowCurrent_d);
+        //                    //    }
 
-                            //    maxn = Lists.Count - 1;
-                            //    n = 0;
-                            //    foreach (int item in Lists)
-                            //    {
-                            //        n += 1;
-                            //        if (n <= maxn)
-                            //        {
-                            //            if (Lists[n] - item > 1)
-                            //                ws.Range(item, c.Ordinal + 1, Lists[n] - 1, c.Ordinal + 1).Merge();
-                            //        }
-                            //        else if (Lists[maxn] - item > 1)
-                            //            ws.Range(item, c.Ordinal + 1, n + rowCurrent_d, c.Ordinal + 1).Merge();
-                            //    }
-                            //}
-                        }
-                    }
-                }
-            }
-        }
-        private static DataTable CreateAdvancedExcFm_applyStylebyfirstCol(DataTable dt)
-        {
-            string font_size = "";
-            string font_bold = "";
-            string color = "";
-            string bg = "";
-            string bd = "";
-            string align = "";
-            string hdfont_size = "";
-            string hdfont_bold = "";
-            string hdcolor = "";
-            string hdbg = "";
-            string hdbd = "";
-            string hdalign = "";
+        //                    //    maxn = Lists.Count - 1;
+        //                    //    n = 0;
+        //                    //    foreach (int item in Lists)
+        //                    //    {
+        //                    //        n += 1;
+        //                    //        if (n <= maxn)
+        //                    //        {
+        //                    //            if (Lists[n] - item > 1)
+        //                    //                ws.Range(item, c.Ordinal + 1, Lists[n] - 1, c.Ordinal + 1).Merge();
+        //                    //        }
+        //                    //        else if (Lists[maxn] - item > 1)
+        //                    //            ws.Range(item, c.Ordinal + 1, n + rowCurrent_d, c.Ordinal + 1).Merge();
+        //                    //    }
+        //                    //}
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
+        //private static DataTable CreateAdvancedExcFm_applyStylebyfirstCol(DataTable dt)
+        //{
+        //    string font_size = "";
+        //    string font_bold = "";
+        //    string color = "";
+        //    string bg = "";
+        //    string bd = "";
+        //    string align = "";
+        //    string hdfont_size = "";
+        //    string hdfont_bold = "";
+        //    string hdcolor = "";
+        //    string hdbg = "";
+        //    string hdbd = "";
+        //    string hdalign = "";
 
-            foreach (DataColumn c in dt.Columns)
-            {
-                string markup = Substr(c.ColumnName, "^", "");
-                if (c.Ordinal == 0)
-                {
-                    if (markup.Contains(",font-size"))
-                        font_size = ",font-size" + Substr(markup, ",font-size", ",");
-                    if (markup.Contains(",font-bold"))
-                        font_bold = ",font-bold" + Substr(markup, ",font-bold", ",");
-                    if (markup.Contains(",color#"))
-                        color = ",color" + Substr(markup, ",color", ",");
-                    if (markup.Contains(",bg#"))
-                        bg = ",bg" + Substr(markup, ",bg", ",");
-                    if (markup.Contains(",bd"))
-                        bd = ",bd" + Substr(markup, ",bd", ",");
-                    if (markup.Contains(",cen"))
-                        align = ",cen";
-                    else if (markup.Contains(",right"))
-                        align = ",right";
+        //    foreach (DataColumn c in dt.Columns)
+        //    {
+        //        string markup = Substr(c.ColumnName, "^", "");
+        //        if (c.Ordinal == 0)
+        //        {
+        //            if (markup.Contains(",font-size"))
+        //                font_size = ",font-size" + Substr(markup, ",font-size", ",");
+        //            if (markup.Contains(",font-bold"))
+        //                font_bold = ",font-bold" + Substr(markup, ",font-bold", ",");
+        //            if (markup.Contains(",color#"))
+        //                color = ",color" + Substr(markup, ",color", ",");
+        //            if (markup.Contains(",bg#"))
+        //                bg = ",bg" + Substr(markup, ",bg", ",");
+        //            if (markup.Contains(",bd"))
+        //                bd = ",bd" + Substr(markup, ",bd", ",");
+        //            if (markup.Contains(",cen"))
+        //                align = ",cen";
+        //            else if (markup.Contains(",right"))
+        //                align = ",right";
 
-                    if (markup.Contains(",hdfont-size"))
-                        hdfont_size = ",hdfont-size" + Substr(markup, ",hdfont-size", ",");
-                    if (markup.Contains(",hdfont-bold"))
-                        hdfont_bold = ",hdfont-bold" + Substr(markup, ",hdfont-bold", ",");
-                    if (markup.Contains(",hdcolor#"))
-                        hdcolor = ",hdcolor" + Substr(markup, ",hdcolor", ",");
-                    if (markup.Contains(",hdbg#"))
-                        hdbg = ",hdbg" + Substr(markup, ",hdbg", ",");
-                    if (markup.Contains(",hdbd"))
-                        hdbd = ",hdbd" + Substr(markup, ",hdbd", ",");
-                    if (markup.Contains(",hdcen"))
-                        hdalign = ",hdcen";
-                    else if (markup.Contains(",hdright"))
-                        hdalign = ",hdright";
-                }
-                else
-                {
-                    if (!c.ColumnName.Contains("^"))
-                        c.ColumnName += "^";
-                    if (!markup.Contains(",font-size") & font_size != "")
-                        c.ColumnName += font_size;
-                    if (!markup.Contains(",font-bold") & font_bold != "")
-                        c.ColumnName += font_bold;
-                    if (!markup.Contains(",color") & color != "")
-                        c.ColumnName += color;
-                    if (!markup.Contains(",bg") & bg != "")
-                        c.ColumnName += bg;
-                    if (!markup.Contains(",bd") & bd != "")
-                        c.ColumnName += bd;
-                    if (!(markup.Contains(",cen") | markup.Contains(",rigth")) & align != "")
-                        c.ColumnName += align;
-
-
-                    if (!markup.Contains(",hdfont-size") & hdfont_size != "")
-                        c.ColumnName += hdfont_size;
-                    if (!markup.Contains(",hdfont-bold") & hdfont_bold != "")
-                        c.ColumnName += hdfont_bold;
-                    if (!markup.Contains(",hdcolor#") & hdcolor != "")
-                        c.ColumnName += hdcolor;
-                    if (!markup.Contains(",hdbg#") & hdbg != "")
-                        c.ColumnName += hdbg;
-                    if (!markup.Contains(",hdbd") & hdbd != "")
-                        c.ColumnName += hdbd;
-                    if (!(markup.Contains(",hdcen") | markup.Contains(",hdrigth")) & hdalign != "")
-                        c.ColumnName += hdalign;
-                }
-            }
-            return dt;
-        }
-        private static void CreateAdvancedExcFm_border(IXLCell _ws, string style, string IsHeader = "0", string useStylebyData = "", bool lastRow = false)
-        {
-            string _style;
-            if (IsHeader == "0")
-                IsHeader = ",";
-            else
-                IsHeader = ",hd";
-
-            if (useStylebyData.Contains(",bd("))
-            {
-                string str = Substr(useStylebyData, ",bd(", ")");
-                string[] arrystr = str.Split(",");
-                if (arrystr.Length == 1)
-                    CreateAdvancedExcFm_border_per_side(_ws, arrystr[0], arrystr[0], arrystr[0], arrystr[0]);
-
-                else if (arrystr.Length == 2)
-                    CreateAdvancedExcFm_border_per_side(_ws, arrystr[0], arrystr[1], arrystr[0], arrystr[1]);
-
-                else if (arrystr.Length == 4)
-                    CreateAdvancedExcFm_border_per_side(_ws, arrystr[0], arrystr[1], arrystr[2], arrystr[3]);
+        //            if (markup.Contains(",hdfont-size"))
+        //                hdfont_size = ",hdfont-size" + Substr(markup, ",hdfont-size", ",");
+        //            if (markup.Contains(",hdfont-bold"))
+        //                hdfont_bold = ",hdfont-bold" + Substr(markup, ",hdfont-bold", ",");
+        //            if (markup.Contains(",hdcolor#"))
+        //                hdcolor = ",hdcolor" + Substr(markup, ",hdcolor", ",");
+        //            if (markup.Contains(",hdbg#"))
+        //                hdbg = ",hdbg" + Substr(markup, ",hdbg", ",");
+        //            if (markup.Contains(",hdbd"))
+        //                hdbd = ",hdbd" + Substr(markup, ",hdbd", ",");
+        //            if (markup.Contains(",hdcen"))
+        //                hdalign = ",hdcen";
+        //            else if (markup.Contains(",hdright"))
+        //                hdalign = ",hdright";
+        //        }
+        //        else
+        //        {
+        //            if (!c.ColumnName.Contains("^"))
+        //                c.ColumnName += "^";
+        //            if (!markup.Contains(",font-size") & font_size != "")
+        //                c.ColumnName += font_size;
+        //            if (!markup.Contains(",font-bold") & font_bold != "")
+        //                c.ColumnName += font_bold;
+        //            if (!markup.Contains(",color") & color != "")
+        //                c.ColumnName += color;
+        //            if (!markup.Contains(",bg") & bg != "")
+        //                c.ColumnName += bg;
+        //            if (!markup.Contains(",bd") & bd != "")
+        //                c.ColumnName += bd;
+        //            if (!(markup.Contains(",cen") | markup.Contains(",rigth")) & align != "")
+        //                c.ColumnName += align;
 
 
-            }
-            else if (style.Contains(IsHeader + "bd"))
-            {
-                if (style.Contains(IsHeader + "bd-color"))
-                    _style = Substr(style, IsHeader + "bd-color", ",");
-                else
-                    _style = "#313131";
+        //            if (!markup.Contains(",hdfont-size") & hdfont_size != "")
+        //                c.ColumnName += hdfont_size;
+        //            if (!markup.Contains(",hdfont-bold") & hdfont_bold != "")
+        //                c.ColumnName += hdfont_bold;
+        //            if (!markup.Contains(",hdcolor#") & hdcolor != "")
+        //                c.ColumnName += hdcolor;
+        //            if (!markup.Contains(",hdbg#") & hdbg != "")
+        //                c.ColumnName += hdbg;
+        //            if (!markup.Contains(",hdbd") & hdbd != "")
+        //                c.ColumnName += hdbd;
+        //            if (!(markup.Contains(",hdcen") | markup.Contains(",hdrigth")) & hdalign != "")
+        //                c.ColumnName += hdalign;
+        //        }
+        //    }
+        //    return dt;
+        //}
+        //private static void CreateAdvancedExcFm_border(IXLCell _ws, string style, string IsHeader = "0", string useStylebyData = "", bool lastRow = false)
+        //{
+        //    string _style;
+        //    if (IsHeader == "0")
+        //        IsHeader = ",";
+        //    else
+        //        IsHeader = ",hd";
+
+        //    if (useStylebyData.Contains(",bd("))
+        //    {
+        //        string str = Substr(useStylebyData, ",bd(", ")");
+        //        string[] arrystr = str.Split(",");
+        //        if (arrystr.Length == 1)
+        //            CreateAdvancedExcFm_border_per_side(_ws, arrystr[0], arrystr[0], arrystr[0], arrystr[0]);
+
+        //        else if (arrystr.Length == 2)
+        //            CreateAdvancedExcFm_border_per_side(_ws, arrystr[0], arrystr[1], arrystr[0], arrystr[1]);
+
+        //        else if (arrystr.Length == 4)
+        //            CreateAdvancedExcFm_border_per_side(_ws, arrystr[0], arrystr[1], arrystr[2], arrystr[3]);
 
 
-                if (useStylebyData.Contains("bdtop#"))
-                    _ws.Style.Border.TopBorderColor = XLColor.FromHtml(Substr(useStylebyData, "bdtop", ","));
+        //    }
+        //    else if (style.Contains(IsHeader + "bd"))
+        //    {
+        //        if (style.Contains(IsHeader + "bd-color"))
+        //            _style = Substr(style, IsHeader + "bd-color", ",");
+        //        else
+        //            _style = "#313131";
 
 
-                if (useStylebyData.Contains("bdleft#"))
-                    _ws.Style.Border.TopBorderColor = XLColor.FromHtml(Substr(useStylebyData, "bdleft", ","));
-                else
-                {
-                    _ws.Style.Border.TopBorderColor = XLColor.FromHtml(_style);
-                    _ws.Style.Border.LeftBorderColor = XLColor.FromHtml(_style);
-                    _ws.Style.Border.RightBorderColor = XLColor.FromHtml(_style);
-                }
+        //        if (useStylebyData.Contains("bdtop#"))
+        //            _ws.Style.Border.TopBorderColor = XLColor.FromHtml(Substr(useStylebyData, "bdtop", ","));
+
+
+        //        if (useStylebyData.Contains("bdleft#"))
+        //            _ws.Style.Border.TopBorderColor = XLColor.FromHtml(Substr(useStylebyData, "bdleft", ","));
+        //        else
+        //        {
+        //            _ws.Style.Border.TopBorderColor = XLColor.FromHtml(_style);
+        //            _ws.Style.Border.LeftBorderColor = XLColor.FromHtml(_style);
+        //            _ws.Style.Border.RightBorderColor = XLColor.FromHtml(_style);
+        //        }
 
 
 
-                if (style == IsHeader + "bd-medium")
-                {
-                    _ws.Style.Border.LeftBorder = XLBorderStyleValues.Medium;
-                    _ws.Style.Border.TopBorder = XLBorderStyleValues.Medium;
-                    _ws.Style.Border.RightBorder = XLBorderStyleValues.Medium;
-                }
-                else if (style.Contains(IsHeader + "bd-double"))
-                {
-                    _ws.Style.Border.LeftBorder = XLBorderStyleValues.Double;
-                    _ws.Style.Border.TopBorder = XLBorderStyleValues.Double;
-                    _ws.Style.Border.RightBorder = XLBorderStyleValues.Double;
-                }
-                else if (style.Contains(IsHeader + "bd-dashed"))
-                {
-                    _ws.Style.Border.LeftBorder = XLBorderStyleValues.Dashed;
-                    _ws.Style.Border.TopBorder = XLBorderStyleValues.Dashed;
-                    _ws.Style.Border.RightBorder = XLBorderStyleValues.Dashed;
-                }
-                else
-                {
-                    _ws.Style.Border.LeftBorder = XLBorderStyleValues.Thin;
-                    _ws.Style.Border.TopBorder = XLBorderStyleValues.Thin;
-                    _ws.Style.Border.RightBorder = XLBorderStyleValues.Thin;
-                }
+        //        if (style == IsHeader + "bd-medium")
+        //        {
+        //            _ws.Style.Border.LeftBorder = XLBorderStyleValues.Medium;
+        //            _ws.Style.Border.TopBorder = XLBorderStyleValues.Medium;
+        //            _ws.Style.Border.RightBorder = XLBorderStyleValues.Medium;
+        //        }
+        //        else if (style.Contains(IsHeader + "bd-double"))
+        //        {
+        //            _ws.Style.Border.LeftBorder = XLBorderStyleValues.Double;
+        //            _ws.Style.Border.TopBorder = XLBorderStyleValues.Double;
+        //            _ws.Style.Border.RightBorder = XLBorderStyleValues.Double;
+        //        }
+        //        else if (style.Contains(IsHeader + "bd-dashed"))
+        //        {
+        //            _ws.Style.Border.LeftBorder = XLBorderStyleValues.Dashed;
+        //            _ws.Style.Border.TopBorder = XLBorderStyleValues.Dashed;
+        //            _ws.Style.Border.RightBorder = XLBorderStyleValues.Dashed;
+        //        }
+        //        else
+        //        {
+        //            _ws.Style.Border.LeftBorder = XLBorderStyleValues.Thin;
+        //            _ws.Style.Border.TopBorder = XLBorderStyleValues.Thin;
+        //            _ws.Style.Border.RightBorder = XLBorderStyleValues.Thin;
+        //        }
 
-                if (lastRow == true)
-                {
-                    _ws.Style.Border.BottomBorderColor = XLColor.FromHtml(_style);
-                    _ws.Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-                }
-            }
+        //        if (lastRow == true)
+        //        {
+        //            _ws.Style.Border.BottomBorderColor = XLColor.FromHtml(_style);
+        //            _ws.Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+        //        }
+        //    }
 
-        }
-        private static void CreateAdvancedExcFm_border_per_side(IXLCell cell, string top, string right, string bottom, string left)
-        {
-            cell.Style.Border.TopBorderColor = XLColor.FromHtml(top);
-            cell.Style.Border.RightBorderColor = XLColor.FromHtml(right);
-            cell.Style.Border.BottomBorderColor = XLColor.FromHtml(bottom);
-            cell.Style.Border.LeftBorderColor = XLColor.FromHtml(left);
+        //}
+        //private static void CreateAdvancedExcFm_border_per_side(IXLCell cell, string top, string right, string bottom, string left)
+        //{
+        //    cell.Style.Border.TopBorderColor = XLColor.FromHtml(top);
+        //    cell.Style.Border.RightBorderColor = XLColor.FromHtml(right);
+        //    cell.Style.Border.BottomBorderColor = XLColor.FromHtml(bottom);
+        //    cell.Style.Border.LeftBorderColor = XLColor.FromHtml(left);
 
-            cell.Style.Border.TopBorder = XLBorderStyleValues.Thin;
-            cell.Style.Border.RightBorder = XLBorderStyleValues.Thin;
-            cell.Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-            cell.Style.Border.LeftBorder = XLBorderStyleValues.Thin;
-        }
+        //    cell.Style.Border.TopBorder = XLBorderStyleValues.Thin;
+        //    cell.Style.Border.RightBorder = XLBorderStyleValues.Thin;
+        //    cell.Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+        //    cell.Style.Border.LeftBorder = XLBorderStyleValues.Thin;
+        //}
         public static string Substr(string word, string startAs = "", string endAs = "")
         {
             if (startAs == "" & endAs == "")
@@ -1107,6 +1107,16 @@ namespace oak
             foreach (DataRow row in datatable.Rows) ExternalStrDT.ImportRow(row);
             return ExternalStrDT;
         }
+
+
+        //public static ref int Findwdsddf(int[,] matrix, Func<int, bool> predicate)
+        //{
+        //    for (int i = 0; i < matrix.GetLength(0); i++)
+        //        for (int j = 0; j < matrix.GetLength(1); j++)
+        //            if (predicate(matrix[i, j]))
+        //                return ref matrix[i, j];
+        //    throw new InvalidOperationException("Not found");
+        //}
 
 
     }

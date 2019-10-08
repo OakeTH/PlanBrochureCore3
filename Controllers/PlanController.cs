@@ -13,13 +13,11 @@ namespace oak.Controllers
     [Route("[controller]/{action}")]
     public class PlanController : Controller
     {
-
-   
         private readonly AppSettings appSettings;
         private readonly EntityContextFASTTRACK contextFt;
         private readonly EntityContextWEB contextWeb;
         public PlanController(IOptions<AppSettings> _appSettings, EntityContextFASTTRACK _contextFt, EntityContextWEB _contextWeb)
-        {  
+        {
             appSettings = _appSettings.Value;
             contextFt = _contextFt;
             contextWeb = _contextWeb;
@@ -136,11 +134,14 @@ namespace oak.Controllers
         }
 
 
-        //public IActionResult _PdfPreviewDisbleDownload([FromForm]int id)
-        //{
-        //    ViewBag.ID = id.ToString();
-        //    return View();
-        //}
+
+
+
+        [AllowAnonymous]
+        public IActionResult AAAA()
+        {
+            return View("Component");
+        }
 
     }
 }
