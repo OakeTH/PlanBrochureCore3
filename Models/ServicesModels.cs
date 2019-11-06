@@ -1,4 +1,8 @@
-﻿namespace oak.Models
+﻿using System.IO;
+using System.Net;
+using System.Net.Http;
+
+namespace oak.Models
 {
     public class ServicesModels
     {
@@ -8,17 +12,23 @@
             public object Value { get; set; }
         }
 
-        //public class GridData
-        //{
-        //    public string Header { get; set; }
-        //    public string Data { get; set; }
-        //}
+        public class AjaxReponse
+        {
+            public string json;
+            public string html;
+            public MemoryStream memoryStream;
+            public string errorMessage = null;
+            public HttpStatusCode? statusCode = null;
+        }
 
-        //public static class SQLDatabase
-        //{
-        //    public static string ConnectionString { get; set; }
-        //}
-
+        public class AjaxParameter
+        {
+            public string url;
+            public HttpMethod method = HttpMethod.Get;
+            public string parametors = "";
+            public WebHeaderCollection headers = null;
+            public string ContentType = null;
+        }
 
     }
 }

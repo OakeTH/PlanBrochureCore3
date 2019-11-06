@@ -5,6 +5,7 @@ using oak.Data;
 using oak.Models;
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 namespace oak.Controllers
 {
@@ -103,28 +104,48 @@ namespace oak.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
-        public async Task<IActionResult> GetDocsNameByID([FromQuery] int id)
+        public IActionResult GetFileNameByPlanCode([FromQuery] string plancode)
+        {
+            if (plancode.Count() == 6)
+                plancode = plancode.Remove(0, 2);
+
+            string initialPath = appSettings.File.PB_PlanDocsInitialPath;
+            string[] extensions = { "pdf", "png", "jpeg" };
+
+            var docFile = Directory
+                .GetFiles(initialPath)
+                .Where(f => f.IndexOf(plancode, StringComparison.OrdinalIgnoreCase) > 0 && extensions.Any(f.Contains) == true)
+                .FirstOrDefault();
+
+            if (docFile != null)
+                docFile = Path.GetFileName(docFile);
+
+            return Ok(new { docFile });
+        }
+
+        [HttpGet]
+        public IActionResult DownloadDocByPlanCode([FromQuery] string filename)
         {
             try
             {
-                var docPath = appSettings.File.PB_PlanDocsInitialPath;
-                var docsName = await new PlanDocs().GetDocsNameByIDAsync(id, contextWeb);
+                filename = filename.Replace("@@_push_@@", "+");
+                string initialPath = appSettings.File.PB_PlanDocsInitialPath;
+                string fullPath = Path.Combine(initialPath, filename);
+                string fileExtension = Path.GetExtension(filename);
+                string contypeType;
 
-                docsName = "10HL1N_แฮปปี้ไลฟ์ชำระเบี้ย10ปี(@9010).PDF";
-
-                var fullPath = Path.Combine(docPath, docsName);
-
-                if (System.IO.File.Exists(fullPath))
-                {
-                    var filename = System.Net.WebUtility.UrlEncode(docsName);
-                    Response.Headers.Add("Content-Disposition", $"inline; filename=" + filename);
-
-                    var file = new FileStream(fullPath, FileMode.Open);
-                    return new FileStreamResult(file, ContentTypes.pdf);
-                }
+                if (fileExtension == ".pdf")
+                    contypeType = ContentTypes.pdf;
+                else if (fileExtension == ".png")
+                    contypeType = ContentTypes.png;
                 else
-                    return NotFound();
+                    contypeType = ContentTypes.jpeg;
+
+
+                var file = new FileStream(fullPath, FileMode.Open);
+                return new FileStreamResult(file, contypeType);
+
+
 
             }
             catch (Exception ex)
@@ -132,10 +153,6 @@ namespace oak.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
-
-
-
 
         [AllowAnonymous]
         public IActionResult AAAA()

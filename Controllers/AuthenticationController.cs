@@ -29,19 +29,12 @@ namespace oak.Controllers
         public IActionResult Login() => View();
 
         [AllowAnonymous]
-        public async Task<IActionResult> LoginMember([FromForm]Users user, [FromForm] string externalUser)
+        public async Task<IActionResult> LoginMember([FromForm]Users user)
         {
             try
             {
-                if (!string.IsNullOrEmpty(externalUser))
-                {
-                    user.EmployeeCode = "620029";
-                    user.Password = "620029";
-                }
-
-                if (user.EmployeeCode == null && user.RoleName == null)
+                if (user.RoleName == null)
                     return Unauthorized();
-
 
                 user = await userService.Authenticate(
                       password: user.Password,
@@ -51,11 +44,19 @@ namespace oak.Controllers
                 List<P> parameters = new List<P> { new P { Key = "RoldName", Value = user.RoleName } };
                 user.Menu = dbServices.SpCaller(name: "[dbo].[PB_GetMneuByRoldID]", parameters: parameters)?.Tables?[0];
 
+
+                //user.Menu = dbServices.SpCallerV2(opt =>
+                //  {
+                //      opt.Name = "[dbo].[PB_GetMneuByRoldID]";
+                //      opt.Parameters = parameters;
+                //  }).ToJsonString();
+
+
                 return Ok(user);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return Unauthorized(ex.Message);
             }
         }
 
@@ -70,9 +71,21 @@ namespace oak.Controllers
 
             List<P> parameters = new List<P> { new P { Key = "RoldName", Value = Current.RoldName } };
             user.Menu = dbServices.SpCaller(name: "[dbo].[PB_GetMneuByRoldID]", parameters: parameters)?.Tables?[0];
-
             return Ok(user);
         }
+
+        //public IActionResult AAAA() {
+        //    List<P> parameters = new List<P> { new P { Key = "RoldName", Value = Current.RoldName } };
+        //    //var x = dbServices.SpCaller(name: "[dbo].[PB_GetMneuByRoldID222]", parameters: parameters)?.Tables?[0];
+        //    var x = dbServices.SpCallerV2(opt =>
+        //    {
+        //        opt.Name = "[dbo].[PB_GetMneuByRoldID333]";
+        //        opt.Parameters = parameters;
+        //    }).ToJsonString();
+
+        //    return Ok(x);
+
+        //}
 
     }
 }

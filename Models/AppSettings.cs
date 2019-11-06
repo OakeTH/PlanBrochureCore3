@@ -18,6 +18,7 @@
     {
         public string FASTTRACKConnectionString { get; set; }
         public string WEBConnectionString { get; set; }
+        public string DOCPDConnectionString { get; set; }
     }
 
     public class FileSetting

@@ -2,14 +2,14 @@
 
     //<-- check querystring wherever have "externaluser" parametor
     var employeeCode = '';
-    var externaluser = '';
-    var getExternaluserFnTemp = function () {
-        querystr().externaluser && redirectToIndex();
-    };
+    //var externaluser = '';
+    //var getExternaluserFnTemp = function () {
+    //    querystr().externaluser && redirectToIndex();
+    //};
     var getExternaluserFn = function () {
-        employeeCode = querystr().employeecode;
+        employeeCode = querystr().employeecode || '';
         roleName = querystr().rolename;
-        querystr().employeecode && redirectToIndex();
+        querystr().rolename && redirectToIndex();
     };
 
 
@@ -28,24 +28,12 @@
             },
             method: 'POST',
             success: function (response) {
-
                 Cookies.set('Authorization', response.token, { expires: 10 });
                 sessionStorage['EmployeeCode'] = response.employeeCode;
                 sessionStorage['RoleName'] = response.roleName
                 sessionStorage['Menu'] = JSON.stringify(response.menu);
 
                 window.location.href = SV.host;
-
-
-                //$.ajax({
-                //    url: SV.host,
-                //    headers: {
-                //        'Authorization': 'Bearer ' +Cookies.get('Authorization')
-                //    },
-                //    success: function (data) {
-                //        console.log('succes: ' + data);
-                //    }
-                //});
 
             },
             error: function (response) {
@@ -61,7 +49,7 @@
 
     //<-- Launch --<<
     getExternaluserFn();
-    getExternaluserFnTemp();
+    //  getExternaluserFnTemp();
 
 });
 

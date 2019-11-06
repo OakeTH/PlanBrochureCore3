@@ -28,14 +28,6 @@ namespace PlanBrochureCore3
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.Configure<CookiePolicyOptions>(options =>
-            //{
-            //    options.CheckConsentNeeded = context => true;
-            //    options.MinimumSameSitePolicy = SameSiteMode.None;
-            //});
-
-            //services.AddCors();
-
             //Chnage default json converter to Newtonsoft
             services.AddControllersWithViews().AddNewtonsoftJson();
 
@@ -46,9 +38,6 @@ namespace PlanBrochureCore3
             // configure jwt authentication
             var app = appSettingsSection.Get<AppSettings>();
             var key = System.Text.Encoding.ASCII.GetBytes(app.JWT.SecretKey);
-
-
-
 
 
             services.AddAuthentication(opt =>
@@ -81,6 +70,7 @@ namespace PlanBrochureCore3
             // Entity framework - Serup connectionstring.
             services.AddDbContext<EntityContextFASTTRACK>(options => options.UseSqlServer(app.Database.FASTTRACKConnectionString));
             services.AddDbContext<EntityContextWEB>(options => options.UseSqlServer(app.Database.WEBConnectionString));
+            services.AddDbContext<EntityContextDocpd>(options => options.UseSqlServer(app.Database.DOCPDConnectionString));
 
             // configure DI for application services
             services.AddScoped<oak.IUserService, oak.UserService>();

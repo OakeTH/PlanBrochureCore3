@@ -15,6 +15,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using static oak.Models.ServicesModels;
@@ -289,7 +290,7 @@ namespace oak
                             continue;
                         }
                     }
-                  //  CreateAdvancedExcFm(wSheet, dt);
+                    //  CreateAdvancedExcFm(wSheet, dt);
 
                 }
             }
@@ -935,6 +936,7 @@ namespace oak
             public const string xml = "application/xml";
             public const string zip = "application/zip";
             public const string urlencoded = "application/x-www-form-urlencoded ";
+            public const string textHtml = "text/html";
         }
         public class ReponseMultipleType
         {
@@ -951,28 +953,37 @@ namespace oak
         /// <param name="parametors"></param>
         /// <param name="headers">use new WebHeaderCollection{["Authorization"] = Request.Headers["Authorization"]};</param>
         /// <returns></returns>
-        public static ReponseMultipleType Ajax(string url, string method, string parametors = "", WebHeaderCollection headers = null)
+        public static AjaxReponse Ajax(Action<AjaxParameter> action)
         {
-            var ReponseMultipleType = new ReponseMultipleType();
+            AjaxParameter model = new AjaxParameter();
+            action.Invoke(obj: model);
+
+            if (model.ContentType == null && model.method == HttpMethod.Get)
+                model.ContentType = ContentTypes.json;
+            else if (model.ContentType == null && model.method == HttpMethod.Post)
+                model.ContentType = ContentTypes.urlencoded;
+
+            AjaxReponse ReponseMultipleType = new AjaxReponse();
+
             try
             {
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
                 ServicePointManager.ServerCertificateValidationCallback = ((sender, certificate, chain, sslPolicyErrors) => true);
-                HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+                HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(model.url);
                 HttpWebResponse httpWebResponse = null;
                 try
                 {
                     byte[] bytes;
-                    bytes = Encoding.ASCII.GetBytes(parametors);
-                    httpWebRequest.Method = method;
+                    bytes = Encoding.ASCII.GetBytes(model.parametors);
+                    httpWebRequest.Method = model.method.ToString();
                     httpWebRequest.ContentLength = bytes.Length;
-                    httpWebRequest.ContentType = ContentTypes.json;
+                    httpWebRequest.ContentType = model.ContentType;
                     httpWebRequest.KeepAlive = false;
 
-                    if (headers != null)
-                        httpWebRequest.Headers = headers;
+                    if (model.headers != null)
+                        httpWebRequest.Headers = model.headers;
 
-                    if (parametors != "")
+                    if (model.parametors != "")
                         using (Stream requestStream = httpWebRequest.GetRequestStream())
                         {
                             requestStream.Write(bytes, 0, bytes.Length);
@@ -984,15 +995,15 @@ namespace oak
 
                     using (Stream responseStream = httpWebResponse.GetResponseStream())
                     {
-                        using (StreamReader reader = new StreamReader(responseStream))
-                            ReponseMultipleType.json = reader.ReadToEnd();
+                        using StreamReader reader = new StreamReader(responseStream);
+                        ReponseMultipleType.json = reader.ReadToEnd();
                     }
 
                     httpWebResponse.Close();
                 }
                 catch (WebException we)
                 {
-                    ReponseMultipleType.errorMessage = we.Message + " " + we.InnerException;
+                    ReponseMultipleType.errorMessage = we.Status + " " + we.Message;// + " " +( we.InnerException == null ? "" : we.InnerException);
                     return ReponseMultipleType;
                 }
                 finally
@@ -1060,6 +1071,7 @@ namespace oak
                 return ReponseMultipleType;
             }
         }
+
         public static async Task<DataSet> ExcelToDataSet(FileUpload model)
         {
             if (model.File == null || model.File.Length == 0)
@@ -1108,16 +1120,43 @@ namespace oak
             return ExternalStrDT;
         }
 
+        private static readonly Random random = new Random();
+        public static string RandomString(int length, bool onlynumber = false)
+        {
+            string chars = "";
 
-        //public static ref int Findwdsddf(int[,] matrix, Func<int, bool> predicate)
-        //{
-        //    for (int i = 0; i < matrix.GetLength(0); i++)
-        //        for (int j = 0; j < matrix.GetLength(1); j++)
-        //            if (predicate(matrix[i, j]))
-        //                return ref matrix[i, j];
-        //    throw new InvalidOperationException("Not found");
-        //}
+            if (onlynumber) chars = "0123456789";
+            else chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+        public static string CalculateMD5Hash(string input)
+        {
+            // step 1, calculate MD5 hash from input
+            using MD5 md5 = MD5.Create();
+            byte[] inputBytes = Encoding.ASCII.GetBytes(input);
+            byte[] hash = md5.ComputeHash(inputBytes);
 
+            // step 2, convert byte array to hex string
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < hash.Length; i++)
+            {
+                sb.Append(hash[i].ToString("X2"));
+            }
+            return sb.ToString();
+        }
+        public static string ToQueryString(this object obj, bool LowerFirstCharacter = false)
+        {
+            var properties = from p in obj.GetType().GetProperties()
+                             where p.GetValue(obj, null) != null
+                             select (LowerFirstCharacter ? char.ToLowerInvariant(p.Name[0]) + p.Name.Substring(1) : p.Name)
+                             + "="
+                             + System.Web.HttpUtility.UrlEncode(p.GetValue(obj, null).ToString());
+
+            return string.Join("&", properties.ToArray());
+        }
+
+        public static string ToJsonString(this object obj) => System.Text.Json.JsonSerializer.Serialize(obj);
     }
 }

@@ -12,7 +12,7 @@ namespace oak
     public interface IDbServices
     {
         DataSet SpCaller(string name, List<P> parameters = null, IDictionary<object, object> requestItem = null, string connectionstring = null);
-        string ToJson(DataSet dataSet);
+        IEnumerable<Dictionary<string, object>> SpCallerV2(Action<SpCallerModel> action);
     }
     public class DbServices : IDbServices
     {
@@ -21,11 +21,6 @@ namespace oak
         {
             appSettings = _appSettings.Value;
         }
-        public string ToJson(DataSet dataSet)
-        {
-            return SharedServices.DsToJson(dataSet);
-        }
-
         public DataSet SpCaller(string name, List<P> parameters = null, IDictionary<object, object> requestitem = null, string Connectionstring = null)
         {
             if (requestitem != null && requestitem.Count > 0)
@@ -35,7 +30,7 @@ namespace oak
                         parameters.Add(new P { Key = (string)item.Key, Value = (string)item.Value });
                 };
 
-            var me = new DbServicesModel
+            var me = new SpCallerModel
             {
                 Name = name,
                 Parameters = parameters,
@@ -45,7 +40,7 @@ namespace oak
             return SpCaller(me);
 
         }
-        public DataSet SpCaller(DbServicesModel model)
+        public DataSet SpCaller(SpCallerModel model)
         {
             if (model.Connectionstring == null)
                 model.Connectionstring = appSettings.Database.WEBConnectionString;
@@ -66,18 +61,68 @@ namespace oak
                 }
 
             try
-
             {
                 using SqlDataAdapter da = new SqlDataAdapter(cmd);
                 da.Fill(ds);
+
             }
             catch (Exception ex) { throw ex; }
             finally
             {
                 connection.Close();
                 connection.Dispose();
+
             }
             return ds;
+        }
+        public IEnumerable<Dictionary<string, object>> SpCallerV2(Action<SpCallerModel> action)
+        {
+            SpCallerModel model = new SpCallerModel();
+            action.Invoke(obj: model);
+
+            if (model.Connectionstring == null)
+                model.Connectionstring = appSettings.Database.WEBConnectionString;
+
+            using SqlConnection connection = new SqlConnection(model.Connectionstring);
+            DataSet ds = new DataSet();
+            SqlCommand cmd = new SqlCommand()
+            {
+                CommandType = CommandType.StoredProcedure,
+                Connection = connection,
+                CommandText = model.Name
+            };
+
+            if (model.Parameters != null)
+                for (short i = 0; i < model.Parameters.Count; i++)
+                {
+                    SeperatesParam(cmd: cmd, args: model.Parameters[i], Connectionstring: model.Connectionstring);
+                }
+
+            try
+            {
+                connection.Open();
+                using SqlDataReader rdr = cmd.ExecuteReader();
+                return Serialize(rdr);
+            }
+            catch (Exception ex) { throw ex; }
+        }
+        public IEnumerable<Dictionary<string, object>> Serialize(SqlDataReader reader)
+        {
+            var results = new List<Dictionary<string, object>>();
+            var cols = new List<string>();
+            for (var i = 0; i < reader.FieldCount; i++)
+                cols.Add(reader.GetName(i));
+
+            while (reader.Read())
+            {
+                var result = new Dictionary<string, object>();
+                for (int i = 0; i < cols.Count; i++)
+                {
+                    result.Add(cols[i], reader[cols[i]] == DBNull.Value ? null : reader[cols[i]]);
+                }
+                results.Add(result);
+            }
+            return results;
         }
         private void SeperatesParam(SqlCommand cmd, P args, string Connectionstring)
         {
@@ -107,7 +152,7 @@ namespace oak
             else
                 cmd.Parameters.AddWithValue(args.Key, args.Value);
         }
-        public static List<P> GetRequestParametor(IFormCollection Request_Form = null)
+        public List<P> GetRequestParametor(IFormCollection Request_Form = null)
         {
             List<P> args = new List<P>();
             if (Request_Form != null)
@@ -118,9 +163,7 @@ namespace oak
 
             return args;
         }
-
-
-        public static DataTable MappingDataTableWithUserDefined(string conn, DataTable dataTable, string userDefinedName = null)
+        public DataTable MappingDataTableWithUserDefined(string conn, DataTable dataTable, string userDefinedName = null)
         {
             //<-- UsTypeNm = User Defined Table type --<<
             //  if (UsTypeNm == null) return ExternalDT;
@@ -212,28 +255,5 @@ namespace oak
 
         }
     }
-
-    //public static class IQueryableExtensions
-    //{
-    //    private static readonly TypeInfo QueryCompilerTypeInfo = typeof(QueryCompiler).GetTypeInfo();
-    //    private static readonly FieldInfo QueryCompilerField = typeof(EntityQueryProvider).GetTypeInfo().DeclaredFields.First(x => x.Name == "_queryCompiler");
-    //    private static readonly FieldInfo QueryModelGeneratorField = QueryCompilerTypeInfo.DeclaredFields.First(x => x.Name == "_queryModelGenerator");
-    //    private static readonly FieldInfo DataBaseField = QueryCompilerTypeInfo.DeclaredFields.Single(x => x.Name == "_database");
-    //    private static readonly PropertyInfo DatabaseDependenciesField = typeof(Database).GetTypeInfo().DeclaredProperties.Single(x => x.Name == "Dependencies");
-    //    public static string ToSql<TEntity>(this IQueryable<TEntity> query) where TEntity : class
-    //    {
-    //        var queryCompiler = (QueryCompiler)QueryCompilerField.GetValue(query.Provider);
-    //        var modelGenerator = (QueryModelGenerator)QueryModelGeneratorField.GetValue(queryCompiler);
-    //        var queryModel = modelGenerator.ParseQuery(query.Expression);
-    //        var database = (IDatabase)DataBaseField.GetValue(queryCompiler);
-    //        var databaseDependencies = (DatabaseDependencies)DatabaseDependenciesField.GetValue(database);
-    //        var queryCompilationContext = databaseDependencies.QueryCompilationContextFactory.Create(false);
-    //        var modelVisitor = (RelationalQueryModelVisitor)queryCompilationContext.CreateQueryModelVisitor();
-    //        modelVisitor.CreateQueryExecutor<TEntity>(queryModel);
-    //        return modelVisitor.Queries.First().ToString();
-    //        // return sql;
-    //    }
-    //}
-
 
 }

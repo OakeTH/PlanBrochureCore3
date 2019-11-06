@@ -73,30 +73,32 @@
                 var getMainManu = this.getMainManu;
 
                 return new Promise(function (resolve, reject) {
-                    if (sessionStorage['EmployeeCode']) {
-                        window.webFn.Menu = getMainManu(JSON.parse(sessionStorage['Menu']));
-                        window.webFn.SubMenu = JSON.parse(sessionStorage['Menu']);
-                        window.webFn.UserInfo = {
-                            roleName: sessionStorage['RoleName'],
-                            employeeCode: sessionStorage['EmployeeCode']
-                        };
-                        return resolve();
+                    //if (sessionStorage['EmployeeCode']) {
+                    //    window.webFn.Menu = getMainManu(JSON.parse(sessionStorage['Menu']));
+                    //    window.webFn.SubMenu = JSON.parse(sessionStorage['Menu']);
+                    //    window.webFn.UserInfo = {
+                    //        roleName: sessionStorage['RoleName'],
+                    //        employeeCode: sessionStorage['EmployeeCode']
+                    //    };
+                    //    return resolve();
 
-                    } else {
-                        $.ajax({
-                            url: SV.host + "authentication/getmenu",
-                            method: 'POST',
-                            success: function (response) {
-                                window.webFn.Menu = getMainManu(response.menu);
-                                window.webFn.SubMenu = response.menu;
-                                window.webFn.UserInfo = {
-                                    roleName: response.roleName,
-                                    employeeCode: response.employeeCode
-                                };
-                                return resolve();
-                            }
-                        });
-                    };
+                    //} else {
+                    $.ajax({
+                        url: SV.host + "authentication/getmenu",
+                        method: 'POST',
+                        success: function (response) {
+                            window.webFn.Menu = getMainManu(response.menu);
+                            window.webFn.SubMenu = response.menu;
+                            //window.webFn.Menu = getMainManu(JSON.parse(response.menu));
+                            //window.webFn.SubMenu = JSON.parse((response.menu));
+                            window.webFn.UserInfo = {
+                                roleName: response.roleName,
+                                employeeCode: response.employeeCode
+                            };
+                            return resolve();
+                        }
+                    });
+                    //  };
                 });
 
             },
@@ -229,7 +231,7 @@
                     this.applyActiveMenuCSS();
 
                     //<-- auto selected one menu if there is only 1 menu.
-                    window.webFn.Menu.length === 1 && $(divUserMenu).children('div.btn').trigger('click');
+                    $(divUserMenu).children('div.btn').first().trigger('click');
 
                 };
                 this.build();
@@ -240,6 +242,7 @@
             getMainManu: function (data) {
                 return data.map(function (item) {
                     return { id: item.id, text: item.text, icon: item.icon, partailViewUrl: item.partailViewUrl, javascriptFn: item.javascriptFn }
+                    //return { id: item.ID, text: item.Text, icon: item.Icon, partailViewUrl: item.PartailViewUrl, javascriptFn: item.javascriptFn }
                 }).distinct();
             }
         };

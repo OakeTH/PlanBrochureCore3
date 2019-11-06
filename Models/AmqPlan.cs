@@ -27,7 +27,9 @@ namespace oak.Models
         public string IsActive { get; set; }
         [IgnoreDataMember]
         public string ProdcIsActive { get; set; }
-        public string ProdGrpDescTh { get; set; }
+        [IgnoreDataMember]
+        public string ProdGrpType { get; set; }
+        public string ProdGrpNameTh { get; set; }
     }
     public class AmqPlanFn
     {
@@ -41,10 +43,13 @@ namespace oak.Models
                 (B, planGr) => new AmqPlan
                 {
                     PlanCode = B.plan.PlanCode,
-                    PlanShortNameTh = (B.plan.IsActive == "I" ? MsgNotSale : "") + B.plan.PlanCode + " : " + B.plan.PlanShortNameTh,
-                    ProdGrpDescTh = planGr.ProdGrpDescTh,
-                    IsActive = B.plan.IsActive
+                    PlanShortNameTh = (B.plan.IsActive != "A" ? MsgNotSale : B.product.IsActive != "A" ? MsgNotSale : "") + B.plan.PlanCode + " : " + B.plan.PlanShortNameTh,
+                    ProdGrpNameTh = planGr.ProdGrpNameTh,
+                    IsActive = B.plan.IsActive,
+                    ProdGrpType = planGr.ProdGrpType
+
                 })
+                .Where(c => c.ProdGrpType == "B")
                 .ToListAsync();
         }
 

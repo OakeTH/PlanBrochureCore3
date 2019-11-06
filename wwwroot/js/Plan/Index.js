@@ -1,5 +1,6 @@
 ﻿$(document).ready(function () {
     window.webFn.planFn = {
+        //<-- get initial data from server.
         getAsync: function () {
             return new Promise(function (resolve, reject) {
                 if (window.webFn.plans)
@@ -25,24 +26,22 @@
                 onchange: function (item) {
                     window.webFn.planFn.ddlPlanSearch();
                     $(ddlFindPlans).trigger('focus');
-
                 }
             });
-
             $(btnClearPlanSearch).on('click', function () {
                 ddlFindPlans.value = '';
                 var e = jQuery.Event("keydown", { keyCode: 20 });
                 $(ddlFindPlans).trigger(e);
             });
-
         },
+        //<-- set data and change event to searching plan ddl(the bigget ddl top of page)
         ddlPlanSearch: function (data) {
             if (!data)
                 data = window.webFn.plans;
 
             if ($(chkOnlyActive).checkboxes('get').all[0].checked) {
                 data = data.filter(function (item) {
-                    return !item.planShortNameTh.includes('error_msg');
+                    return item.planShortNameTh.indexOf('error_msg') === -1;
                 });
             };
 
@@ -50,42 +49,72 @@
                 .dropdown({
                     source: data,
                     height: '500px',
-                    width: '560px',
-                    groupby: 'prodGrpDescTh',
+                    width: '556px',
+                    groupby: 'prodGrpNameTh',
                     fixposition: true
                 })
-                .on('change', function () {
+                .on('change', function (e) {
+                    if (e.bubbles) return;
+
                     divContent.style.display = '';
                     window.webFn.planFn.reset();
                     window.webFn.planFn.divPdfViewer();
                     window.webFn.planFn.divCommRate.prototype.renderGridAndInput();
                 });
+
+
+            //$(sdsdsdsdsd).on('click', function () {
+            //    var t0 = performance.now();
+            //    // console.info(t0)
+
+            //    $.ajax({
+            //        url: SV.host + 'Authentication/AAAA',
+            //        dataType: 'json',
+            //        success: function (response) {
+            //            //  JSON.parse(response)
+            //            var t1 = performance.now();
+            //            // console.info(t1)
+            //            console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.");
+
+            //        }
+            //    });
+
+            //});
+
         },
+        //<-- display PNG/PDF when chosen item in searching plan ddl 
+        //<-- menu ข้อมูลแบบประกัน
         divPdfViewer: function () {
             this.render = function () {
                 window.webFn.planFn.divPdfViewer.prototype.getPlanDocsAsync().then(function (response) {
+                    if (!response || !response.docFile)
+                        return $(divPdfViewer).empty().append(sharedFn.warningBox());
+
                     var content;
+                    var getFileExtension = function (response) {
+                        return response.docFile.split('.').pop();
+                    }(response);
 
-                    if (!response || !response[0] || !response[0].id) {
-                        content = sharedFn.warningBox();
-                        lblPdffullscr.style.display = 'none';
-                    }
-                    else {
-                        content = '<embed id="ifrPdfviewer" class="pdf-inline" src='
-                            + SV.host + 'Plan/GetDocsNameByID?id='
-                            + response[0].id + '#toolbar=0&view=fitH; />';
-                        lblPdffullscr.style.display = '';
-                    }
+                    response.docFile = encodeURI(response.docFile);
+                    response.docFile = response.docFile.replace('+', '@@_push_@@')
 
+                    if (getFileExtension == "pdf")
+                        content = '<embed id="ifrPdfviewer" class="pdf-inline" src="' + SV.host + 'Plan/DownloadDocByPlanCode?filename=' + response.docFile + '#toolbar=0"/>';
+                    else
+                        content = '<img id="ifrPdfviewer"  class="pdf-inline" src="' + SV.host + 'Plan/DownloadDocByPlanCode?filename=' + response.docFile + '"/>'
+
+
+                    lblPdffullscr.style.display = '';
                     var contaninerHeight = divContainer.getBoundingClientRect().height;
                     var contentHeight = 225;
                     var pdfHeight = contaninerHeight - contentHeight;
 
                     $(divPdfViewer).empty().append(content);
-                    ifrPdfviewer.style.height = pdfHeight + 'px';
+
+                    ifrPdfviewer.style.height = getFileExtension != "pdf" ? "auto" : pdfHeight + 'px';
 
                     $(lblPdffullscr).off('click').on('click', function () {
-                        window.open(SV.host + 'Plan/GetDocsNameByID?id=' + response[0].id, '_blank');
+                        window.open(SV.host + 'Plan/DownloadDocByPlanCode?filename=' + response.docFile, '_blank');
                     });
 
 
@@ -94,19 +123,24 @@
             this.divPdfViewer.prototype.getPlanDocsAsync = function () {
                 return new Promise(function (resolve) {
                     if (!ddlFindPlans.dataset.myvalue)
+                        // if (!ddlFindPlans.value)
                         return resolve();
 
                     $.ajax({
-                        url: SV.host + "plan/getDocByID",
+                        url: SV.host + "plan/GetFileNameByPlanCode",
                         data: { planCode: ddlFindPlans.dataset.myvalue },
+                        // data: { planCode: ddlFindPlans.value },
                         success: function (response) {
                             resolve(response)
                         }
                     });
                 });
             };
+
             this.render();
         },
+        //<-- display data grid when chosen item in searching plan ddl and fill txtPovAge ,ddlPovGender ,txtEndYear
+        //<-- ตารางมูลค่ากรมธรรม์
         divPolicyValue: function () {
             this.setupInputs = function () {
                 var renderGrid = this.renderGrid;
@@ -127,12 +161,17 @@
 
                 $(txtPovAge).on('input', renderGrid);
                 $(ddlPovGender).dropdown({
-                    source: [{ value: 'M', text: male() }, { value: 'F', text: female() }],
+                    source: [{ value: 'M', text: male }, { value: 'F', text: female }],
                     fixposition: true
 
-                }).on('change', function () { renderGrid({ ignoreGetDataFromSV: true }) });
+                }).on('change', function () {
 
-                $(txtEndYear).on('input', function () { renderGrid({ ignoreGetDataFromSV: true }) });
+                    renderGrid({ ignoreGetDataFromSV: true })
+                });
+
+                $(txtEndYear).on('input', function () {
+                    renderGrid({ ignoreGetDataFromSV: true })
+                });
 
             }
             this.renderGrid = function (args) {
@@ -185,6 +224,8 @@
             };
             this.setupInputs();
         },
+        //<-- display data grid when chosen item in searching plan ddl
+        //<-- ตารางมูลค่าคอมมิชชั่น
         divCommRate: function () {
             this.divCommRate.prototype.renderGridAndInput = function (args) {
                 window.webFn.planFn.divCommRate.prototype.getCommRateAsync(args).then(function (response) {
@@ -260,7 +301,7 @@
                     };
                     var isEmptyData = function () {
                         if (!response || !response.length) {
-                            $(divCommRate).append(sharedFn.warningBox());
+                            $(divCommRate).empty().append(sharedFn.warningBox());
                             return true;
                         }
 
@@ -335,6 +376,7 @@
 
             this.setupInputs();
         },
+        //<-- Reset all element, active when userchosen another one item in searching plan ddl       
         reset: function () {
             divPdfViewer.innerHTML = '';
             divPolicyValue.innerHTML = '';
@@ -346,6 +388,7 @@
             txtEntryAge.value = '';
             txtTotalYear.value = '';
         },
+        //<-- Lanuch first fo all function when page stared.
         launch: function () {
             this.getAsync().then(function (response) {
                 window.webFn.planFn.activeMenu();
@@ -355,25 +398,7 @@
             });
 
 
-
-
-            $('#button1').on('click', function () {
-                $.ajax({
-                    url: SV.host + 'plan/aaaa',
-                    success: function (response) {
-                        var sds = '';
-
-                    }
-                })
-
-            })
-
-
         }
     }
-
-
-
-
 });
 

@@ -3,7 +3,7 @@ using static oak.Models.ServicesModels;
 
 namespace oak
 {
-    public class DbServicesModel
+    public class SpCallerModel
     {
         public string Name { get; set; }
         public List<P> Parameters { get; set; } = null;
@@ -24,7 +24,8 @@ namespace oak
         public const string zip = "application/zip";
         public const string form = "application/x-www-form-urlencoded";
         public const string fromUTF8 = "application/x-www-form-urlencoded; charset=UTF-8";
-        public const string image = "image/jpeg";
+        public const string jpeg = "image/jpeg";
+        public const string png = "image/png";
         public const string excel2003lower = "application/vnd.ms-excel";
         public const string excel = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 

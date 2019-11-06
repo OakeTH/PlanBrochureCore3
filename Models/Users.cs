@@ -21,7 +21,6 @@ namespace oak.Models
         public int ID { get; set; }
         public string EmployeeCode { get; set; }
 
-        //Column("RoleID", 
         [Column(TypeName = "tinyint")]
         public int RoleID { get; set; }
 
@@ -83,7 +82,7 @@ namespace oak.Models
             context.Users.Remove(users);
             await context.SaveChangesAsync();
         }
-        public async Task<Users> LoginAsync(string username, string password, EntityContextWEB context)
+        public async Task<Users> AdminLoginAsync(string username, string password, EntityContextWEB context)
         {
             if (string.IsNullOrEmpty(password))
                 password = "";
@@ -98,6 +97,29 @@ namespace oak.Models
                     })
                     .FirstOrDefaultAsync();
         }
+
+        public async Task<Users> EmployeeLoginAsync(string employeeCode, EntityContextDocpd context)
+        {
+            var payload = await context.Idoc_user
+                    .Include(c => c.Idoc_Department)
+                    .Where(c => c.User_employeecode == employeeCode)
+                    .Select(c => new Users
+                    {
+                        EmployeeCode = employeeCode,
+                        RoleName = c.Idoc_Department.Dept_department
+                    })
+                    .FirstOrDefaultAsync();
+
+
+            string[] availableRoleNames = { "Agency Support", "Actuarial", "Information Technology" };
+
+
+            if (payload == null || Array.FindIndex(availableRoleNames, m => m == payload.RoleName) == -1)
+                payload.RoleName = "InternalEmployee";
+
+            return payload;
+        }
+
     }
 
 }

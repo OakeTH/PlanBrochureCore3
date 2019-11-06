@@ -6,6 +6,10 @@
     --tokio-g-2: #0babc0;
 }
 
+.pdf-inline img {
+    width: 100% !important;
+}
+
 body {
     height: 100vh;
     display: flex;
@@ -35,11 +39,11 @@ html {
 }
 
 .region-header {
-    background: rgb(76, 76, 76);
     font-size: 14px;
     height: 65px;
     overflow-x: hidden;
     z-index: 10;
+    background: #444444;
 }
 
 .region-band {
@@ -97,8 +101,9 @@ html {
         }
 
 .navi-menu-title {
-    background: #c4cf55;
-    box-shadow: 0 2px 2px -2px #000;
+    background: #146671;
+    color: #fff;
+    /*box-shadow: 0 2px 2px -2px #000;*/
     z-index: 999;
 }
 
@@ -184,7 +189,7 @@ html {
 .btn-eraser {
     color: #cc5c5c;
     border-bottom: 1px solid var( --txt-br);
-    cursor:pointer;
+    cursor: pointer;
 }
 
 .btn-search {

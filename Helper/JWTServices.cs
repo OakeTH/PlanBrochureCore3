@@ -19,19 +19,30 @@ namespace oak
     {
         private readonly AppSettings appSettings;
         private readonly EntityContextWEB contextWeb;
+        private readonly EntityContextDocpd contextDocpd;
 
-        public UserService(IOptions<AppSettings> _appSettings, EntityContextWEB _contextWeb)
+        public UserService(IOptions<AppSettings> _appSettings, EntityContextWEB _contextWeb, EntityContextDocpd _contextDocpd)
         {
             appSettings = _appSettings.Value;
             contextWeb = _contextWeb;
+            contextDocpd = _contextDocpd;
         }
 
         public async Task<Users> Authenticate(string password, string employeecode, string rolename)
         {
-            Users users = await new Users().LoginAsync(employeecode, password, contextWeb);
+            Users users = await new Users().AdminLoginAsync(employeecode, password, contextWeb);
 
             if (users == null)
-                users = new Users() { EmployeeCode = employeecode, RoleName = rolename };
+            {
+                if (rolename == "" || rolename.ToLower() == "employee")
+                    users = await new Users().EmployeeLoginAsync(employeecode, contextDocpd);
+                else
+                    users = new Users() { EmployeeCode = employeecode ?? "", RoleName = rolename };
+
+            }
+
+            if (users == null)
+                return null;
 
             // <--- authentication successful so generate jwt token
             int currentHour = DateTime.Today.Hour;

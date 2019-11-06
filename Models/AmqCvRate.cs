@@ -26,7 +26,6 @@ namespace oak.Models
         [Required(ErrorMessage = "ยังไม่ได้ระบุ อายุ")]
         [IgnoreDataMember]
         [Column("insureage")]
-        [Range(0, 80, ErrorMessage = "ช่วงอายุต้องอยู่ระหว่าง 0 - 80")]
         public int? Insureage { get; set; }
         [Column("endyear")]
         public int? Endyear { get; set; }

@@ -2,7 +2,7 @@
   {
     "outputFileName": "wwwroot/css/site.min.css",
     "inputFiles": [
-      "wwwroot/oak/oak.min.css",
+      //"wwwroot/oak/oak.min.css",
       "wwwroot/css/site.css"
     ]
   },

@@ -7,12 +7,11 @@
         <div class="content-header"></div>
         <div class="content-body">
             <div class="txt-2 bar pb30">
-
-                <input type="button"id="button1" />
                 <input type="text" id="ddlFindPlans" style="width:500px;font-size:1rem;" class="p-2" placeholder="กรอก รหัสหรือชื่อแบบประกัน เพื่อค้นหา..." />
                 <label class="btn-eraser pr-2" id="btnClearPlanSearch"><i class="fas fa-times pr-2"></i></label>
                 <label class="btn-search"><i class="fas fa-search"></i></label>
                 <span id="chkOnlyActive"></span>
+                @*<input type="button"  value="aaaaaa" id="sdsdsdsdsd"/>*@
             </div>
             <div id="divContent" style="display:none">
                 <div class="container" id="containerMenu">
@@ -35,11 +34,11 @@
                             <div class="align-i-start flex-column ml10 mb10">
                                 <div class="flex-row align-i-center">
                                     <label class="mr10">อายุผู้เอาประกัน</label>
-                                    <input type="number" id="txtPovAge" placeholder="0-80 ปี" class="wid100 mr20" min="0" max="80" required />
+                                    <input type="number" id="txtPovAge" class="wid100 mr20" required />
                                     <label class="mr10">เพศ</label>
                                     <select id="ddlPovGender" class="wid100 mr20"></select>
                                     <label class="mr10">EndYear</label>
-                                    <input type="number" id="txtEndYear" placeholder="EndYear" class="wid100" />
+                                    <input type="number" id="txtEndYear" class="wid100" min="0" oninput="validity.valid||(value='');" />
                                 </div>
                             </div>
                             <div id="divPolicyValue"></div>
@@ -55,11 +54,11 @@
                             <div class="align-i-start flex-column ml10 mb10 bar">
                                 <div class="flex-row align-i-center">
                                     <label>ทุนประกันภัย</label>
-                                    <input type="text" id="txtSumAssured" class="wid200 mr10" />
+                                    <input type="text" id="txtSumAssured" class="wid200 mr10 ml5" />
                                     <label>อายุผู้เอาประกัน</label>
-                                    <input type="text" id="txtEntryAge" class="wid100 mr10" />
+                                    <input type="text" id="txtEntryAge" class="wid100 mr10 ml5" />
                                     <label>ระยะชำระเบี้ย</label>
-                                    <input type="text" id="txtTotalYear" class="wid100" />
+                                    <input type="text" id="txtTotalYear" class="wid100 ml5" />
                                 </div>
                             </div>
                             <div id="divCommRate"></div>

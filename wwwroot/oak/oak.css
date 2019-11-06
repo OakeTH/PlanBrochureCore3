@@ -213,7 +213,7 @@ label.btn-upload {
     border-bottom: 1px solid var(--txt-br);
     padding: 5px;
     -webkit-appearance: none;
-    background: var(--select-arrow) no-repeat right;
+    /*background: var(--select-arrow) no-repeat right;*/
 }
 
     .select-2 select:required {
@@ -273,11 +273,10 @@ select.select-2 {
     }
 
 .btn-accept {
-    background: #19646d;
+    background: #0b99ab;
     border: 0;
-    color: #50e6ff;
     cursor: pointer;
-    outline: none;
+    /* outline: none; */
     transition: background 1s;
 }
 

@@ -8,7 +8,8 @@ namespace oak.Models
         [Key]
         [Column(TypeName = "bigint")]
         public int ProdGrpId { get; set; }
-        public string ProdGrpDescTh { get; set; }
+        public string ProdGrpNameTh { get; set; }
+        public string ProdGrpType { get; set; }
         public int IsActive { get; set; }
 
     }

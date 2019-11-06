@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using oak.Models;
-
+using PlanBrochureCore3.Models;
 
 namespace oak.Data
 {
@@ -36,6 +36,20 @@ namespace oak.Data
         public DbSet<Users> Users { get; set; }
         public DbSet<Roles> Roles { get; set; }
         public DbSet<AnnounceMathDocs> AnnounceDocs { get; set; }
+    }
+    
+    public class EntityContextDocpd : DbContext
+    {
+        public EntityContextDocpd(DbContextOptions<EntityContextDocpd> options) : base(options)
+        {
+        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseLazyLoadingProxies();
+        }
+        public DbSet<Idoc_department> Idoc_department { get; set; }
+        public DbSet<Idoc_user> Idoc_user { get; set; }
 
     }
+
 }

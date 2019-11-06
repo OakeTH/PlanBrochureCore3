@@ -60,36 +60,33 @@ var oakdef = {
 SV.host = window.location.origin + '/' + (SV.ALIAS ? SV.ALIAS + '/' : '');
 
 //<--- Add prototypes
-String.prototype.startsWith || (String.prototype.startsWith = function(t, r) { return this.substr(!r || r < 0 ? 0 : +r, t.length) === t; });
-String.prototype.endsWith || (String.prototype.endsWith = function(t, n) { return (void 0 === n || n > this.length) && (n = this.length), this.substring(n - t.length, n) === t; });
-Element.prototype.remove || (Element.prototype.remove = function() { this.parentElement.removeChild(this); });
-Date.prototype.addDays = function(t) { var e = new Date(this.valueOf()); return e.setDate(e.getDate() + t), e };
-
-Array.prototype.distinct = function() {
+String.prototype.startsWith || (String.prototype.startsWith = function (t, r) { return this.substr(!r || r < 0 ? 0 : +r, t.length) === t; });
+String.prototype.endsWith || (String.prototype.endsWith = function (t, n) { return (void 0 === n || n > this.length) && (n = this.length), this.substring(n - t.length, n) === t; });
+String.prototype.includes || (String.prototype.includes = function () { 'use strict'; return String.prototype.indexOf.apply(this, arguments) !== -1; });
+Element.prototype.remove || (Element.prototype.remove = function () { this.parentElement.removeChild(this); });
+Date.prototype.addDays = function (t) { var e = new Date(this.valueOf()); return e.setDate(e.getDate() + t), e };
+Array.prototype.distinct = function () {
     var newArray = [];
-    $.each(this, function(key, value) {
+    $.each(this, function (key, value) {
         var exists = false;
-        $.each(newArray, function(k, val2) {
+        $.each(newArray, function (k, val2) {
             if (value.id == val2.id) { exists = true };
         });
         if (exists == false && value.id != "") { newArray.push(value); }
     });
-
     return newArray;
 }
 
 var oakfn = {},
-    substr = function(a, b, c) { b = b === '' ? 0 : a.indexOf(b) + 1; var d = a.indexOf(c, b); return -1 < d ? a.substring(b, d) : a.split(c).pop(); },
-    querystr = function() {
-        for (
-            var c = [], a, d = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&'), b = 0; b < d.length; b++
-        )
+    substr = function (a, b, c) { b = b === '' ? 0 : a.indexOf(b) + 1; var d = a.indexOf(c, b); return -1 < d ? a.substring(b, d) : a.split(c).pop(); },
+    querystr = function () {
+        for (var c = [], a, d = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&'), b = 0; b < d.length; b++)
             a = d[b].split('='), c[a[0]] = a[1];
         return c || [];
     },
-    objtoquerystr = function(obj, encd) {
+    objtoquerystr = function (obj, encd) {
         let str = '';
-        $.each(obj, function(r, c) {
+        $.each(obj, function (r, c) {
             if (encd) {
                 let spl = c.toString().split('');
                 let splStr = '';
@@ -102,7 +99,7 @@ var oakfn = {},
         });
         return '?' + str.slice(0, -1);
     },
-    getDate = function(separated, dateAdd) {
+    getDate = function (separated, dateAdd) {
         let isBE = oakdef.isBE ? 543 : 0;
         let sepa = separated || '/';
         let now;
@@ -160,7 +157,7 @@ var oakfn = {},
             //  fulldatetime: fulldate + ' ' + hour + ':' + min + ':' + sec
         };
     },
-    dateDiff = function(date1, date2) {
+    dateDiff = function (date1, date2) {
         if (!date1 || !date2)
             return null;
 
@@ -172,22 +169,22 @@ var oakfn = {},
         cDate2 = Date.UTC(cDate2.getFullYear(), cDate2.getMonth(), cDate2.getDate());
         return Math.floor((cDate2 - cDate1) / (1000 * 60 * 60 * 24));
     },
-    addcomma = function(x) { return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); },
-    add0 = function(str, max) { str = str.toString(); return str.length < max ? add0("0" + str, max) : str; },
-    randomstring = function() { return Math.random().toString(36).split(".")[1] + Math.random().toString(36).split(".")[1] },
-    toFileSizeFormat = function(S) {
+    addcomma = function (x) { return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); },
+    add0 = function (str, max) { str = str.toString(); return str.length < max ? add0("0" + str, max) : str; },
+    randomstring = function () { return Math.random().toString(36).split(".")[1] + Math.random().toString(36).split(".")[1] },
+    toFileSizeFormat = function (S) {
         return S < 1e3 ? S + " B" : S < 1e6 ? Math.round(S / 1e3) + " KB" : Math.round(S / 1e6) + " MB"
     },
-    isEmail = function(email) {
+    isEmail = function (email) {
         if (!email) return false;
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(String(email).toLowerCase());
     };
 
-$.fn.window = function(selector, elementtype) {
+$.fn.window = function (selector, elementtype) {
     elementtype = elementtype || 'input,label,select,span,div';
 
-    $(selector).find(elementtype).addBack().each(function() {
+    $(selector).find(elementtype).addBack().each(function () {
         if (!this.id) return !0;
 
         window[this.id] = $(this);
@@ -197,7 +194,7 @@ $.fn.window = function(selector, elementtype) {
     });
 };
 
-$.fn.scrollTo = function(args) {
+$.fn.scrollTo = function (args) {
     if (!args) args = {}
 
     var paddingtop = args.paddingtop || 0;
@@ -207,7 +204,7 @@ $.fn.scrollTo = function(args) {
     $('html, body').animate({ scrollTop: $(this).offset().top + paddingtop - top }, duration);
 };
 
-$.fn.ajaxpost = function(args) {
+$.fn.ajaxpost = function (args) {
     let data = null,
         url = SV.host,
         datatype = 'json',
@@ -225,7 +222,7 @@ $.fn.ajaxpost = function(args) {
 
     if (contenttype == 'application/json') {
         data = {}
-        $.each(args, function(key, value) {
+        $.each(args, function (key, value) {
             if (key != 'url' && typeof value !== "function") {
                 data[key] = value
             }
@@ -240,7 +237,7 @@ $.fn.ajaxpost = function(args) {
         if (!data)
             data = new FormData();
 
-        $.each(args, function(key, value) {
+        $.each(args, function (key, value) {
             if (value === undefined)
                 return true;
 
@@ -280,11 +277,11 @@ $.fn.ajaxpost = function(args) {
             contentType: contenttype,
             processData: processdata,
             dataType: datatype,
-            success: function(data) { args.onsuccess && args.onsuccess(data); },
-            error: function(a, b, c) { args.onerror && args.onerror(a, b, c); }
+            success: function (data) { args.onsuccess && args.onsuccess(data); },
+            error: function (a, b, c) { args.onerror && args.onerror(a, b, c); }
         });
     else
-        return new Promise(function(resolve) {
+        return new Promise(function (resolve) {
             resolve(
                 $.ajax({
                     type: "POST",
@@ -298,7 +295,7 @@ $.fn.ajaxpost = function(args) {
         });
 
 };
-$.fn.ajaxpost.redirect = function(args, newpage) {
+$.fn.ajaxpost.redirect = function (args, newpage) {
     if (!args.url.startsWith('http'))
         args.url = SV.host + args.url;
 
@@ -307,7 +304,7 @@ $.fn.ajaxpost.redirect = function(args, newpage) {
         .attr('target', newpage ? '_blank' : '')
         .attr('method', 'post');
 
-    $.each(args, function(key, value) {
+    $.each(args, function (key, value) {
         if (typeof value === "object")
             value = JSON.stringify(value);
 
@@ -322,8 +319,8 @@ $.fn.ajaxpost.redirect = function(args, newpage) {
             }).appendTo(form);
     });
 
-    let submit = function() {
-        return new Promise(function(resolve) {
+    let submit = function () {
+        return new Promise(function (resolve) {
             resolve(
                 form.appendTo('body')
                     .submit()
@@ -331,16 +328,16 @@ $.fn.ajaxpost.redirect = function(args, newpage) {
             );
         });
     };
-    submit().then(function() {
+    submit().then(function () {
         args.onsuccess && args.onsuccess();
     });
 
 };
-$.fn.ajaxpost.redirect.newpage = function(args) {
+$.fn.ajaxpost.redirect.newpage = function (args) {
     oak.ajaxpost.redirect(args, true);
 };
 
-$.fn.ajaxget = function(args) {
+$.fn.ajaxget = function (args) {
     var url = SV.host,
         datatype = 'json',
         contenttype = false,
@@ -369,7 +366,7 @@ $.fn.ajaxget = function(args) {
         else if (args.FilterParamsfn) { url += SV.FilterParamsfn; }
         else if (args.Emailingfn) { url += SV.Emailingfn; }
         else url += SV.Standardfn;
-        $.each(SV, function(key) { delete args[key]; });
+        $.each(SV, function (key) { delete args[key]; });
     }
 
     if (args.ajaxconfig) {
@@ -381,7 +378,7 @@ $.fn.ajaxget = function(args) {
     }
 
     var _args = {};
-    $.each(args, function(key, item) {
+    $.each(args, function (key, item) {
         typeof item !== "function" && (_args[key] = item);
     });
 
@@ -405,12 +402,12 @@ $.fn.ajaxget = function(args) {
             url: url,
             dataType: datatype,
             headers: headers,
-            success: function(b) { args.onsuccess && args.onsuccess(b); },
-            error: function(b, c, d) { args.onerror && args.onerror(b, c, d); }
+            success: function (b) { args.onsuccess && args.onsuccess(b); },
+            error: function (b, c, d) { args.onerror && args.onerror(b, c, d); }
         });
 
     } else {
-        return new Promise(function(resolve) {
+        return new Promise(function (resolve) {
             resolve(
                 $.ajax({
                     type: 'GET',
@@ -425,7 +422,7 @@ $.fn.ajaxget = function(args) {
         });
     }
 };
-$.fn.ajaxget.redirect = function(args) {
+$.fn.ajaxget.redirect = function (args) {
     var arryArgs = Object.keys(args);
 
     querystring = {};
@@ -445,7 +442,7 @@ $.fn.ajaxget.redirect = function(args) {
         window.location.href = SV.host + args.url + querystring;
 
 };
-$.fn.ajaxget.redirect.newpage = function(args) {
+$.fn.ajaxget.redirect.newpage = function (args) {
     var hostname = args.url.startsWith('http') ? args.url : SV.host + args.url;
     var querystr = '';
     if (args.querystring)
@@ -454,27 +451,27 @@ $.fn.ajaxget.redirect.newpage = function(args) {
     window.open(hostname + querystr, '_blank');
 };
 
-$.fn.dropdown = function(args) {
+$.fn.dropdown = function (args) {
     if (!args)
         args = {};
 
     args.me = this;
-    oak.dropdown.get_source(args.source, args.me[0]).then(function(source) {
+    oak.dropdown.get_source(args.source, args.me[0]).then(function (source) {
         args.source = source;
         args.me.dropdown.then(args);
     });
     return this;
 };
 oak.dropdown.source = [];
-oak.dropdown.get_source = function(source, me) {
-    return new Promise(function(resolve) {
+oak.dropdown.get_source = function (source, me) {
+    return new Promise(function (resolve) {
         if (source === undefined)
             resolve(undefined);
 
         else if (source === 'thai address') {
             if (!oak.dropdown.thaiaddress)
                 resolve(
-                    $.getJSON(SV.host + SV.DependencyRootPath + SV.jsonTHF_Path, function(json) {
+                    $.getJSON(SV.host + SV.DependencyRootPath + SV.jsonTHF_Path, function (json) {
                         oak.dropdown.thaiaddress = json;
 
                     }));
@@ -485,7 +482,7 @@ oak.dropdown.get_source = function(source, me) {
             let clint_onsucess = source.onsuccess || $.noop;
 
             source.DDLfn = true;
-            source.onsuccess = function(response) {
+            source.onsuccess = function (response) {
                 clint_onsucess(response);
                 oak.dropdown.add_select_options(response, me)
                 resolve(response);
@@ -510,7 +507,7 @@ oak.dropdown.get_source = function(source, me) {
         }
     });
 };
-oak.dropdown.add_select_options = function(source, me) {
+oak.dropdown.add_select_options = function (source, me) {
     if (!source && !source.length) return;
     if (me.tagName === 'INPUT') return;
 
@@ -522,8 +519,8 @@ oak.dropdown.add_select_options = function(source, me) {
     if (source[0].constructor.name !== 'Object')
         for (i = 0; i < source.length; i++) {
             let opt = document.createElement("option");
-            opt.value = source[i];
-            opt.innerHTML = source[i];
+            opt.value = source[i].value;
+            opt.innerHTML = source[i].text;
             me.add(opt);
         }
     else {
@@ -537,7 +534,7 @@ oak.dropdown.add_select_options = function(source, me) {
         }
     }
 };
-oak.dropdown.get_source_objectname = function(args) {
+oak.dropdown.get_source_objectname = function (args) {
     if (!args.source.length)
         return;
 
@@ -562,11 +559,11 @@ oak.dropdown.get_source_objectname = function(args) {
     };
 
     if (args.groupby) {
-        var useItem = args.source.map(function(item) {
+        var useItem = args.source.map(function (item) {
             return item[args.groupby]
         });
 
-        var uniqueGroup = useItem.filter(function(item, i, ar) {
+        var uniqueGroup = useItem.filter(function (item, i, ar) {
             return ar.indexOf(item) === i
         });
 
@@ -575,7 +572,7 @@ oak.dropdown.get_source_objectname = function(args) {
     }
 
 };
-oak.dropdown.then = function(args) {
+oak.dropdown.then = function (args) {
     if (args.province || args.zipcode) {
         if (!oak.dropdown.addressbox)
             oak.ajaxget({
@@ -624,8 +621,8 @@ oak.dropdown.then = function(args) {
 
     args.me.dropdown.core(args);
 };
-oak.dropdown.core = function(args) {
-    let create = function() {
+oak.dropdown.core = function (args) {
+    let create = function () {
         this.me = args.me;
         this.id = args.me[0].id;
         this.height = args.height;
@@ -680,8 +677,8 @@ oak.dropdown.core = function(args) {
 
     }
     create.prototype = {
-        input_width: function() { return this.width || this.me.outerWidth() || oakdef.dropdown_width },
-        searchbox_keyup: function() {
+        input_width: function () { return this.width || this.me.outerWidth() || oakdef.dropdown_width },
+        searchbox_keyup: function () {
             oak.dropdown.ul_items_create({
                 ul: this.my_options_ul,
                 owner_id: this.owner_id,
@@ -694,7 +691,7 @@ oak.dropdown.core = function(args) {
                 li_first.dispatchEvent(click);
             }
         },
-        searchbox_click: function(e) {
+        searchbox_click: function (e) {
             this.classList.remove('hide');
             this.my_options_ul.classList.remove('hide');
             this.my_options_ul.children.length === 0 &&
@@ -703,7 +700,7 @@ oak.dropdown.core = function(args) {
                     owner_id: this.owner_id
                 });
         },
-        searchbox_create: function() {
+        searchbox_create: function () {
             let fix = args.fixposition ? ' fix' : '';
 
             return $('<input type="search">')
@@ -717,19 +714,19 @@ oak.dropdown.core = function(args) {
                 .referTo('my_searchbox', this.options_ul)
                 .on('keyup', this.searchbox_keyup)
                 .on('click', this.searchbox_click)
-                .on('focusout', function(e) {
+                .on('focusout', function (e) {
                     this.classList.add('hide');
                     this.my_options_ul.classList.add('hide');
                 });
         },
-        options_ul_create: function() {
+        options_ul_create: function () {
             let options_ul = $('<ul>')
                 .refer('elementtype', this.elementtype);
 
             this.options_ul_style(options_ul);
             return options_ul;
         },
-        options_ul_style: function(options_ul) {
+        options_ul_style: function (options_ul) {
             let margintop = this.elementtype === 'dropdown' ? this.options_ddl_mtop : this.options_autoc_mtop;
             let effect = this.elementtype === 'dropdown' ? 'show' : '';
             let fix = args.fixposition ? ' fix' : '';
@@ -740,14 +737,14 @@ oak.dropdown.core = function(args) {
                 .addClass('oak-ddl-options hide' + fix)
                 .addClass(effect);
         },
-        options_ul_clear: function() {
+        options_ul_clear: function () {
             let ul = this.me.refer('my_options_ul');
             if (ul)
                 while (ul.firstChild) {
                     ul.removeChild(ul.firstChild);
                 }
         },
-        ddl_click: function(evt) {
+        ddl_click: function (evt) {
             if (evt.button == 2) {//<--Right click--<<//
                 var input = document.createElement('input');
                 input.type = 'text';
@@ -782,7 +779,7 @@ oak.dropdown.core = function(args) {
             }
 
         },
-        ddl_tags_add: function() {
+        ddl_tags_add: function () {
             this.me
                 .refer('text', '')
                 .refer('options_ddl_mtop', this.options_ddl_mtop)
@@ -794,7 +791,7 @@ oak.dropdown.core = function(args) {
             this.me[0].required = this.required;
 
         },
-        txt_keyup: function(evt) {
+        txt_keyup: function (evt) {
             if (this.value.length < this.minlength)
                 return;
 
@@ -813,7 +810,7 @@ oak.dropdown.core = function(args) {
             }
 
         },
-        txt_click: function(evt) {
+        txt_click: function (evt) {
             if (evt.button == 2) {//<--Right click--<<//
                 this.select();
                 return false;
@@ -832,14 +829,14 @@ oak.dropdown.core = function(args) {
                 return;
 
             this.my_options_ul.classList.remove('hide');
-           // if (this.my_options_ul.children.length === 0)
-                oak.dropdown.ul_items_create({
-                    ul: this.my_options_ul,
-                    owner_id: this.id,
-                    filtertext: this.value
-                });
+            // if (this.my_options_ul.children.length === 0)
+            oak.dropdown.ul_items_create({
+                ul: this.my_options_ul,
+                owner_id: this.id,
+                filtertext: this.value
+            });
         },
-        txt_tags_add: function() {
+        txt_tags_add: function () {
             this.me
                 .refer('my_options_ul', this.options_ul)
                 .refer('minlength', this.minlength)
@@ -849,11 +846,11 @@ oak.dropdown.core = function(args) {
                 .attr('autocomplete', 'off')
                 .on('keyup', this.txt_keyup)
                 .on('mousedown', this.txt_click)
-                .on('focusout', function(e) {
+                .on('focusout', function (e) {
                     this.my_options_ul.classList.add('hide');
                 });
         },
-        placeholder_create: function() {
+        placeholder_create: function () {
             if (!this.placeholder)
                 return;
 
@@ -885,7 +882,7 @@ oak.dropdown.core = function(args) {
 
     new create();
 };
-oak.dropdown.apply_value_to_owner = function() {
+oak.dropdown.apply_value_to_owner = function () {
     let input = this.parentNode.my_input;  //previousSibling.previousSibling;
     let elementtype = this.parentNode.elementtype;
 
@@ -908,8 +905,6 @@ oak.dropdown.apply_value_to_owner = function() {
             //input.dispatchEvent(event);
         }
         input.blur();
-
-
     }
     else {//<--- elementtype === 'dropdown' ---<<
 
@@ -921,13 +916,14 @@ oak.dropdown.apply_value_to_owner = function() {
         ul.my_input.text = this.innerHTML;
 
         if (prev_value != this.firstkey) {
-            var event = new Event('change');
-            ul.my_input.dispatchEvent(event);
+            $(ul.my_input).trigger('change')
+            //var event = new Event('change');
+            //ul.my_input.dispatchEvent(event);
             ul.my_input.blur();
         }
     }
 };
-oak.dropdown.ul_items_create = function(p) {
+oak.dropdown.ul_items_create = function (p) {
     //if (!oak.dropdown.source[p.owner_id])
     //    return;
 
@@ -953,12 +949,12 @@ oak.dropdown.ul_items_create = function(p) {
             if (dataInGroup.length === 0)
                 continue;
 
-            let li = document.createElement("li");
-            li.innerHTML = myGroup;
-            li.firstkey = myGroup;
-            li.classList.add('group-topic')
-            li.addEventListener('mousedown', function(evt) { evt.preventDefault(); });
-            p.ul.appendChild(li);
+            let lig = document.createElement("li");
+            lig.innerHTML = myGroup;
+            lig.firstkey = myGroup;
+            lig.classList.add('group-topic')
+            lig.addEventListener('mousedown', function (evt) { evt.preventDefault(); });
+            p.ul.appendChild(lig);
 
             for (ii = 0; ii < dataInGroup.length; ii++) {
                 let li = document.createElement("li");
@@ -969,30 +965,32 @@ oak.dropdown.ul_items_create = function(p) {
                 p.ul.appendChild(li);
             }
         }
-    } else
+    } else {
         for (i = 0; i < data.length; i++) {
             let li = document.createElement("li");
             li.innerHTML = data[i][objectname.secondkey];
             li.firstkey = data[i][objectname.firstkey];
+
             li.addEventListener('mousedown', oak.dropdown.apply_value_to_owner);
             p.ul.appendChild(li);
         }
+    }
 
 };
-oak.dropdown.filter_data = function(data, filtertext, key) {
+oak.dropdown.filter_data = function (data, filtertext, key) {
     if (data[0][key].constructor === Number)
-        return data.filter(function(object) {
+        return data.filter(function (object) {
             return object[key] == filtertext
         });
     else
-        return data.filter(function(object) {
+        return data.filter(function (object) {
             return object[key].indexOf(filtertext) > -1
         });
     // }
 
 }
 
-$.fn.downloadexcel = function(args) {
+$.fn.downloadexcel = function (args) {
     args.Source_SP = JSON.stringify(args.source);
 
     if (args.excelsheetsname && args.excelsheetsname instanceof Array)
@@ -1002,7 +1000,7 @@ $.fn.downloadexcel = function(args) {
         args.lastrowissummary += '';
     window.location.href = SV.host + SV.DownloadExcelFromDTfn + objtoquerystr(args);
 };
-$.fn.downloadfile = function(args) {
+$.fn.downloadfile = function (args) {
     oak.minidialog({ value: "กำลังค้นหาไฟล์... " });
     var obj = {};
     obj.source = JSON.stringify(args.source);
@@ -1071,7 +1069,7 @@ $.fn.downloadfile = function(args) {
 //<--New---<<//
 oak.pdftemplate = SV.host + 'PDF/GetHTMPTemplate?templatepath=';
 
-$.fn.minidialog = function(args) {
+$.fn.minidialog = function (args) {
     if (!$.toast)
         oak.ajaxget({
             url: SV.host + SV.DependencyRootPath + 'Toast/jquery.toast.min.js',
@@ -1081,7 +1079,7 @@ $.fn.minidialog = function(args) {
 
     oak.minidialog.then(args);
 };
-oak.minidialog.then = function(args) {
+oak.minidialog.then = function (args) {
     if (args === false)
         return $.toast().reset('all');
 
@@ -1145,8 +1143,8 @@ oak.minidialog.then = function(args) {
         oak.minidialog.core(Arr[i]);
     };
 };
-oak.minidialog.core = function(args) {
-    window.setTimeout(function() {
+oak.minidialog.core = function (args) {
+    window.setTimeout(function () {
         $.toast({
             text: args.value,
             icon: args.icon,
@@ -1159,16 +1157,16 @@ oak.minidialog.core = function(args) {
         });
     }, args.delay);
 };
-oak.minidialog.reset = function() {
+oak.minidialog.reset = function () {
     return $.toast().reset('all');
 }
 
-$.gridSetup = function(args) {
+$.gridSetup = function (args) {
     oakdef.gridSetup = {};
     $.extend(oakdef.gridSetup, args);
 }
 
-$.fn.grid = function(args) {
+$.fn.grid = function (args) {
     if (!oak.jsGrid)
         oak.ajaxget({
             url: SV.host + SV.DependencyRootPath + 'JsGrid/jsgrid.oak.min.js',
@@ -1186,7 +1184,7 @@ $.fn.grid = function(args) {
     else
         return this.grid_then(args);
 };
-$.fn.grid_then = function(args) {
+$.fn.grid_then = function (args) {
     var this_id = this[0].id,
         DS = {},               //<--- Collect source fetched from server or args.source, Contains 2 constructor(Scheme,Data)---<<
         CONF = {},             //<--- Grid configuration ---<<
@@ -1222,15 +1220,15 @@ $.fn.grid_then = function(args) {
         DS.Scheme = [];
         DS.Scheme[0] = {};
         DS.Data = [];
-        $.each(args.source[0], function(key, val) {
+        $.each(args.source[0], function (key, val) {
             DS.Scheme[0][index] = key;
             index += 1;
         });
         index = 0;
-        $.each(args.source, function(key, val) {
+        $.each(args.source, function (key, val) {
             index_sub = 0;
             DS.Data[key] = {};
-            $.each(args.source[key], function(key2, val2) {
+            $.each(args.source[key], function (key2, val2) {
                 DS.Data[key][index_sub] = val2;
                 index_sub += 1;
             });
@@ -1247,7 +1245,7 @@ $.fn.grid_then = function(args) {
         this[0].style.display = '';
 
 
-    let getColType = function(value, key) {
+    let getColType = function (value, key) {
         if (-1 < value.indexOf(',chk'))
             return 'checkbox';
         else if (-1 < value.indexOf(',num'))
@@ -1260,16 +1258,16 @@ $.fn.grid_then = function(args) {
             return 'text';
 
     };
-    let getColWidth = function(a, b) {
+    let getColWidth = function (a, b) {
         return -1 < a.indexOf(",w") ? substr(a, ",w", ",").replace("w", "") : -1 < a.indexOf(",chk") ? "80" : b ? b : oakdef.gridcolumnwidth
     };
-    let getColAlign = function(a) {
+    let getColAlign = function (a) {
         return -1 < a.indexOf(',cen') ? 'center' : -1 < a.indexOf(',chk') ? 'center' : -1 < a.indexOf(',right') ? 'right' : 'left';
     };
-    let getCSS = function(a) {
+    let getCSS = function (a) {
         if (-1 < a.indexOf(',.')) return substr(a, ',.', ',').replace('.', '');
     };
-    let extendFieldsADJ = function(e) {
+    let extendFieldsADJ = function (e) {
         for (i = 0; i < args.fieldsADJ.length; i++) {
             var ajd = args.fieldsADJ[i];
 
@@ -1287,7 +1285,7 @@ $.fn.grid_then = function(args) {
         };
     };
     // <--- Add all field(DS.Scheme) to main SCHEME object (CN) ---<<
-    $.each(DS.Scheme[0], function(key, val) {
+    $.each(DS.Scheme[0], function (key, val) {
         var i = {};
         var usefor = val.split('^')[1] || val;
         i.name = key;
@@ -1321,7 +1319,7 @@ $.fn.grid_then = function(args) {
 
     if (args.updater) {
         oak.grid_update({ config: CONF, updater: args.updater, grid: this[0] });
-        CONF.rowClick = function(rowitemArray) {
+        CONF.rowClick = function (rowitemArray) {
             if (rowitemArray.event.target.type == 'button' ||
                 rowitemArray.event.target.tagName == 'A' ||
                 rowitemArray.event.target.tagName == 'BUTTON')
@@ -1336,7 +1334,7 @@ $.fn.grid_then = function(args) {
 
     args.inserter && oak.grid_inserter({ config: CONF, inserter: args.inserter, grid: this[0] });
     args.remover && oak.grid_remover({ config: CONF, remover: args.remover });
-    args.onrowclick && (CONF.rowClick = function(i, a, b) {
+    args.onrowclick && (CONF.rowClick = function (i, a, b) {
         if (i.event.target.tagName === 'INPUT') return;
         else if (i.event.target.tagName === 'BUTTON') return;
         else if (i.event.target.tagName === 'A') return;
@@ -1345,7 +1343,7 @@ $.fn.grid_then = function(args) {
         args.onrowclick(i);
     });
 
-    CONF.getcolumnname = function(item) {
+    CONF.getcolumnname = function (item) {
         let newcolumn = {};
         for (i = 0; i < this.fields.length; i++) {
             let me = this.fields[i].title;
@@ -1367,7 +1365,7 @@ $.fn.grid_then = function(args) {
 
     if (args.useexternalsearch) {
         args.useexternalsearch.getsourcefrom = this[0];
-        CONF.onHeaderRendered = function() {
+        CONF.onHeaderRendered = function () {
             oak.grid.useExternalSearch(args.useexternalsearch);
         }
     }
@@ -1382,9 +1380,9 @@ $.fn.grid_then = function(args) {
 
     return this.jsGrid(CONF);
 };
-oak.grid_inserter = function(args) {
+oak.grid_inserter = function (args) {
 
-    let createFn = function() {
+    let createFn = function () {
         this.userconf = args.inserter;
         this.gridconf = args.config;
         this.grid = args.grid;
@@ -1396,7 +1394,7 @@ oak.grid_inserter = function(args) {
         this.construction();
     }
     createFn.prototype = {
-        addRefer: function() {
+        addRefer: function () {
             this.referFn = {};
             this.referFn.inputfileds = [];
             this.referFn.openDialog = this.openDialog;
@@ -1406,7 +1404,7 @@ oak.grid_inserter = function(args) {
             this.referFn.grid = this.grid;
             this.referFn.fields = this.gridconf.fields;
         },
-        createBtnOpen: function() {
+        createBtnOpen: function () {
             let btn;
             if (this.userconf.inserterbutton)
                 btn = oak.pureHtml(this.userconf.inserterbutton);
@@ -1422,18 +1420,18 @@ oak.grid_inserter = function(args) {
             }
 
             btn.referFn = this.referFn;
-            btn.addEventListener('click', function() {
+            btn.addEventListener('click', function () {
                 $(this.referFn.dialog).dialog({ show: true, title: 'เพิ่มข้อมูล' });
             });
         },
-        splitColumnsPerType: function() {
-            let insertcols = this.gridconf.fields.filter(function(item) {
+        splitColumnsPerType: function () {
+            let insertcols = this.gridconf.fields.filter(function (item) {
                 return item.forinsert === true;
             });
 
             this.columns = { insertcols: insertcols };
         },
-        createDialog: function() {
+        createDialog: function () {
             let dialog = document.createElement('div');
             let width = this.dialogwidth;
             dialog.style.width = width + 'px';
@@ -1443,20 +1441,20 @@ oak.grid_inserter = function(args) {
             this.referFn.dialog = dialog;
             return dialog;
         },
-        creatLine: function() {
+        creatLine: function () {
             let line = document.createElement('div');
             line.classList.add('line');
             line.classList.add('txt-2');
             return line;
         },
-        createTopic: function(column) {
+        createTopic: function (column) {
             let topic = document.createElement('label');
             topic.innerHTML = column.title;
             topic.style.width = this.topicwidth + 'px';
             topic.classList.add('topic');
             return topic;
         },
-        createTxtediter: function(column, templ) {
+        createTxtediter: function (column, templ) {
             let edit = document.createElement('input');
             edit.type = 'search';
             edit.my_data = column;
@@ -1486,7 +1484,7 @@ oak.grid_inserter = function(args) {
             }
             return edit;
         },
-        createDllediter: function(column, templ) {
+        createDllediter: function (column, templ) {
             let edit = document.createElement('select');
             edit.my_data = column;
             edit.classList.add('select-2');
@@ -1503,13 +1501,13 @@ oak.grid_inserter = function(args) {
             $(edit).dropdown(templ);
             return edit;
         },
-        createChkediter: function(column, templ) {
+        createChkediter: function (column, templ) {
             let edit = document.createElement('input');
             edit.type = 'checkbox';
             edit.my_data = column;
             edit.value = false;
             edit.text = false;
-            edit.addEventListener('change', function() {
+            edit.addEventListener('change', function () {
                 this.value = this.checked;
                 this.text = this.checked;
             });
@@ -1532,10 +1530,10 @@ oak.grid_inserter = function(args) {
 
             return edit;
         },
-        getItemTemplate: function(column) {
+        getItemTemplate: function (column) {
             let mytempl = [];
             if (this.userconf.itemtemplate)
-                mytempl = this.userconf.itemtemplate.filter(function(item) {
+                mytempl = this.userconf.itemtemplate.filter(function (item) {
                     return column.name == item.field || column.title == item.field;
                 });
 
@@ -1552,7 +1550,7 @@ oak.grid_inserter = function(args) {
             else if (mytempl[0].type !== 'dropdown')
                 return this.createTxtediter(column, mytempl[0]);
         },
-        createBtnsave: function() {
+        createBtnsave: function () {
             let save = document.createElement('input');
             save.classList.add('jsgrid-btnSave');
             save.classList.add('btn-blue');
@@ -1564,7 +1562,7 @@ oak.grid_inserter = function(args) {
             save.value = 'บันทึก';
             return save;
         },
-        onBtnsaveClicked: function() {
+        onBtnsaveClicked: function () {
             let objsInputs = {};
             let grid = this.referFn.grid;
             let dialog = this.referFn.dialog;
@@ -1615,15 +1613,15 @@ oak.grid_inserter = function(args) {
                 };
 
             let onsave = this.referFn.userconf.onsave;
-            userSaveFn = function() {
-                return new Promise(function(resolve, reject) {
+            userSaveFn = function () {
+                return new Promise(function (resolve, reject) {
                     objsInputs.resolve = resolve;
                     objsInputs.reject = reject;
                     onsave(objsInputs, fields);
                 });
             };
 
-            userSaveFn().then(function(resp) {
+            userSaveFn().then(function (resp) {
                 resp = objsInputs
 
                 let Arr = [];
@@ -1668,7 +1666,7 @@ oak.grid_inserter = function(args) {
                 oak.minidialog(resp);
             });
         },
-        checkRequiredInputs: function() {
+        checkRequiredInputs: function () {
             let requiredFileds = [];
             for (i = 0; i < this.inputfileds.length; i++) {
                 if (this.inputfileds[i].required && this.inputfileds[i].value == '')
@@ -1676,20 +1674,20 @@ oak.grid_inserter = function(args) {
             }
             return requiredFileds;
         },
-        createErrorMsg: function(inputs) {
+        createErrorMsg: function (inputs) {
             oak.minidialog({ icon: 'error', value: 'กรอกข้อมูลไม่ครบ' });
 
             for (i = 0; i < inputs.length; i++) {
                 inputs[i].classList.add('input-error');
             };
 
-            window.setTimeout(function() {
+            window.setTimeout(function () {
                 for (i = 0; i < inputs.length; i++) {
                     inputs[i].classList.remove('input-error');
                 };
             }, 9000);
         },
-        construction: function() {
+        construction: function () {
             let dialog = this.createDialog();
 
             for (cl = 0; cl < this.columns.insertcols.length; cl++) {
@@ -1710,9 +1708,9 @@ oak.grid_inserter = function(args) {
     };
     new createFn();
 };
-oak.grid_update = function(args) {
+oak.grid_update = function (args) {
 
-    let createFn = function() {
+    let createFn = function () {
         this.userconf = args.updater;
         this.gridconf = args.config;
         this.grid = args.grid;
@@ -1723,7 +1721,7 @@ oak.grid_update = function(args) {
         this.construction();
     }
     createFn.prototype = {
-        addRefer: function() {
+        addRefer: function () {
             this.referFn = {};
             this.referFn.openDialog = this.openDialog;
             this.referFn.inputfileds = [];
@@ -1737,7 +1735,7 @@ oak.grid_update = function(args) {
 
             this.gridconf.referFn = this.referFn;
         },
-        onRowclick: function(item, rowItemArray) {
+        onRowclick: function (item, rowItemArray) {
 
             let rowItem = rowItemArray.item;
             for (input = 0; input < this.inputfileds.length; input++) {
@@ -1784,21 +1782,21 @@ oak.grid_update = function(args) {
             this.dialog.dialog({ show: true, title: 'แก้ไขข้อมูล' });
 
         },
-        splitColumnsPerType: function() {
-            let updatecols = this.gridconf.fields.filter(function(item) {
+        splitColumnsPerType: function () {
+            let updatecols = this.gridconf.fields.filter(function (item) {
                 return item.forupdate === true;
             });
 
-            let readcols = this.gridconf.fields.filter(function(item) {
+            let readcols = this.gridconf.fields.filter(function (item) {
                 return item.forread === true;
             });
 
-            let hidecols = this.gridconf.fields.filter(function(item) {
+            let hidecols = this.gridconf.fields.filter(function (item) {
                 return item.forhide === true;
             });
             this.columns = { updatecols: updatecols, readcols: readcols, hidecols: hidecols };
         },
-        createDialog: function() {
+        createDialog: function () {
             let dialog = document.createElement('div');
             let width = this.dialogwidth;
             dialog.style.width = width + 'px';
@@ -1808,20 +1806,20 @@ oak.grid_update = function(args) {
             this.referFn.dialog = $(dialog);
             return dialog;
         },
-        creatLine: function() {
+        creatLine: function () {
             let line = document.createElement('div');
             line.classList.add('line');
             line.classList.add('txt-2');
             return line;
         },
-        createTopic: function(column) {
+        createTopic: function (column) {
             let topic = document.createElement('label');
             topic.innerHTML = column.title;
             topic.style.width = this.topicwidth + 'px';
             topic.classList.add('topic');
             return topic;
         },
-        createTxtediter: function(column, templ) {
+        createTxtediter: function (column, templ) {
             let edit = document.createElement('input');
             edit.type = templ.type || 'search';
             edit.my_data = column;
@@ -1851,7 +1849,7 @@ oak.grid_update = function(args) {
             }
             return edit;
         },
-        createDllediter: function(column, templ) {
+        createDllediter: function (column, templ) {
             let edit = document.createElement('select');
             edit.my_data = column;
             edit.classList.add('select-2');
@@ -1868,13 +1866,13 @@ oak.grid_update = function(args) {
             $(edit).dropdown(templ);
             return edit;
         },
-        createChkediter: function(column, templ) {
+        createChkediter: function (column, templ) {
             let edit = document.createElement('input');
             edit.type = 'checkbox';
             edit.my_data = column;
             edit.value = false;
             edit.text = false;
-            edit.addEventListener('change', function() {
+            edit.addEventListener('change', function () {
                 this.value = this.checked;
                 this.text = this.checked;
             });
@@ -1897,17 +1895,17 @@ oak.grid_update = function(args) {
 
             return edit;
         },
-        createlbl: function(column) {
+        createlbl: function (column) {
             let readonly = document.createElement('label');
             readonly.classList.add('read');
             readonly.my_data = column;
             readonly.style.width = '100%';
             return readonly;
         },
-        getItemTemplate: function(column) {
+        getItemTemplate: function (column) {
             let mytempl = [];
             if (this.userconf.itemtemplate)
-                mytempl = this.userconf.itemtemplate.filter(function(item) {
+                mytempl = this.userconf.itemtemplate.filter(function (item) {
                     return column.name == item.field || column.title == item.field;
                 });
 
@@ -1924,21 +1922,21 @@ oak.grid_update = function(args) {
             else if (mytempl[0].type !== 'dropdown')
                 return this.createTxtediter(column, mytempl[0]);
         },
-        createBtnclose: function() {
+        createBtnclose: function () {
             let save = document.createElement('input');
             save.classList.add('jsgrid-btnSave');
             save.classList.add('btn-blue');
             save.type = 'button';
 
             save.referFn = this.referFn;
-            save.addEventListener('click', function() {
+            save.addEventListener('click', function () {
                 $(this.referFn.dialog).dialog('close');
             });
 
             save.value = 'ปิด';
             return save;
         },
-        createBtnsave: function() {
+        createBtnsave: function () {
             let save = document.createElement('input');
             save.classList.add('jsgrid-btnSave');
             save.classList.add('btn-blue');
@@ -1949,7 +1947,7 @@ oak.grid_update = function(args) {
             save.value = 'บันทึก';
             return save;
         },
-        onBtnsaveClicked: function() {
+        onBtnsaveClicked: function () {
             let objsInputs = {};
             let grid = this.referFn.grid;
             let dialog = this.referFn.dialog;
@@ -2001,15 +1999,15 @@ oak.grid_update = function(args) {
 
             let thisrow = this.referFn.thisrow;
             let onsave = this.referFn.userconf.onsave;
-            userSaveFn = function() {
-                return new Promise(function(resolve, reject) {
+            userSaveFn = function () {
+                return new Promise(function (resolve, reject) {
                     objsInputs.resolve = resolve;
                     objsInputs.reject = reject;
                     onsave(objsInputs, fields);
                 });
             };
 
-            userSaveFn().then(function(resp) {
+            userSaveFn().then(function (resp) {
                 let Arr = [];
                 if (!resp) Arr.push({});
                 else if (resp.constructor === Array) Arr = resp;
@@ -2043,7 +2041,7 @@ oak.grid_update = function(args) {
                 $(grid).jsGrid('updateItem', thisrow, newItem);
                 $(dialog).dialog('close');
 
-            }).catch(function(resp) {
+            }).catch(function (resp) {
                 let prevDialog_icon = oakdef.dialog_icon;
                 oakdef.dialog_icon = 'error';
                 oak.minidialog(resp);
@@ -2053,7 +2051,7 @@ oak.grid_update = function(args) {
             });
 
         },
-        checkRequiredInputs: function() {
+        checkRequiredInputs: function () {
             let requiredFileds = [];
             for (i = 0; i < this.inputfileds.length; i++) {
                 if (this.inputfileds[i].required && this.inputfileds[i].value == '')
@@ -2061,19 +2059,19 @@ oak.grid_update = function(args) {
             }
             return requiredFileds;
         },
-        createErrorMsg: function(inputs) {
+        createErrorMsg: function (inputs) {
             oak.minidialog({ icon: 'error', value: 'กรอกข้อมูลไม่ครบ' });
             for (i = 0; i < inputs.length; i++) {
                 inputs[i].classList.add('input-error');
             };
 
-            window.setTimeout(function() {
+            window.setTimeout(function () {
                 for (i = 0; i < inputs.length; i++) {
                     inputs[i].classList.remove('input-error');
                 };
             }, 9000);
         },
-        construction: function() {
+        construction: function () {
             let dialog = this.createDialog();
             let btnsave = this.userconf.onsave ?
                 this.createBtnsave() : this.createBtnclose();
@@ -2111,17 +2109,17 @@ oak.grid_update = function(args) {
     };
     new createFn();
 };
-oak.grid_remover = function(args) {
+oak.grid_remover = function (args) {
     let fields = args.config.fields;
     fields[fields.length] = { type: "control", modeSwitchButton: true, editButton: false, width: '50', align: "left" };
     args.config.onsave_delete = args.remover.onsave;
 };
 
-oakfn.set_grid_filter_autocomplete = function(data, autocomplete_list) {
+oakfn.set_grid_filter_autocomplete = function (data, autocomplete_list) {
     let list = {};
-    $.each(autocomplete_list, function(key, val) {
-        list[val.name] = data.reduce(function(memo, e1) {
-            var matches = memo.filter(function(e2) {
+    $.each(autocomplete_list, function (key, val) {
+        list[val.name] = data.reduce(function (memo, e1) {
+            var matches = memo.filter(function (e2) {
                 return e1[val.name] === e2;
             });
             if (!matches.length) memo.push(e1[val.name]);
@@ -2131,12 +2129,12 @@ oakfn.set_grid_filter_autocomplete = function(data, autocomplete_list) {
     return list;
 };
 oak.grid.gridcontroller = {
-    loadData: function(source) {
+    loadData: function (source) {
         if (!source)
             return jsGrid.oakfn[this.id].data
         else {
             STR = 'jsGrid.oakfn[this.id].data.filter(function (e) { return ';
-            $.each(source, function(i, v) {
+            $.each(source, function (i, v) {
                 STR += 'number' === typeof v ? "e[" + i + "] == " + v
                     : 'boolean' === typeof v ? "e[" + i + "] == " + v
                         : "-1 < e[" + i + "].indexOf('" + v + "')";
@@ -2150,8 +2148,8 @@ oak.grid.gridcontroller = {
     }
 };
 
-oak.grid.useExternalSearch = function(args) {
-    var gridSearchfields = function(args) {
+oak.grid.useExternalSearch = function (args) {
+    var gridSearchfields = function (args) {
         if (args.at) args.at = oak.pureHtml(args.at);
         else args.at = this;
         if (!args.at === undefined) return false;
@@ -2170,7 +2168,7 @@ oak.grid.useExternalSearch = function(args) {
     gridSearchfields.prototype = {
         source: [],
         gridSearchColumns: [],
-        getSource: function(args) {
+        getSource: function (args) {
             if (!args || !args.getsourcefrom)
                 return;
 
@@ -2184,32 +2182,32 @@ oak.grid.useExternalSearch = function(args) {
                 this.avaliablefields = args.fields;
 
         },
-        renderFields: function(args) {
-            this.createLine = function() {
+        renderFields: function (args) {
+            this.createLine = function () {
                 var line = document.createElement('div');
                 line.classList.add('row');
                 $(line).addClass(args.linecss);
                 return line;
             }
-            this.createSubLine = function(i) {
+            this.createSubLine = function (i) {
                 var sub = document.createElement('div');
                 var stdcss = ' bar pr-3';
                 $(sub).addClass(args.subfieldcss + stdcss);
                 return sub;
             }
-            this.createField = function(item) {
+            this.createField = function (item) {
                 var eleType = item.type || 'text';
                 var field = document.createElement('input');
                 field.classList.add('flex-grow');
                 field.type = eleType;
                 field.myGridSearchColumn = this.gridSearchColumns[item.name];
-                field.addEventListener('blur', function() {
+                field.addEventListener('blur', function () {
                     if (this.value.length > 0)
                         this.myTopic.classList.add('fill');
                     else
                         this.myTopic.classList.remove('fill');
                 });
-                field.addEventListener('keyup', function() {
+                field.addEventListener('keyup', function () {
                     if (this.value.length > 0)
                         this.myTopic.classList.add('fill');
                     else
@@ -2220,19 +2218,19 @@ oak.grid.useExternalSearch = function(args) {
                 });
 
                 if (item.filter) {
-                    var setSelectSource = function() {
+                    var setSelectSource = function () {
                         var itemIndex = item.name;
-                        var useItem = jsGrid.oakfn[args.getsourcefrom.id].data.map(function(item) {
+                        var useItem = jsGrid.oakfn[args.getsourcefrom.id].data.map(function (item) {
                             return item[itemIndex]
                         });
-                        var uniqueItem = useItem.filter(function(item, i, ar) {
+                        var uniqueItem = useItem.filter(function (item, i, ar) {
                             return ar.indexOf(item) === i
                         });
 
                         $(field).dropdown({
                             source: uniqueItem,
                             fixposition: true,
-                            onselected: function(evt) {
+                            onselected: function (evt) {
                                 this.myGridSearchColumn.value = evt.newvalue;
                                 $(this.myGridSearchColumn).trigger('input');
                             }
@@ -2243,10 +2241,10 @@ oak.grid.useExternalSearch = function(args) {
                 $(field).addClass(args.fieldcss);
                 return field;
             };
-            this.createField.addRefer = function(me, myRefer) {
+            this.createField.addRefer = function (me, myRefer) {
                 me.myTopic = myRefer;
             };
-            this.createTopic = function(item) {
+            this.createTopic = function (item) {
                 var label = document.createElement('label');
                 label.innerHTML = item.topics;
                 label.classList.add('oak-searchf-topic')
@@ -2254,7 +2252,7 @@ oak.grid.useExternalSearch = function(args) {
 
                 return label;
             };
-            this.build = function() {
+            this.build = function () {
                 var line = this.createLine();
 
                 for (i = 0; i < this.source.length; i++) {
@@ -2281,7 +2279,7 @@ oak.grid.useExternalSearch = function(args) {
             //<-- Launch --<<
             this.build();
         },
-        getFieldsPerRow: function(args) {
+        getFieldsPerRow: function (args) {
             if (args.fieldsperrow === 1)
                 args.subfieldcss += ' col-12';
             else if (args.fieldsperrow === 2)
@@ -2295,7 +2293,7 @@ oak.grid.useExternalSearch = function(args) {
             else
                 args.fieldcss += ' col-1';
         },
-        getGridSearchColumn: function() {
+        getGridSearchColumn: function () {
             this.gridSearchColumns = $(args.getsourcefrom).find('.jsgrid-filter-row>td>input');
         }
     };
@@ -2303,7 +2301,7 @@ oak.grid.useExternalSearch = function(args) {
     new gridSearchfields(args);
 }
 
-$.fn.upload = function(args, event) {
+$.fn.upload = function (args, event) {
     oak.upload.core(this[0], args);
 
     if (typeof args === 'string') {
@@ -2328,7 +2326,7 @@ $.fn.upload = function(args, event) {
     };
     return this;
 };
-oak.upload.core = function(me, args) {
+oak.upload.core = function (me, args) {
     //<--me.displayfileinfo     = Files Layout --<<
     //<--me.myuploadEle         = Files Input ---<<
     //<--me.myuploadEle.myfiles = Files Collection(Form Data) ---<<
@@ -2341,7 +2339,7 @@ oak.upload.core = function(me, args) {
     let accept = args.accept || null;
     let myfunction = { onsuccess: onsuccess, onerror: onerror, source: source }
     let responseto = oak.pureHtml(args.responseto);
-    let createFormData = function() {
+    let createFormData = function () {
         formData = new FormData();
         let myuploadEle = me.myuploadEle.myfiles;
         for (i = 0; i < myuploadEle.length; i++) {
@@ -2351,7 +2349,7 @@ oak.upload.core = function(me, args) {
         }
         return formData;
     };
-    let setDisplayFileInfo = function(data) {
+    let setDisplayFileInfo = function (data) {
         data.type = data.type ? data.type.replace('application/', '') : '';
 
         let extension = data.name.split('.').pop().toLowerCase();
@@ -2382,26 +2380,26 @@ oak.upload.core = function(me, args) {
             removebtn.onremove = me.uploadFn.onremove;
             removebtn.filename = data.name;
             removebtn.me = me;
-            removebtn.addEventListener('click', function() {
+            removebtn.addEventListener('click', function () {
                 let btn = this;
-                let remove = function() {
+                let remove = function () {
                     //  for (i = 0; i < me._files.length; i++) {
                     // if (me._files[i].name === btn.filename) {
-                    btn.onremove(me._files[i]).then(function(result) {
+                    btn.onremove(me._files[i]).then(function (result) {
                         if (result && result.errormessage)
                             return oak.minidialog({ icon: 'error', value: result.errormessage });
 
                         btn.parentNode.parentNode.removeChild(btn.parentNode);
 
                         if (btn.myuploadEle.myfiles.length)
-                            btn.myuploadEle.myfiles = btn.myuploadEle.myfiles.filter(function(item) {
+                            btn.myuploadEle.myfiles = btn.myuploadEle.myfiles.filter(function (item) {
                                 return item.name != btn.filename;
                             });
 
-                        me.filesName = me.filesName.filter(function(name) {
+                        me.filesName = me.filesName.filter(function (name) {
                             return name != btn.filename;
                         });
-                        me._files = me._files.filter(function(item) {
+                        me._files = me._files.filter(function (item) {
                             return item.name != btn.filename;
                         });
                     });
@@ -2429,7 +2427,7 @@ oak.upload.core = function(me, args) {
 
         if (data.allowdownload) {
             filename.classList.add('download');
-            filename.addEventListener('click', function() {
+            filename.addEventListener('click', function () {
                 let data = this.downloadInfo;
 
                 if (data.path && (!data.uploadto || !data.containername)) {
@@ -2483,7 +2481,7 @@ oak.upload.core = function(me, args) {
         //<-- use to indicates the URL( for Downloading) when click on a File's Name --<<      
         filename.downloadInfo = data;
     };
-    let setDisplayEmpty = function() {
+    let setDisplayEmpty = function () {
 
         let line = document.createElement('div');
         let message = document.createElement('lable');
@@ -2497,12 +2495,12 @@ oak.upload.core = function(me, args) {
         me.displayfileinfo.append(line);
         me.isEmptyFile = true;
     }
-    let isDuplicateFile = function(newFilename) {
-        return me.filesName.filter(function(i) {
+    let isDuplicateFile = function (newFilename) {
+        return me.filesName.filter(function (i) {
             return i === newFilename
         });
     };
-    let createDiscription = function() {
+    let createDiscription = function () {
         let maxfile = args.maxfileamount || oakdef.upload_maxfile_amount;
         let maxsize = args.maxfilesize || oakdef.upload_maxfile_size
         let div = document.createElement('div');
@@ -2513,7 +2511,7 @@ oak.upload.core = function(me, args) {
 
     me.uploadFn = {};
     me.onchange = args.onchange || $.noop;
-    me.uploadFn.createFilesLayout = function() {
+    me.uploadFn.createFilesLayout = function () {
         if (!responseto) {
             responseto = document.createElement('div');
             let witdh = me.args.width || me.getBoundingClientRect().width;
@@ -2539,7 +2537,7 @@ oak.upload.core = function(me, args) {
         } else
             me.displayfileinfo.style.display = 'none';
     };
-    me.uploadFn.createUploader = function() {
+    me.uploadFn.createUploader = function () {
         me.args = args;
 
         if (me.fnAlreadyExists)
@@ -2557,7 +2555,7 @@ oak.upload.core = function(me, args) {
         inputFile.myfiles = [];
         inputFile.maxFilesAmount = me.args.maxfileamount || oakdef.upload_maxfile_amount;
         inputFile.maxFilesSize = (me.args.maxfilesize || oakdef.upload_maxfile_size);
-        inputFile.addEventListener('change', function() {
+        inputFile.addEventListener('change', function () {
             if (!this.value) {
                 this.value = "";
                 return oak.minidialog({ icon: 'error', value: 'ไม่สามารถเข้าถึงไฟล์ดังกล่าว' });
@@ -2603,7 +2601,7 @@ oak.upload.core = function(me, args) {
         me.myuploadEle = inputFile;
         me.tagName === 'DIV' && me.classList.add('uploadinput');
         me.tagName === 'DIV' && me.classList.add('bar-item');
-        me.addEventListener('click', function() { this.myuploadEle.click() });
+        me.addEventListener('click', function () { this.myuploadEle.click() });
         me.tagName === 'DIV' && (me.innerHTML = me.args.placeholder || oakdef.upload_placeholder);
         me._files = [];
         me.filesName = [];
@@ -2613,18 +2611,18 @@ oak.upload.core = function(me, args) {
         me.fnAlreadyExists = true;
         me.tagName === 'DIV' && me.appendChild(createDiscription());
 
-        let dragover = function(e) {
+        let dragover = function (e) {
             this.classList.add('uploadinput-dragover');
             e.preventDefault();
         };
-        let dragenter = function(e) {
+        let dragenter = function (e) {
             e.preventDefault();
         };
-        let dragleave = function(e) {
+        let dragleave = function (e) {
             this.classList.remove('uploadinput-dragover');
             e.preventDefault();
         };
-        let drop = function(e) {
+        let drop = function (e) {
             this.classList.remove('uploadinput-dragover');
             if (e.dataTransfer.files[0]) {
                 this.myuploadEle.myfiles.push(e.dataTransfer.files[0]);
@@ -2646,22 +2644,22 @@ oak.upload.core = function(me, args) {
         me.addEventListener("drop", drop);
         me.parentNode.insertBefore(inputFile, me.nextSibling);
     };
-    me.uploadFn.clearLayout = function() {
+    me.uploadFn.clearLayout = function () {
         me.displayfileinfo.innerHTML = '';
     };
-    me.uploadFn.clearFiles = function() {
+    me.uploadFn.clearFiles = function () {
         if (!me.myuploadEle)
             return;
         me.myuploadEle.myfiles = [];
         me.filesName = [];
         me._files = [];
     };
-    me.uploadFn.uploading = function(event) {
+    me.uploadFn.uploading = function (event) {
         let params = {};
         let onuploaded = me.args.onuploaded || event.onuploaded;
-        let deletefiles = function() {
+        let deletefiles = function () {
             let file = me.uploadFn.getFilesChanged().deletedfiles;
-            return $.map(file, function(item) {
+            return $.map(file, function (item) {
                 return item.path
             });
         };
@@ -2671,7 +2669,7 @@ oak.upload.core = function(me, args) {
         params.uploadto = me.args.uploadto || event.uploadto;
         params.containername = me.args.containername || event.containername;
         params.server = me.args.server || event.server || '';
-        params.onsuccess = function(resp) {
+        params.onsuccess = function (resp) {
             if (resp.success) {
                 let item = $.extend(me.uploadFn.getFilesChanged(), resp);
                 onuploaded(item);
@@ -2696,7 +2694,7 @@ oak.upload.core = function(me, args) {
         }
         oak.ajaxpost(params);
     };
-    me.uploadFn.setfilesinfo = function(data) {
+    me.uploadFn.setfilesinfo = function (data) {
         //<-- clear previous data and layout --<<
         me.uploadFn.clearLayout();
         me.uploadFn.clearFiles();
@@ -2729,35 +2727,35 @@ oak.upload.core = function(me, args) {
                 setDisplayFileInfo(I);
             }
     }
-    me.uploadFn.onremove = function(item) {
+    me.uploadFn.onremove = function (item) {
         let params = {};
         params.onremoved = me.args.onremoved || $.noop;
         params.onremovefaild = me.args.onremovefaild || $.noop;
 
-        params.onremoving = function() {
-            return new Promise(function(resolve) {
-                let fn = me.args.onremoving || function(item) { return item }
+        params.onremoving = function () {
+            return new Promise(function (resolve) {
+                let fn = me.args.onremoving || function (item) { return item }
                 resolve(fn(item));
             });
         };
 
-        return new Promise(function(resolve) {
+        return new Promise(function (resolve) {
             params.onremoving(item)
-                .then(function(result) {
+                .then(function (result) {
                     resolve(params.onremoved(result));
                 })
-                .catch(function(result) {
+                .catch(function (result) {
                     resolve(params.onremovefaild(result));
                 });
         });
     };
-    me.uploadFn.deleteUploadedFile = function(event) {
+    me.uploadFn.deleteUploadedFile = function (event) {
         let params = {};
         params.url = WEBAPI.host + WEBAPI.Uploadfn;
         params.deletepath = me.args.deletepath || event.deletepath;
         params.containername = me.args.containername || event.containername;
 
-        params.onsuccess = function(result) {
+        params.onsuccess = function (result) {
             (me.args.ondeleted || event.ondeleted)(result);
         }
         oak.ajaxpost(params);
@@ -2773,28 +2771,28 @@ oak.upload.core = function(me, args) {
         }
 
     };
-    me.uploadFn.getFilesChanged = function() {
+    me.uploadFn.getFilesChanged = function () {
         let oldf = me.filesNameAsStart;
         let newf = me.filesName;
 
         // let deletedfilesname = oldf.filter(x => !newf.includes(x));
-        let deletedfilesname = oldf.filter(function(item) {
+        let deletedfilesname = oldf.filter(function (item) {
             return !newf.includes(item)
         });
 
         //let newfilesname = newf.filter(x => !oldf.includes(x));
-        let newfilesname = newf.filter(function(item) {
+        let newfilesname = newf.filter(function (item) {
             return !oldf.includes(item)
         })
 
 
-        let newuploadfiles = $.map(me.myuploadEle.myfiles, function(item) {
+        let newuploadfiles = $.map(me.myuploadEle.myfiles, function (item) {
             return item.name;
         });
 
         //let reuploadfilesname = newuploadfiles.filter(x => !newfilesname.includes(x));
 
-        let reuploadfilesname = newuploadfiles.filter(function(item) {
+        let reuploadfilesname = newuploadfiles.filter(function (item) {
             return !newfilesname.includes(item)
         });
 
@@ -2803,14 +2801,14 @@ oak.upload.core = function(me, args) {
             newfilesname = newfilesname.concat(reuploadfilesname);
         };
 
-        let deletedfiles = me.filesAsStart.filter(function(item) {
+        let deletedfiles = me.filesAsStart.filter(function (item) {
             return deletedfilesname.indexOf(item.name) > -1
         });
-        let newfiles = me._files.filter(function(item) {
+        let newfiles = me._files.filter(function (item) {
             return newuploadfiles.indexOf(item.name) > -1
         });
         let currentfiles = me._files;
-        let logs = function() {
+        let logs = function () {
             if (deletedfiles.length)
                 for (i = 0; i < deletedfiles.length; i++) { deletedfiles[i].event = 'delete'; }
 
@@ -2831,7 +2829,7 @@ oak.upload.core = function(me, args) {
     };
 };
 
-$.fn.excelimport = function(args) {
+$.fn.excelimport = function (args) {
     if (!args)
         args = {}
     if (!args.onsuccess)
@@ -2855,8 +2853,8 @@ $.fn.excelimport = function(args) {
 
     oak.excelimport.core(args);
 };
-oak.excelimport.core = function(args) {
-    let coreFN = function() {
+oak.excelimport.core = function (args) {
+    let coreFN = function () {
         this.args = args;
         this.clearRefer();
         this.createFileInputer();
@@ -2865,7 +2863,7 @@ oak.excelimport.core = function(args) {
     }
 
     coreFN.prototype = {
-        clearRefer: function() {
+        clearRefer: function () {
             if (!window.excelimport)
                 window.excelimport = {};
 
@@ -2877,7 +2875,7 @@ oak.excelimport.core = function(args) {
             window.excelimport.args = this.args;
 
         },
-        createFileInputer: function() {
+        createFileInputer: function () {
             if (window.excelimport.createFileInputer)
                 return;
 
@@ -2893,7 +2891,7 @@ oak.excelimport.core = function(args) {
             window.excelimport.createFileInputer = true;
 
         },
-        createDialog: function() {
+        createDialog: function () {
             if (window.excelimport.createDialog)
                 return;
 
@@ -2909,7 +2907,7 @@ oak.excelimport.core = function(args) {
             dialog.classList.add('p10')
             select.classList.add('select-2');
             select.style.width = '350px';
-            select.addEventListener('change', function() {
+            select.addEventListener('change', function () {
                 window.excelimport.dialogChooseSheet.dialog('hide');
                 window.excelimport.args.sheet = this.value;
 
@@ -2929,7 +2927,7 @@ oak.excelimport.core = function(args) {
 
             window.excelimport.createDialog = true;
         },
-        setDialogContent: function(source) {
+        setDialogContent: function (source) {
             window.excelimport.selectChooseSheet
                 .dropdown({
                     source: source,
@@ -2939,8 +2937,8 @@ oak.excelimport.core = function(args) {
 
             window.excelimport.dialogChooseSheet.dialog('show');
         },
-        getExcelSheets: function(excelFile, sheetName) {
-            return new Promise(function(resolve) {
+        getExcelSheets: function (excelFile, sheetName) {
+            return new Promise(function (resolve) {
                 if (sheetName)
                     return resolve([sheetName]);
                 if (excelFile.name.toLowerCase().indexOf('.xlsx') === 0)
@@ -2949,23 +2947,23 @@ oak.excelimport.core = function(args) {
                 let result = [];
                 let sheets;
                 let zip = new JSZip();
-                zip.loadAsync(excelFile, { base64: true }).then(function(zip) {
+                zip.loadAsync(excelFile, { base64: true }).then(function (zip) {
                     let xlsx = zip.file('xl/workbook.xml')
                     if (!xlsx) return resolve([]);
 
                     xlsx.async("string")
-                        .then(function(data) {
+                        .then(function (data) {
                             sheets = data.split('name=');
                             for (sheet = 1; sheet < sheets.length; sheet++) {
                                 let name = sheets[sheet].split(' sheetId')[0].replace(/["']/g, "")
                                 result.push(name);
                             }
                             return resolve(result);
-                        }).catch(function() { return resolve(result); });
+                        }).catch(function () { return resolve(result); });
                 });
             });
         },
-        onChange: function() {
+        onChange: function () {
             let args = window.excelimport.args;
             let file;
 
@@ -2979,14 +2977,14 @@ oak.excelimport.core = function(args) {
 
             window.excelimport
                 .getExcelSheets(file, args.sheet)
-                .then(function(sheet) {
+                .then(function (sheet) {
 
 
                     if (sheet.constructor === Array) {
                         if (sheet.length === 0)//<-- If JSZip.js cannot read the excel file--<<
                             args.sheet = ''
                         else {
-                            sheet = sheet.filter(function(item) {
+                            sheet = sheet.filter(function (item) {
                                 if (!item.includes('</'))
                                     return item;
                             })
@@ -3017,17 +3015,17 @@ oak.excelimport.core = function(args) {
 
                 });
         },
-        Launching: function() {
+        Launching: function () {
             window.excelimport.fileInput.click();
         }
     }
     new coreFN();
 }
 
-$.fn.emailing = function(args) {
+$.fn.emailing = function (args) {
     args.Emailingfn = true;
 
-    let objectToArry = function(obj) {
+    let objectToArry = function (obj) {
         if (!obj) return '';
 
         if (obj[0] && typeof obj[0] === 'object') {
@@ -3050,7 +3048,7 @@ $.fn.emailing = function(args) {
     oak.ajaxpost(args);
 };
 
-$.fn.browser = function() {
+$.fn.browser = function () {
     var ua = navigator.userAgent, tem, M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
     if (/trident/i.test(M[1])) {
         tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
@@ -3068,7 +3066,7 @@ $.fn.browser = function() {
     };
 };
 
-$.fn.datebox = function(args) {
+$.fn.datebox = function (args) {
     if (this[0].dataset.layout && this[0].dataset.layout === 'inline')
         return this.dateboxinline(args);
 
@@ -3117,10 +3115,10 @@ $.fn.datebox = function(args) {
 
 
 };
-$.fn.dateboxinline = function(args) {
+$.fn.dateboxinline = function (args) {
     this[0].type = "text";
     this[0].autocomplete = "off";
-    this[0].addEventListener('keydown', function(evt) {
+    this[0].addEventListener('keydown', function (evt) {
         if ([8, 9, 37, 39].indexOf(evt.which) > - 1)
             return true;
 
@@ -3129,7 +3127,7 @@ $.fn.dateboxinline = function(args) {
             evt.preventDefault();
 
     });
-    this[0].addEventListener('keyup', function(evt) {
+    this[0].addEventListener('keyup', function (evt) {
         if (this.value.length === 2 && evt.which !== 8)
             this.value += '/';
         else if (this.value.length === 5 && evt.which !== 8)
@@ -3154,7 +3152,7 @@ $.fn.dateboxinline = function(args) {
             }
         }
     });
-    this[0].addEventListener('focusout', function() {
+    this[0].addEventListener('focusout', function () {
         if (this.value.length === 8 || this.value.length === 9) {
             let i = this.value.split('/');
             i[0].length === 1 && i[0] > 0 && (i[0] = '0' + i[0]);
@@ -3171,7 +3169,7 @@ $.fn.dateboxinline = function(args) {
     });
 };
 
-$.fn.refer = function(refername, source) {
+$.fn.refer = function (refername, source) {
     if (source === undefined)
         return this[0][refername];
 
@@ -3182,7 +3180,7 @@ $.fn.refer = function(refername, source) {
 
     return this;
 };
-$.fn.referTo = function(refername, destination) {
+$.fn.referTo = function (refername, destination) {
     if (destination[0])
         destination[0][refername] = this[0];
     else
@@ -3191,9 +3189,9 @@ $.fn.referTo = function(refername, destination) {
     return this;
 };
 
-$.fn.dialog = function(args) {
+$.fn.dialog = function (args) {
     let me = this;
-    let create = function() {
+    let create = function () {
         this.get_Bootstrap_modal();
         this.args = args || {};
         this.me = me;
@@ -3203,7 +3201,7 @@ $.fn.dialog = function(args) {
     }
 
     create.prototype = {
-        validate_parameters: function() {
+        validate_parameters: function () {
             // <-- parametor is string --<<
             if (typeof this.args == 'string') {
                 this.modal_string_method();
@@ -3254,7 +3252,7 @@ $.fn.dialog = function(args) {
             // <-- title --<<
             this.title = this.args.title || this.me[0].title || '';
         },
-        get_Bootstrap_modal: function() {
+        get_Bootstrap_modal: function () {
             if (!oak.modal)
                 oak.ajaxget({
                     url: SV.host + SV.DependencyRootPath + '/Modal/modal.min.js',
@@ -3262,7 +3260,7 @@ $.fn.dialog = function(args) {
                     ajaxconfig: { datatype: 'script' }
                 });
         },
-        modal_string_method: function() {
+        modal_string_method: function () {
             if (this.args === 'open')//<-- for older version --<<
                 this.args = 'show';
             else if (this.args === 'close')//<-- for older version --<<
@@ -3278,13 +3276,13 @@ $.fn.dialog = function(args) {
 
 
         },
-        outline_create: function() {
+        outline_create: function () {
             let div = document.createElement("div");
             div.classList.add('modal');
             div.classList.add(this.args.effect || oakdef.dialog_effect);
             return div;
         },
-        outline_position: function() {
+        outline_position: function () {
             outline = this.me[0].my_outline;
             let x = this.position.x;
             let y = this.position.y;
@@ -3325,18 +3323,18 @@ $.fn.dialog = function(args) {
             outline.style.left = x + 'px';
             outline.style.top = y + scollheight + 'px';
         },
-        dialog_create: function() {
+        dialog_create: function () {
             let div = document.createElement("div");
             //div.classList.add('modal-dialog');
             return div;
         },
-        content_create: function() {
+        content_create: function () {
             let div = document.createElement("div");
             div.classList.add('modal-content');
             div.style.display = ' table-cell'
             return div;
         },
-        header_create: function() {
+        header_create: function () {
             let header = document.createElement("div");
             header.classList.add('modal-header');
 
@@ -3355,12 +3353,12 @@ $.fn.dialog = function(args) {
 
             return header;
         },
-        body_create: function() {
+        body_create: function () {
             let body = document.createElement("div");
             body.classList.add('modal-body');
             return body;
         },
-        me_prepare: function() {
+        me_prepare: function () {
             this.me[0].alreadyhandle = true;
             this.me[0].style.display = null;
             this.me[0].dataset.draggable = this.draggable;
@@ -3368,7 +3366,7 @@ $.fn.dialog = function(args) {
             this.me[0].dataset.show = this.show;
             this.me[0].outline_position = this.outline_position;
         },
-        me_modal: function(outline) {
+        me_modal: function (outline) {
             let $outline = $(outline);
             $outline
                 .modal({
@@ -3379,7 +3377,7 @@ $.fn.dialog = function(args) {
             if (this.draggable)
                 $outline.drag({ drawer: outline.drawer });
         },
-        construction: function() {
+        construction: function () {
             if (typeof this.args == 'string')
                 return;
 
@@ -3411,7 +3409,7 @@ $.fn.dialog = function(args) {
     return me;
 };
 
-$.fn.drag = function(args) {
+$.fn.drag = function (args) {
     if (!args.drawer)
         return;
 
@@ -3431,7 +3429,7 @@ $.fn.drag = function(args) {
     drawer.drag_added = true;
     drawer.style.cursor = 'move';
     drawer.origin_transitionDuration = drawer.style.transitionDuration;
-    drawer.addEventListener('mousedown', function(e) {
+    drawer.addEventListener('mousedown', function (e) {
         let rect = this.getBoundingClientRect();
         this.rect_h = rect.height;
         this.rect_w = rect.width;
@@ -3441,7 +3439,7 @@ $.fn.drag = function(args) {
 
     });
 
-    drawer.addEventListener('drag', function(e) {
+    drawer.addEventListener('drag', function (e) {
 
         if (e.pageY < 1 || e.pageX < 1) return;
 
@@ -3453,17 +3451,17 @@ $.fn.drag = function(args) {
 
     });
 
-    drawer.addEventListener('dragend', function(e) {
+    drawer.addEventListener('dragend', function (e) {
         this.my_target.classList.remove('move');
     });
-    drawer.addEventListener('mouseup', function(e) {
+    drawer.addEventListener('mouseup', function (e) {
         this.my_target.classList.remove('move');
     });
 
     return $(dragged);
 };
 
-$.fn.pureHtml = function(element) {
+$.fn.pureHtml = function (element) {
     if (!element)
         return undefined
     else if (typeof element === 'string')
@@ -3474,7 +3472,7 @@ $.fn.pureHtml = function(element) {
         return element
 };
 
-$.fn.confirm = function(args) {
+$.fn.confirm = function (args) {
     if (!args || !args.buttons)
         return;
 
@@ -3518,7 +3516,7 @@ $.fn.confirm = function(args) {
         btn.type = 'button';
         btn.value = buttons[i].text;
         btn.clickEvent = buttons[i].onclick;
-        btn.onclick = function() {
+        btn.onclick = function () {
             if (this.clickEvent)
                 this.clickEvent();
 
@@ -3541,7 +3539,7 @@ $.fn.confirm = function(args) {
     })
 };
 
-$.fn.processingButton = function(args, rollback) {
+$.fn.processingButton = function (args, rollback) {
     let elements = [];
     let shadowThemes = {
         yellow: 'rgba(255, 242, 5, 0.8)',
@@ -3580,7 +3578,7 @@ $.fn.processingButton = function(args, rollback) {
     if (args.timeout)
         timeOut = args.timeout;
 
-    let addLoadingCss = function(element) {
+    let addLoadingCss = function (element) {
         if (element.LoadingCssClassIsExists)
             return element.classList.add(element.LoadingCssClassName);
 
@@ -3608,7 +3606,7 @@ $.fn.processingButton = function(args, rollback) {
         element.LoadingCssClassName = callerName;
         element.classList.add(callerName);
     }
-    let removeLoadingCss = function(element) {
+    let removeLoadingCss = function (element) {
         callerName = element.LoadingCssClassName;
         element.classList.remove(callerName);
     }
@@ -3624,7 +3622,7 @@ $.fn.processingButton = function(args, rollback) {
 
             loadingTime && addLoadingCss(me);
 
-            window.setTimeout(function() {
+            window.setTimeout(function () {
                 $(me).processingButton(false);
             }, timeOut);
 
@@ -3642,11 +3640,11 @@ $.fn.processingButton = function(args, rollback) {
     return this;
 }
 
-$.fn.progressbar = function(args) {
+$.fn.progressbar = function (args) {
     args = args === undefined ? {} : args;
     var ele = this[0];
     $.fn.progressbar.prototype.ele = this[0];
-    this.createBar = function() {
+    this.createBar = function () {
         if (ele.dataset.createdbar)
             return;
 
@@ -3661,26 +3659,26 @@ $.fn.progressbar = function(args) {
         ele.style.zIndex = 999;
         ele.mybar = bar;
     }
-    this.move = function() {
+    this.move = function () {
         ele.mybar.style.display = '';
-        window.setTimeout(function() { ele.mybar.style.width = '60%'; }, 100);
+        window.setTimeout(function () { ele.mybar.style.width = '60%'; }, 100);
     };
     $.fn.progressbar.prototype.ele = ele;
 
     this.createBar();
     this.move();
 };
-$.fn.progressbar.clear = function() {
+$.fn.progressbar.clear = function () {
     var ele = $.fn.progressbar.prototype.ele;
     if (ele.mybar) {
-        window.setTimeout(function() { ele.mybar.style.width = '100%'; }, 100);
-        window.setTimeout(function() { $(ele.mybar).fadeOut(500) }, 400);
-        window.setTimeout(function() { ele.mybar.style.width = '0%'; }, 900);
+        window.setTimeout(function () { ele.mybar.style.width = '100%'; }, 100);
+        window.setTimeout(function () { $(ele.mybar).fadeOut(500) }, 400);
+        window.setTimeout(function () { ele.mybar.style.width = '0%'; }, 900);
     }
 
 };
 
-$.fn.activemenu = function(args) {
+$.fn.activemenu = function (args) {
     if (!args) args = {};
     if (this instanceof Array && this instanceof jQuery)
         args.container = this[0];
@@ -3702,7 +3700,7 @@ $.fn.activemenu = function(args) {
             args.allMyContainers.push(args.buttonsHTML[i].dataset.mycontainer);
     };
 
-    var onclick = function() {
+    var onclick = function () {
         $(this.myMember).removeClass(this.activecss);
         $(this).addClass(this.activecss);
 
@@ -3713,7 +3711,7 @@ $.fn.activemenu = function(args) {
 
         if (this.allMyContainers && this.dataset.mycontainer) {
             var myContatainer = this.dataset.mycontainer;
-            var hideContainers = this.allMyContainers.filter(function(item) {
+            var hideContainers = this.allMyContainers.filter(function (item) {
                 return item !== myContatainer
             });
 
@@ -3745,13 +3743,13 @@ $.fn.activemenu = function(args) {
         $(defaultContainer).trigger('click');
 };
 
-$.checkboxesSetup = function(args) {
+$.checkboxesSetup = function (args) {
     if (oakdef.checkboxesSetup === undefined)
         oakdef.checkboxesSetup = {};
 
     $.extend(oakdef.checkboxesSetup, args);
 };
-$.fn.checkboxes = function(args) {
+$.fn.checkboxes = function (args) {
     if (oakdef.checkboxesSetup === undefined)
         oakdef.checkboxesSetup = {};
 
@@ -3784,8 +3782,8 @@ $.fn.checkboxes = function(args) {
 
     oak.checkboxes.core(args);
 };
-oak.checkboxes.core = function(args) {
-    var createForDIV = function() {
+oak.checkboxes.core = function (args) {
+    var createForDIV = function () {
         this.cssContainer = 'chkes';
         this.cssCheckMark = 'checkmark';
         this.chekedcolor = args.chekedcolor;
@@ -3795,7 +3793,7 @@ oak.checkboxes.core = function(args) {
         this.flexdirection = args.flexdirection;
         this.onchange = args.onchange;
         this.setflexdirection(args.me);
-        this.build = function() {
+        this.build = function () {
             for (i = 0; i < args.source.length; i++) {
                 var item = args.source[i];
                 var container = this.createContainer(item);
@@ -3814,7 +3812,7 @@ oak.checkboxes.core = function(args) {
     };
 
     createForDIV.prototype = {
-        createContainer: function(item) {
+        createContainer: function (item) {
             var customChangeEvent = this.onchange;
             var div = document.createElement('div');
             var systemChangeEvent = this.systemChangeEvent;
@@ -3824,7 +3822,7 @@ oak.checkboxes.core = function(args) {
             div.checked = item.checked;
             div.myvalue = item.value;
             div.mytext = item.text;
-            div.addEventListener('click', function() {
+            div.addEventListener('click', function () {
                 systemChangeEvent(this, true);
                 customChangeEvent(this);
             });
@@ -3835,13 +3833,13 @@ oak.checkboxes.core = function(args) {
 
             return div;
         },
-        createLabel: function(item) {
+        createLabel: function (item) {
             var label = document.createElement('label');
             label.innerHTML = item.text;
             label.style.fontSize = this.fontsize;
             return label;
         },
-        createCheckmark: function() {
+        createCheckmark: function () {
             var mark = document.createElement('span');
             mark.classList.add(this.cssCheckMark);
             mark.style.background = this.unchekedcolor;
@@ -3850,11 +3848,11 @@ oak.checkboxes.core = function(args) {
             mark.style.fontSize = this.fontsize;
             return mark;
         },
-        setflexdirection: function(me) {
+        setflexdirection: function (me) {
             me.style.display = 'flex';
             me.style.flexDirection = this.flexdirection;
         },
-        systemChangeEvent: function(me, revert) {
+        systemChangeEvent: function (me, revert) {
             if ((!me.checked && revert) || (me.checked && !revert)) {
                 me.myCheckmark.style.background = me.myCheckedColor;
                 me.myCheckmark.innerText = '/';
@@ -3873,17 +3871,16 @@ oak.checkboxes.core = function(args) {
     if (args.createFor === 'nonCheckbox')
         new createForDIV();
 };
-oak.checkboxes.get = function(args) {
+oak.checkboxes.get = function (args) {
     var payload = { all: [], checked: [], unchecked: [] };
-    $(args).children('.chkes').each(function() {
+    $(args).children('.chkes').each(function () {
         payload.all.push({ text: this.mytext, value: this.myvalue, checked: this.checked });
     });
 
-    payload.checked = payload.all.filter(function(item) {
+    payload.checked = payload.all.filter(function (item) {
         return item.checked === true;
     });
-
-    payload.unchecked = payload.all.filter(function(item) {
+    payload.unchecked = payload.all.filter(function (item) {
         return item.checked === false;
     });
 

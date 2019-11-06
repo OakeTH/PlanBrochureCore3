@@ -12,15 +12,13 @@
     <script src="~/oak/libraries/Fontawesome/all.js" data-auto-replace-svg="nest"></script>
     <script src="~/oak/libraries/jsCookie/js.cookie.min.js"></script>
 
-    <script src="_framework/blazor.server.js"></script>
 
     <environment include="Development">
-        <script src="~/oak/oak.js"></script>
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.custom.min.css" />
-
         <link rel="stylesheet" href="~/oak/oak.css" asp-append-version="true" />
         <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 
+        <script src="~/oak/oak.js"></script>
         <script src="~/js/_Layout.js" asp-append-version="true"></script>
         <script src="~/js/Plan/Index.js" asp-append-version="true"></script>
         <script src="~/js/UploadData/index.js" asp-append-version="true"></script>
@@ -33,10 +31,13 @@
             window.myALIAS = "@Configuration.GetSection("AppSettings")["ALIAS"]";
         </script>
 
+        <link rel="stylesheet" href="~/oak/oak.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+
         <script src="~/oak/oak.min.js" asp-append-version="true"></script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
 
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+
     </environment>
 
 </head>
