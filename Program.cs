@@ -14,6 +14,7 @@ namespace PlanBrochureCore3
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    webBuilder.UseKestrel(opt => opt.AddServerHeader = false);
                     webBuilder.UseStartup<Startup>();
                 });
     }
