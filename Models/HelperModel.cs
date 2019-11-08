@@ -33,8 +33,5 @@ namespace oak
         public const string png = "image/png";
         public const string excel2003lower = "application/vnd.ms-excel";
         public const string excel = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-
-
     }
-
 }

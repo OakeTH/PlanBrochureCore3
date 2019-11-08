@@ -44,7 +44,6 @@ namespace oak.Controllers
                 List<P> parameters = new List<P> { new P { Key = "RoldName", Value = user.RoleName } };
                 user.Menu = dbServices.SpCaller(name: "[dbo].[PB_GetMneuByRoldID]", parameters: parameters)?.Tables?[0];
 
-
                 return Ok(user);
             }
             catch (Exception ex)
@@ -69,6 +68,11 @@ namespace oak.Controllers
 
         //public IActionResult AAAA()
         //{
+
+        //var sds = "Pachara Khawtong 001";
+        //var ssss = sds.Crypt();
+        //var EEEE = ssss.Decrypt();
+
         //    List<P> parameters = new List<P> { new P { Key = "RoldName", Value = Current.RoldName } };
         //    //var x = dbServices.SpCaller(name: "[dbo].[PB_GetMneuByRoldID333]", parameters: parameters)?.Tables?[0];
         //    var x = dbServices.SpCallerV2(opt =>

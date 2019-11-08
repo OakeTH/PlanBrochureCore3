@@ -1,8 +1,4 @@
-﻿//<---------------------------------------------------------------------------------------<<
-//<---------------------------------- v.3.4-----------------------------------------------<<
-//<---------------------------------------------------------------------------------------<<
-//using AgetnCompensation.Models;
-using ClosedXML.Excel;
+﻿using ClosedXML.Excel;
 using ExcelDataReader;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
@@ -1071,7 +1067,6 @@ namespace oak
                 return ReponseMultipleType;
             }
         }
-
         public static async Task<DataSet> ExcelToDataSet(FileUpload model)
         {
             if (model.File == null || model.File.Length == 0)
@@ -1156,10 +1151,31 @@ namespace oak
 
             return string.Join("&", properties.ToArray());
         }
-
         public static string ToJsonString(this object obj)
         {
             return System.Text.Json.JsonSerializer.Serialize(obj);
         }
+
+        private static readonly byte[] key = new byte[8] { 211, 0, 3, 1, 25, 36, 7, 99 };
+        private static readonly byte[] iv = new byte[8] { 0, 0, 9, 9, 35, 16, 72, 28 };
+        public static string Crypt(this string text)
+        {
+            using SymmetricAlgorithm algorithm = DES.Create();
+            ICryptoTransform transform = algorithm.CreateEncryptor(key, iv);
+            byte[] inputbuffer = Encoding.Unicode.GetBytes(text);
+            byte[] outputBuffer = transform.TransformFinalBlock(inputbuffer, 0, inputbuffer.Length);
+            return Convert.ToBase64String(outputBuffer);
+
+        }
+
+        public static string Decrypt(this string text)
+        {
+            using SymmetricAlgorithm algorithm = DES.Create();
+            ICryptoTransform transform = algorithm.CreateDecryptor(key, iv);
+            byte[] inputbuffer = Convert.FromBase64String(text);
+            byte[] outputBuffer = transform.TransformFinalBlock(inputbuffer, 0, inputbuffer.Length);
+            return Encoding.Unicode.GetString(outputBuffer);
+        }
+
     }
 }
