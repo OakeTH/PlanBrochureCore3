@@ -1157,6 +1157,9 @@ namespace oak
             return string.Join("&", properties.ToArray());
         }
 
-        public static string ToJsonString(this object obj) => System.Text.Json.JsonSerializer.Serialize(obj);
+        public static string ToJsonString(this object obj)
+        {
+            return System.Text.Json.JsonSerializer.Serialize(obj);
+        }
     }
 }

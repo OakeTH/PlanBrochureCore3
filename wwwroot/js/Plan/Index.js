@@ -1,4 +1,5 @@
-﻿$(document).ready(function () {
+﻿
+$(document).ready(function () {
     window.webFn.planFn = {
         //<-- get initial data from server.
         getAsync: function () {
@@ -65,17 +66,20 @@
 
             //$(sdsdsdsdsd).on('click', function () {
             //    var t0 = performance.now();
-            //    // console.info(t0)
 
             //    $.ajax({
             //        url: SV.host + 'Authentication/AAAA',
             //        dataType: 'json',
             //        success: function (response) {
-            //            //  JSON.parse(response)
-            //            var t1 = performance.now();
-            //            // console.info(t1)
-            //            console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.");
+            //            // JSON.combineSchemeAndData(response);
 
+            //            $(dfsdfsfsf3eee).grid({
+            //                source: response
+            //            })
+
+            //            var t1 = performance.now();
+
+            //            console.log("Call to doSomething took " + (t1 - t0) + " mil.");
             //        }
             //    });
 
@@ -161,7 +165,7 @@
 
                 $(txtPovAge).on('input', renderGrid);
                 $(ddlPovGender).dropdown({
-                    source: [{ value: 'M', text: male }, { value: 'F', text: female }],
+                    source: [{ value: 'M', text: male() }, { value: 'F', text: female() }],
                     fixposition: true
 
                 }).on('change', function () {

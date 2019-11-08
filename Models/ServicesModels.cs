@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 
@@ -29,6 +30,8 @@ namespace oak.Models
             public WebHeaderCollection headers = null;
             public string ContentType = null;
         }
+
+
 
     }
 }

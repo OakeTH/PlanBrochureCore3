@@ -45,13 +45,6 @@ namespace oak.Controllers
                 user.Menu = dbServices.SpCaller(name: "[dbo].[PB_GetMneuByRoldID]", parameters: parameters)?.Tables?[0];
 
 
-                //user.Menu = dbServices.SpCallerV2(opt =>
-                //  {
-                //      opt.Name = "[dbo].[PB_GetMneuByRoldID]";
-                //      opt.Parameters = parameters;
-                //  }).ToJsonString();
-
-
                 return Ok(user);
             }
             catch (Exception ex)
@@ -74,14 +67,16 @@ namespace oak.Controllers
             return Ok(user);
         }
 
-        //public IActionResult AAAA() {
+        //public IActionResult AAAA()
+        //{
         //    List<P> parameters = new List<P> { new P { Key = "RoldName", Value = Current.RoldName } };
-        //    //var x = dbServices.SpCaller(name: "[dbo].[PB_GetMneuByRoldID222]", parameters: parameters)?.Tables?[0];
+        //    //var x = dbServices.SpCaller(name: "[dbo].[PB_GetMneuByRoldID333]", parameters: parameters)?.Tables?[0];
         //    var x = dbServices.SpCallerV2(opt =>
         //    {
         //        opt.Name = "[dbo].[PB_GetMneuByRoldID333]";
         //        opt.Parameters = parameters;
-        //    }).ToJsonString();
+        //        opt.CompressPayloadSize = true;
+        //    });
 
         //    return Ok(x);
 

@@ -12,7 +12,7 @@ namespace oak
     public interface IDbServices
     {
         DataSet SpCaller(string name, List<P> parameters = null, IDictionary<object, object> requestItem = null, string connectionstring = null);
-        IEnumerable<Dictionary<string, object>> SpCallerV2(Action<SpCallerModel> action);
+        string SpCallerV2(Action<SpCallerModel> action);
     }
     public class DbServices : IDbServices
     {
@@ -34,7 +34,7 @@ namespace oak
             {
                 Name = name,
                 Parameters = parameters,
-                RequestItem = requestitem,
+                //RequestItem = requestitem,
                 Connectionstring = Connectionstring
             };
             return SpCaller(me);
@@ -75,7 +75,7 @@ namespace oak
             }
             return ds;
         }
-        public IEnumerable<Dictionary<string, object>> SpCallerV2(Action<SpCallerModel> action)
+        public string SpCallerV2(Action<SpCallerModel> action)
         {
             SpCallerModel model = new SpCallerModel();
             action.Invoke(obj: model);
@@ -94,35 +94,73 @@ namespace oak
 
             if (model.Parameters != null)
                 for (short i = 0; i < model.Parameters.Count; i++)
-                {
                     SeperatesParam(cmd: cmd, args: model.Parameters[i], Connectionstring: model.Connectionstring);
-                }
 
             try
             {
                 connection.Open();
                 using SqlDataReader rdr = cmd.ExecuteReader();
-                return Serialize(rdr);
+
+                if (model.CompressPayload)
+                    return SerializeDrToDicWithCompressPayload(rdr).ToJsonString();
+                else
+                    return SerializeDrToDic(rdr).ToJsonString();
             }
             catch (Exception ex) { throw ex; }
         }
-        public IEnumerable<Dictionary<string, object>> Serialize(SqlDataReader reader)
+        public IEnumerable<Dictionary<string, object>> SerializeDrToDic(SqlDataReader reader)
         {
-            var results = new List<Dictionary<string, object>>();
+            var payload = new List<Dictionary<string, object>>();
             var cols = new List<string>();
+
+            if (reader.HasRows == false)
+                return null;
+
             for (var i = 0; i < reader.FieldCount; i++)
                 cols.Add(reader.GetName(i));
+
 
             while (reader.Read())
             {
                 var result = new Dictionary<string, object>();
                 for (int i = 0; i < cols.Count; i++)
-                {
-                    result.Add(cols[i], reader[cols[i]] == DBNull.Value ? null : reader[cols[i]]);
-                }
-                results.Add(result);
+                    result.Add(cols[i], reader[i] == DBNull.Value ? null : reader[i]);
+
+
+                payload.Add(result);
             }
-            return results;
+            return payload;
+        }
+        public SerializeDrToDicResponse SerializeDrToDicWithCompressPayload(SqlDataReader reader)
+        {
+            var payload = new SerializeDrToDicResponse
+            {
+                Schema = new List<Dictionary<string, string>>(),
+                Data = new List<Dictionary<string, object>>()
+            };
+
+            var Schema = new Dictionary<string, string>();
+           
+            if (reader.HasRows == false)
+                return payload;
+
+            for (var i = 0; i < reader.FieldCount; i++)
+            {
+                Schema.Add(i.ToString(), reader.GetName(i));
+            }
+
+            payload.Schema.Add(Schema);
+
+            while (reader.Read())
+            {
+                var data = new Dictionary<string, object>();
+                for (int i = 0; i < Schema.Count; i++)
+                    data.Add(i.ToString(), reader[i] == DBNull.Value ? null : reader[i]);
+
+                payload.Data.Add(data);
+            }
+
+            return payload;
         }
         private void SeperatesParam(SqlCommand cmd, P args, string Connectionstring)
         {
@@ -143,7 +181,7 @@ namespace oak
                     }
                 }
 
-                if (args.Value is DataTable dataTable)
+                else if (args.Value is DataTable dataTable)
                     cmd.Parameters.AddWithValue(
                         parameterName: key,
                         value: MappingDataTableWithUserDefined(conn: Connectionstring, dataTable: dataTable, userDefinedName: key));

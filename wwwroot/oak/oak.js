@@ -1205,6 +1205,11 @@ $.fn.grid_then = function (args) {
         args.source.Gridfn = 1;
         DS = oak.ajaxget(con.source);
     }
+
+    else if (args.source && args.source.Schema && args.source.Data) {
+        DS.Scheme = args.source.Schema;
+        DS.Data = args.source.Data;
+    }
     else if (args.source && !DS.Data) {
 
         if (args.source.table)
@@ -3886,3 +3891,22 @@ oak.checkboxes.get = function (args) {
 
     return payload;
 };
+
+//<---- JSON functions.
+JSON.combineSchemeAndData = function (payload) {
+    if (!payload) return payload;
+    if (payload instanceof Array) return payload;
+    if (!payload.Data || !payload.Schema) return payload;
+
+    var schema = payload.Schema[0];
+    for (i = 0; i < payload.Data.length; i++) {
+        for (var key in payload.Data[i]) {
+            Object.defineProperty(payload.Data[i], schema[key], Object.getOwnPropertyDescriptor(payload.Data[i], key));
+        };
+
+        for (var key in schema) {
+            delete payload.Data[i][key];
+        };
+
+    }
+}

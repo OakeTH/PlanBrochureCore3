@@ -7,10 +7,15 @@ namespace oak
     {
         public string Name { get; set; }
         public List<P> Parameters { get; set; } = null;
-        public IDictionary<object, object> RequestItem { get; set; } = null;
+        // public IDictionary<object, object> RequestItem { get; set; } = null;
         public string Connectionstring { get; set; } = null;
+        public bool CompressPayload { get; set; } = false;
     }
-
+    public class SerializeDrToDicResponse
+    {
+        public List<Dictionary<string, string>> Schema { get; set; }
+        public List<Dictionary<string, object>> Data { get; set; }
+    }
 
     public static class ContentTypes
     {
