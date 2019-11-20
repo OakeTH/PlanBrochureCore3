@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using static oak.Models.ServicesModels;
 
@@ -19,12 +20,12 @@ namespace oak.Controllers
     {
         private readonly IDbServices dbServices;
         private readonly AppSettings appSettings;
-        private readonly EntityContextWEB contextWeb;       
+        private readonly EntityContextWEB contextWeb;
         public UploadDataController(IDbServices _dbServices, IOptions<AppSettings> _appSettings, EntityContextWEB _contextWeb)
         {
             dbServices = _dbServices;
-            appSettings = _appSettings.Value;    
-            contextWeb = _contextWeb;       
+            appSettings = _appSettings.Value;
+            contextWeb = _contextWeb;
         }
 
         public IActionResult IndexPartail() => View();
@@ -90,6 +91,23 @@ namespace oak.Controllers
             return File(stream, ContentTypes.excel, model.ExcelName + ".xlsx");
         }
 
+
+        [HttpGet]
+        public IActionResult GetAllPlanDocFilesName()
+        {
+            string initialPath = appSettings.File.PB_PlanDocsInitialPath;
+            //var filesName = Directory
+            //      .GetFiles(initialPath)
+            //      .ToList();
+
+            DirectoryInfo info = new DirectoryInfo(initialPath);
+            var filesName = info.GetFiles()
+                 .Select(p => new { p.Name, p.Extension, CreationTime = p.CreationTime.ToString("dd/MM/yyyy") })
+                 .OrderBy(p => p.Name).ToArray();
+
+
+            return Ok(filesName);
+        }
 
         [GetCurrentUser]
         public async Task<IActionResult> UploadAnnounceMathDocs([FromForm]AnnounceMathDocs announce)

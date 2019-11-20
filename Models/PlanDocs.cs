@@ -68,10 +68,10 @@ namespace oak.Models
                   .FirstOrDefaultAsync();
         }
 
-        public async Task<bool> IsExistsPlanCodeAsync(string planCode, EntityContextWEB context)
-        {
-            return await context.PlanDocs.AnyAsync(c => c.PlanCode == planCode);
-        }
+        //public async Task<bool> IsExistsPlanCodeAsync(string docsName, EntityContextWEB context)
+        //{
+        //    return await context.PlanDocs.AnyAsync(c => c.PlanCode.Contains(docsName));
+        //}
         public async Task<bool> IsExistsDocsNameAsync(string docsName, EntityContextWEB context)
         {
             return await context.PlanDocs.AnyAsync(c => c.DocsName == docsName);
@@ -80,20 +80,21 @@ namespace oak.Models
         {
             PlanDocs planDocs = new PlanDocs
             {
-                PlanCode = model.File.FileName.Split("_")[0],
-                DocsName = model.File.FileName.Substring(model.File.FileName.IndexOf("_") + 1),
-                AddBy = Current.UserID,
-                LastModifyBy = Current.UserID
+                PlanCode = null, // model.File.FileName.Split("_")[0],
+                //DocsName = model.File.FileName.Substring(model.File.FileName.IndexOf("_") + 1),
+                DocsName = model.File.FileName,
+                AddBy = null,// Current.UserID,
+                LastModifyBy = null //Current.UserID
             };
 
 
             //<-- check plancode in filename is exists in table: PB_PlanDocs.
-            bool IsExistsPlanCode = await new PlanDocs().IsExistsPlanCodeAsync(planCode: planDocs.PlanCode, context: context);
-            if (!IsExistsPlanCode)
-            {
-                planDocs.Errors = "แผนประกัน " + planDocs.PlanCode + " ไม่มีในระบบ";
-                return planDocs;
-            }
+            //bool IsExistsPlanCode = await new PlanDocs().IsExistsPlanCodeAsync(docsName: planDocs.DocsName, context: context);
+            //if (!IsExistsPlanCode)
+            //{
+            //    planDocs.Errors = "แผนประกัน " + planDocs.PlanCode + " ไม่มีในระบบ";
+            //    return planDocs;
+            //}
 
             string path = Path.Combine(initialPath, model.File.FileName);
             //<--- Create Directory if it is not exists.
@@ -107,30 +108,32 @@ namespace oak.Models
                 await model.File.CopyToAsync(stream);
             }
             //<--- Insert Data.
-            await InsertAsync(planDocs, context);
+            //await InsertAsync(planDocs, context);
 
             return planDocs;
         }
 
-        public async Task InsertAsync(PlanDocs model, EntityContextWEB context)
-        {
-            var isexists = await model.IsExistsDocsNameAsync(model.DocsName, context);
-            if (!isexists)
-            {
-                context.PlanDocs.Add(model);
-                await context.SaveChangesAsync();
-            }
-            else
-            {
-                await context.PlanDocs
-                    .Where(t => t.DocsName == model.DocsName)
-                    .UpdateAsync(t => new PlanDocs { LastModifyDate = DateTime.Now, LastModifyBy = Current.UserID });
-            }
+        //public async Task InsertAsync(PlanDocs model, EntityContextWEB context)
+        //{
+        //    var isexists = await model.IsExistsDocsNameAsync(model.DocsName, context);
+        //    if (!isexists)
+        //    {
+        //        context.PlanDocs.Add(model);
+        //        await context.SaveChangesAsync();
+        //    }
+        //    else
+        //    {
+        //        await context.PlanDocs
+        //            .Where(t => t.DocsName == model.DocsName)
+        //            .UpdateAsync(t => new PlanDocs { LastModifyDate = DateTime.Now, LastModifyBy = Current.UserID });
+        //    }
 
-        }
+        //}
 
         public async Task DeleteAsync(int id, EntityContextWEB context)
         {
+
+
             context.PlanDocs.Remove(context.PlanDocs.Find(id));
             await context.SaveChangesAsync();
         }

@@ -22,7 +22,6 @@
     --bg-close: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAALVBMVEVHR0cAAABMTExLS0tJSUlRUVFLS0tNTU1LS0tKSkpMTExMTExJSUlLS0tLS0sNRJwJAAAADnRSTlMSAM7SFRPQFM/Rtr0qzSnewpMAAABuSURBVHjaddJVAoQwFEPRPKTe7n+5IxnJSPi8B6hiNMTPgzbQ1/wRbKvj2NeGn75nxFO01xwIEelXUGFPZxAo2gkq7ASVay/shKfcOuIJIptOIkTYHfhf+cH9dP0C/Zb4TfTbbg/KHq29DPb6XAAZxAYPW8SNJwAAAABJRU5ErkJggg==') no-repeat center;
 }
 
-
 body {
     padding: 0;
     margin: 0;
@@ -213,6 +212,7 @@ label.btn-upload {
     border-bottom: 1px solid var(--txt-br);
     padding: 5px;
     -webkit-appearance: none;
+    background:#fff;
     /*background: var(--select-arrow) no-repeat right;*/
 }
 
@@ -457,6 +457,18 @@ select.select-2 {
 .flex-column {
     display: flex;
     flex-direction: column;
+}
+
+@media (max-width: 576px) {
+    .sm-flex-row {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .sm-flex-column {
+        display: flex;
+        flex-direction: column;
+    }
 }
 
 .align-i-start {
@@ -1230,8 +1242,8 @@ div.jsgrid-pager {
     position: fixed;
     pointer-events: none;
     letter-spacing: normal;
-    z-index: 9000;
-    min-width: 300px;
+    z-index: 999;
+    min-width: 250px;
 }
 
     .jq-toast-wrap.bottom-left {

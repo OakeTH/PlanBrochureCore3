@@ -201,9 +201,6 @@
                                 divContainer.innerHTML = data;
                                 sessionStorage[ssPrefix + option.id] = data;
                                 runStardnardFn(option);
-                                //createContentHeader();
-                                //createSubMenu();
-                                //eval(option.javascriptFn);
                             }
                         });
                     }
@@ -230,7 +227,7 @@
                     }
                     this.applyActiveMenuCSS();
 
-                    //<-- auto selected one menu if there is only 1 menu.
+                    //<-- auto selected one menu.
                     $(divUserMenu).children('div.btn').first().trigger('click');
 
                 };

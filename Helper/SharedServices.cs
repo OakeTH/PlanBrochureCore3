@@ -1165,9 +1165,7 @@ namespace oak
             byte[] inputbuffer = Encoding.Unicode.GetBytes(text);
             byte[] outputBuffer = transform.TransformFinalBlock(inputbuffer, 0, inputbuffer.Length);
             return Convert.ToBase64String(outputBuffer);
-
         }
-
         public static string Decrypt(this string text)
         {
             using SymmetricAlgorithm algorithm = DES.Create();

@@ -48,17 +48,11 @@
             this.setupInput = function () {
                 var fileNameValidation = function (item) {
                     var isPass = true;
+                    var fType = item.files[0].type;
+                    var allowfType = ['application/pdf', 'image/jpeg', 'image/png']
 
-                    if (item.files[0].type !== 'application/pdf') {
-                        oak.minidialog({ icon: 'error', value: 'อัพโหลดได้เฉพาะไฟล์ PDF เท่านั้น' });
-                        isPass = false;
-                    };
-
-                    if (!item.files[0].name.includes('_')) {
-                        oak.minidialog({ icon: 'error', value: 'ชื่อไฟล์ไม่ถูกต้อง' });
-                        isPass = false;
-                    } else if (item.files[0].name.split('_')[0].length === 0) {
-                        oak.minidialog({ icon: 'error', value: 'ชื่อไฟล์ไม่ถูกต้อง' });
+                    if (allowfType.indexOf(fType) === -1) {
+                        oak.minidialog({ icon: 'error', value: 'อัพโหลดได้เฉพาะ pdf / jpeg / png' });
                         isPass = false;
                     };
 
@@ -92,7 +86,8 @@
                                     fieldname: 'errors', forhide: true
                                 }],
                                 onrowclick: function (item) {
-                                    window.open(SV.host + 'Plan/GetDocsNameByID?id=' + item.data.id, '_blank');
+                                    var name = item.data.name.replace('+', '@@_push_@@')
+                                    window.open(SV.host + 'Plan/DownloadDocByPlanCode?filename=' + name, '_blank');
                                 },
                             });
                         }
@@ -101,8 +96,7 @@
                 var getAsync = function () {
                     return new Promise(function (resolve, reject) {
                         $.ajax({
-                            url: SV.host + "plan/GetDocByID",
-                            data: { plancode: 'All' },
+                            url: SV.host + "UploadData/GetAllPlanDocFilesName",
                             success: function (response) {
                                 resolve(response)
                             }
@@ -112,7 +106,7 @@
                 var remover = function (item) {
                     $.ajax({
                         url: SV.host + "plan/DeleteDocs",
-                        data: { id: item.id },
+                        data: { fileName: item.name },
                         success: function (response) {
                             item.resolve();
                         }
@@ -124,7 +118,7 @@
                             source: response,
                             excelbutton: true,
                             fields: [{
-                                fieldname: 'ชื่อไฟล์', width: 500, itemTemplate: function (value) {
+                                fieldname: 'name', width: 600, itemTemplate: function (value) {
                                     var div = $('<div>');
                                     var i = $('<i>').addClass('fas fa-folder-open mr10');
                                     return div.append(i).append(value);
@@ -139,7 +133,8 @@
                                 }
                             },
                             onrowclick: function (item) {
-                                window.open(SV.host + 'Plan/GetDocsNameByID?id=' + item.data.id, '_blank');
+                                var name = item.data.name.replace('+', '@@_push_@@')
+                                window.open(SV.host + 'Plan/DownloadDocByPlanCode?filename=' + name, '_blank');
                             }
 
                         });

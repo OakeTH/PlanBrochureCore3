@@ -204,9 +204,41 @@ html {
 }
 
 /*#region <------------------ @Media roles -------------------------<<*/
-@media screen and (max-width: 800px) {
+@media (max-width: 576px) {
     .navi-root {
-        width: 200px;
+        width: 100%;
+    }
+
+    .navi-menu {
+        flex-direction: row;
+        align-self: stretch;
+        justify-content: space-around;
+    }
+
+        .navi-menu .btn {
+            padding-left: 0;
+            justify-content: center;
+            flex-grow: 1;
+        }
+
+    .navi-menu-title {
+        display: none;
+    }
+
+    .content-header {
+        display: none;
+    }
+
+    .content-body {
+        margin-top: 15px;
+    }
+
+    .region-header {
+        display: none;
+    }
+
+    .sm-wid100 {
+        width: 100px;
     }
 }
 /*#endregion*/

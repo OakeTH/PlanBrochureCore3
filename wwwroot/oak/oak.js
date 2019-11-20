@@ -519,8 +519,8 @@ oak.dropdown.add_select_options = function (source, me) {
     if (source[0].constructor.name !== 'Object')
         for (i = 0; i < source.length; i++) {
             let opt = document.createElement("option");
-            opt.value = source[i].value;
-            opt.innerHTML = source[i].text;
+            opt.value = source[i].value === undefined ? source[i] : source[i].value;
+            opt.innerHTML = source[i].text === undefined ? source[i] : source[i].text;
             me.add(opt);
         }
     else {
@@ -619,6 +619,9 @@ oak.dropdown.then = function (args) {
     if (!args.flexdisplay)
         args.flexdisplay = false;
 
+    if (args.showsearchbox === undefined)
+        args.showsearchbox = true;
+
     args.me.dropdown.core(args);
 };
 oak.dropdown.core = function (args) {
@@ -635,7 +638,7 @@ oak.dropdown.core = function (args) {
         this.required = args.required;
         this.fixposition = args.fixposition;
         this.flexdisplay = args.flexdisplay;
-
+        this.showsearchbox = args.showsearchbox;
         this.options_ddl_mtop = '1cm';
         this.options_autoc_mtop = '0px';
 
@@ -657,7 +660,7 @@ oak.dropdown.core = function (args) {
             this.options_ul = this.options_ul_create();
             this.searchbox = this.searchbox_create();
             this.me.after(this.options_ul);
-            this.me.after(this.searchbox);
+            this.showsearchbox && this.me.after(this.searchbox);
             this.ddl_tags_add();
             this.me.refer('is_created', true);
         }
@@ -674,7 +677,6 @@ oak.dropdown.core = function (args) {
         };
 
         this.placeholder_create();
-
     }
     create.prototype = {
         input_width: function () { return this.width || this.me.outerWidth() || oakdef.dropdown_width },
@@ -721,14 +723,22 @@ oak.dropdown.core = function (args) {
         },
         options_ul_create: function () {
             let options_ul = $('<ul>')
-                .refer('elementtype', this.elementtype);
+                .refer('elementtype', this.elementtype)
+                .refer('showsearchbox', this.showsearchbox)
+                .on('focusout', function () {
+                    //ul.classList.add('hide');
+                    //ul.my_searchbox.classList.add('hide');
+                    this.classList.add('hide')
+
+                });
+
 
             this.options_ul_style(options_ul);
             return options_ul;
         },
         options_ul_style: function (options_ul) {
-            let margintop = this.elementtype === 'dropdown' ? this.options_ddl_mtop : this.options_autoc_mtop;
-            let effect = this.elementtype === 'dropdown' ? 'show' : '';
+            let margintop = (this.elementtype === 'dropdown' && args.showsearchbox) ? this.options_ddl_mtop : this.options_autoc_mtop;
+            let effect = (this.elementtype === 'dropdown' && args.showsearchbox) ? 'show' : '';
             let fix = args.fixposition ? ' fix' : '';
             options_ul
                 .css('width', this.input_width())
@@ -772,9 +782,14 @@ oak.dropdown.core = function (args) {
                 }
                 searchbox.my_options_ul.classList.remove('hide');
                 searchbox.classList.remove('hide');
-
-                searchbox.focus();
                 searchbox.click();
+
+                if (!this.my_options_ul.showsearchbox)
+                    $(this.my_options_ul).attr("tabindex", -1).focus();
+                else
+                    searchbox.focus();
+
+
                 evt.preventDefault();
             }
 
@@ -889,25 +904,18 @@ oak.dropdown.apply_value_to_owner = function () {
     if (input.onselected)
         input.onselected({ oldvalue: input.value, newvalue: this.innerText });
 
-
     if (elementtype === 'textbox') {
         let oldvalue = input.value;
         input.value = this.innerText
         input.dataset.myvalue = this.firstkey
         input.my_options_ul.classList.add('hide');
 
-        if (input.value != oldvalue) {
+        if (input.value != oldvalue)
             $(input).trigger('change')
-            //var event = new Event('change', {
-            //    'bubbles': true,
-            //    'cancelable': true
-            //});
-            //input.dispatchEvent(event);
-        }
+
         input.blur();
     }
     else {//<--- elementtype === 'dropdown' ---<<
-
         let ul = this.parentNode;
         let prev_value = ul.my_input.value;
         ul.classList.add('hide');
@@ -917,21 +925,15 @@ oak.dropdown.apply_value_to_owner = function () {
 
         if (prev_value != this.firstkey) {
             $(ul.my_input).trigger('change')
-            //var event = new Event('change');
-            //ul.my_input.dispatchEvent(event);
-            ul.my_input.blur();
+            //ul.my_input.blur();
         }
     }
 };
 oak.dropdown.ul_items_create = function (p) {
-    //if (!oak.dropdown.source[p.owner_id])
-    //    return;
-
     let data = oak.dropdown.source[p.owner_id].data;
     if (!data.length)
         return;
 
-    // let type = data.length ? data[0].constructor.name : null;
     let objectname = oak.dropdown.source[p.owner_id].objectname;
     p.filtertext && (data = oak.dropdown.filter_data(data, p.filtertext, objectname.secondkey));
 
@@ -1008,65 +1010,7 @@ $.fn.downloadfile = function (args) {
     obj.containername = args.containername || '';
     window.location.href = SV.host + SV.Downloadfilefn + objtoquerystr(obj);
 };
-//<-- Legacy--<<//
-//$.fn.downloadpdf = function(args) {
-//    let title = args.title || 'PDF Preview';
-//    let islandscape = args.islandscape || false;
-//    let isgrayscale = args.isgrayscale || false;
-//    let _css = args.css;
-//    let size = args.size || 'A4';
-//    let filename = args.filename || 'PDF ' + getDate().fulldate;
-//    let css = [];
-//    let html = args.html;
-//    let onsuccess = args.onsuccess || $.noop;
-//    let onerror = args.onerror || $.noop;
-//    if (typeof _css === 'string') css.push(_css)
-//    else if (_css instanceof Array) css = _css;
 
-//    if (!html)
-//        return;
-
-//    if (html instanceof Element)
-//        html = html.innerHTML
-
-//    else if (html instanceof jQuery)
-//        html = html[0].innerHTML
-
-//    if (filename && filename.endsWith !== '.pdf')
-//        filename += '.pdf'
-
-//    for (i = 0; i < css.length; i++) {
-//        if (!css[i].startsWith('http'))
-//            css[i] = window.host + css[i]
-//    }
-
-//    let options = {
-//        url: SV.DownloadPDFfn,
-//        html: html,
-//        title: title,
-//        size: size,
-//        islandscape: islandscape,
-//        isgrayscale: isgrayscale,
-//        css: css,
-//        filename: filename,
-//        onsuccess: onsuccess,
-//        onerror: onerror
-//    };
-
-//    oak.downloadpdf.rotativaCaller(options);
-
-//};
-////<-- Legacy--<<//
-//oak.downloadpdf.rotativaCaller = function(options) {
-//    let prm = new Promise(function(resolve) {
-//        oak.ajaxpost.redirect(options);
-//        resolve();
-//    });
-
-//    prm.then(function(a) { options.onsuccess(a); })
-
-//}
-//<--New---<<//
 oak.pdftemplate = SV.host + 'PDF/GetHTMPTemplate?templatepath=';
 
 $.fn.minidialog = function (args) {
@@ -1321,6 +1265,7 @@ $.fn.grid_then = function (args) {
     CONF.primaryKey = args.primarykey || null;
     CONF.fields = args.fieldsADJ;
     CONF.pageSize = args.pagesize || oakdef.pagesize;
+    CONF.pageIndex = 1;
 
     if (args.updater) {
         oak.grid_update({ config: CONF, updater: args.updater, grid: this[0] });
@@ -3677,7 +3622,7 @@ $.fn.progressbar.clear = function () {
     var ele = $.fn.progressbar.prototype.ele;
     if (ele.mybar) {
         window.setTimeout(function () { ele.mybar.style.width = '100%'; }, 100);
-        window.setTimeout(function () { $(ele.mybar).fadeOut(500) }, 400);
+        window.setTimeout(function () { $(ele.mybar).fadeOut(300) }, 300);
         window.setTimeout(function () { ele.mybar.style.width = '0%'; }, 900);
     }
 
@@ -3833,7 +3778,7 @@ oak.checkboxes.core = function (args) {
             });
 
             if (args.me.style.flexDirection === 'row')
-                div.style.marginLeft = '1rem';
+                div.style.marginRight = '1rem';
 
 
             return div;

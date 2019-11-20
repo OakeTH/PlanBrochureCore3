@@ -34,7 +34,7 @@
 
   <ItemGroup>
     <PackageReference Include="BuildBundlerMinifier" Version="3.2.435" />
-    <PackageReference Include="ClosedXML" Version="0.94.2" />
+    <PackageReference Include="ClosedXML" Version="0.92.1" />
     <PackageReference Include="ExcelDataReader" Version="3.6.0" />
     <PackageReference Include="ExcelDataReader.DataSet" Version="3.6.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.0.0" />

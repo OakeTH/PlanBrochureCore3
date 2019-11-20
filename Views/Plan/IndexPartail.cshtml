@@ -6,11 +6,13 @@
     <div class="container">
         <div class="content-header"></div>
         <div class="content-body">
-            <div class="txt-2 bar pb30">
-                <input type="text" id="ddlFindPlans" style="width:500px;font-size:1rem;" class="p-2" placeholder="กรอก รหัสหรือชื่อแบบประกัน เพื่อค้นหา..." />
-                <label class="btn-eraser pr-2" id="btnClearPlanSearch"><i class="fas fa-times pr-2"></i></label>
-                <label class="btn-search"><i class="fas fa-search"></i></label>
-                <span id="chkOnlyActive"></span>
+            <div class="txt-2 bar pb30 pb-sm-1 bar sm-flex-column txt-2">
+                <span>
+                    <input type="text" id="ddlFindPlans" style="width:500px;font-size:1rem;" class="pt-2 pb-2" placeholder="กรอก รหัสหรือชื่อแบบประกัน เพื่อค้นหา..." />
+                    <label class="btn-eraser p-2" id="btnClearPlanSearch"><i class="fas fa-times pr-2"></i></label>
+                    <label class="btn-search p-2"><i class="fas fa-search"></i></label>
+                </span>
+                <span id="chkOnlyActive" class="pt-sm-2 pl-sm-0 pl-2"></span>
             </div>
             <div id="divContent" style="display:none">
                 <div class="container" id="containerMenu">
@@ -26,18 +28,24 @@
                 </div>
                 <div class="container" id="container2" style="display:none">
                     <div>
-                        <div class="flex-column pt-2 pb-2 txt-2 select-2">
+                        <div class="align-i-start flex-column txt-2 select-2 pt-2 pb-2">
                             <div>
                                 <label class="lbl-remind ptb-1">- ระบุ อายุและเพศ เพื่อค้นหามูลค่ากรมธรรม์</label>
                             </div>
                             <div class="align-i-start flex-column ml10 mb10">
-                                <div class="flex-row align-i-center">
-                                    <label class="mr10">อายุผู้เอาประกัน</label>
-                                    <input type="number" id="txtPovAge" class="wid100 mr20" required />
-                                    <label class="mr10">เพศ</label>
-                                    <select id="ddlPovGender" class="wid100 mr20"></select>
-                                    <label class="mr10">EndYear</label>
-                                    <input type="number" id="txtEndYear" class="wid100" min="0" oninput="validity.valid||(value='');" />
+                                <div class="flex-row sm-flex-column">
+                                    <div class="flex-row align-i-center">
+                                        <label class="mr10 sm-wid100">เพศ</label>
+                                        <select id="ddlPovGender" class="wid100 mr20"></select>
+                                    </div>
+                                    <div class="flex-row align-i-center">
+                                        <label class="mr10 sm-wid100">อายุผู้เอาประกัน</label>
+                                        <input type="number" id="txtPovAge" class="wid100 mr20" required min="0" oninput="validity.valid||(value='');" />
+                                    </div>
+                                    <div class="flex-row align-i-center">
+                                        <label class="mr10 sm-wid100">EndYear</label>
+                                        <input type="number" id="txtEndYear" class="wid100 mr20" min="0" oninput="validity.valid||(value='');" />
+                                    </div>
                                 </div>
                             </div>
                             <div id="divPolicyValue"></div>
@@ -48,16 +56,22 @@
                     <div>
                         <div class="align-i-start flex-column txt-2 select-2 pt-2 pb-2">
                             <div>
-                                <label class="lbl-remind  ptb-1">- ระบุ ทุนประกันภัย อายุผู้เอาประกันภัย ระยะเวลาชำระเบี้ย(ปี) เพื่อค้นหาอัตราค่าบำเหน็จ</label>
+                                <label class="lbl-remind ptb-1">- ระบุ ทุนประกันภัย อายุผู้เอาประกันภัย ระยะเวลาชำระเบี้ย เพื่อค้นหาอัตราค่าบำเหน็จ</label>
                             </div>
-                            <div class="align-i-start flex-column ml10 mb10 bar">
-                                <div class="flex-row align-i-center">
-                                    <label>ทุนประกันภัย</label>
-                                    <input type="text" id="txtSumAssured" class="wid200 mr10 ml5" />
-                                    <label>อายุผู้เอาประกัน</label>
-                                    <input type="text" id="txtEntryAge" class="wid100 mr10 ml5" />
-                                    <label>ระยะชำระเบี้ย</label>
-                                    <input type="text" id="txtTotalYear" class="wid100 ml5" />
+                            <div class="align-i-start flex-column ml10 mb10">
+                                <div class="flex-row sm-flex-column">
+                                    <div class="flex-row  align-i-center">
+                                        <label class="mr10 sm-wid100">ระยะชำระเบี้ย</label>
+                                        <select id="txtTotalYear" class="wid150 ml5 mr20"></select>
+                                    </div>
+                                    <div class="flex-row  align-i-center">
+                                        <label class="mr10 sm-wid100">ทุนประกันภัย</label>
+                                        <select id="txtSumAssured" class="wid200  ml5 mr20"></select>
+                                    </div>
+                                    <div class="flex-row align-i-center">
+                                        <label class="mr10 sm-wid100">อายุผู้เอาประกัน</label>
+                                        <select id="txtEntryAge" class="wid150  ml5 mr20"></select>
+                                    </div>
                                 </div>
                             </div>
                             <div id="divCommRate"></div>

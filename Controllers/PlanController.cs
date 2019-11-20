@@ -90,11 +90,18 @@ namespace oak.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> DeleteDocs([FromQuery] int id)
+        public IActionResult DeleteDocs([FromQuery] string fileName)
         {
             try
             {
-                await new PlanDocs().DeleteAsync(id, contextWeb);
+                fileName = fileName.Replace("@@_push_@@", "+");
+                string initialPath = appSettings.File.PB_PlanDocsInitialPath;
+                string fullPath = Path.Combine(initialPath, fileName);
+
+                if (System.IO.File.Exists(fullPath))
+                    System.IO.File.Delete(fullPath);
+
+
                 return Ok();
             }
             catch (Exception ex)
@@ -141,11 +148,8 @@ namespace oak.Controllers
                 else
                     contypeType = ContentTypes.jpeg;
 
-
                 var file = new FileStream(fullPath, FileMode.Open);
                 return new FileStreamResult(file, contypeType);
-
-
 
             }
             catch (Exception ex)
