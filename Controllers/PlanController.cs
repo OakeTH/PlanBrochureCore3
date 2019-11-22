@@ -23,7 +23,6 @@ namespace oak.Controllers
             contextFt = _contextFt;
             contextWeb = _contextWeb;
         }
-
         public IActionResult IndexPartail()
         {
             return View();

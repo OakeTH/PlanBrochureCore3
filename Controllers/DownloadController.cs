@@ -71,6 +71,7 @@ namespace oak.Controllers
                     SheetName: model.Excelsheetsname,
                     Template: model.Template,
                     LastRowIsSummary: model.LastRowIsSummary);
+
                 return File(stream, "application/vnd.ms-excel", model.ExcelName + ".xlsx");
             }
             catch
@@ -84,6 +85,7 @@ namespace oak.Controllers
         {
             try
             {
+
                 DataSet DsData = new DataSet();
                 DataTable DtData = SharedServices.JsonToDT(data);
                 JArray ArryFields = JArray.Parse(fields);
@@ -105,6 +107,7 @@ namespace oak.Controllers
                 {
                     DataSouece = DsData
                 };
+
                 return DownloadExcelFromDBfn(excelModel);
             }
             catch (Exception ex)
