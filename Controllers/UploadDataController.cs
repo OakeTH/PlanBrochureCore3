@@ -54,10 +54,7 @@ namespace oak.Controllers
             string initialPath = appSettings.File.PB_PlanDocsInitialPath;
             try
             {
-                PlanDocs planDocs = await new PlanDocs().UploadFileAsync(model: model, initialPath: initialPath, context: contextWeb);
-
-                if (planDocs.Errors != null)
-                    return BadRequest(planDocs);
+                PlanDocs planDocs = await new PlanDocs().UploadFileAsync(model: model, initialPath: initialPath);
 
                 return Ok(planDocs);
             }
@@ -91,14 +88,10 @@ namespace oak.Controllers
             return File(stream, ContentTypes.excel, model.ExcelName + ".xlsx");
         }
 
-
         [HttpGet]
         public IActionResult GetAllPlanDocFilesName()
         {
             string initialPath = appSettings.File.PB_PlanDocsInitialPath;
-            //var filesName = Directory
-            //      .GetFiles(initialPath)
-            //      .ToList();
 
             DirectoryInfo info = new DirectoryInfo(initialPath);
             var filesName = info.GetFiles()
@@ -123,6 +116,5 @@ namespace oak.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
     }
 }

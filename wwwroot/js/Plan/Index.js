@@ -1,5 +1,4 @@
-﻿
-$(document).ready(function () {
+﻿$(document).ready(function () {
     window.webFn.planFn = {
         //<-- get initial data from server.
         getAsync: function () {
@@ -42,7 +41,7 @@ $(document).ready(function () {
 
 
         },
-        //<-- set data and "change event" to searching plan ddl(the large DDL top of page)
+        //<-- set data source and "change event" to searching plan ddl(the large DDL top of page)
         ddlPlanSearch: function (data) {
             if (!data)
                 data = window.webFn.plans;
@@ -127,7 +126,7 @@ $(document).ready(function () {
 
             this.render();
         },
-        //<-- display data grid when chosen item in searching plan ddl and fill txtPovAge ,ddlPovGender ,txtEndYear
+        //<-- display data when chosen item in searching plan ddl and fill txtPovAge ,ddlPovGender ,txtEndYear
         //<-- ตารางมูลค่ากรมธรรม์
         divPolicyValue: function () {
             this.setupInputs = function () {
@@ -166,6 +165,9 @@ $(document).ready(function () {
             this.renderGrid = function (args) {
                 window.webFn.planFn.divPolicyValue.prototype.getCVRateAsync(args).then(function (response) {
 
+                    if (!response)
+                        return;
+
                     response = response.filter(function (item) {
                         return item.insuresex === ddlPovGender.value;
                     });
@@ -174,6 +176,7 @@ $(document).ready(function () {
                         var endYearInt = parseInt(txtEndYear.value);
                         response = response.filter(function (item) { return item.endyear === endYearInt });
                     }
+
 
                     $(divPolicyValue).grid({
                         source: response,
@@ -195,7 +198,10 @@ $(document).ready(function () {
                 args = args || {};
 
                 return new Promise(function (resolve) {
-                    if (!ddlFindPlans.dataset.myvalue || txtPovAge.value == '' || args.ignoreGetDataFromSV)
+                    if (!txtPovAge.value)
+                        return resolve(null);
+
+                    if (!ddlFindPlans.dataset.myvalue || args.ignoreGetDataFromSV)
                         return resolve(divPolicyValue.data);
 
                     $.ajax({
@@ -440,14 +446,7 @@ $(document).ready(function () {
             this.setupInputs = function () {
                 $('#txtSumAssured,#txtEntryAge,#txtTotalYear').on('change', function () {
                     window.webFn.planFn.divCommRate.prototype.renderGrid();
-                    // window.webFn.planFn.divCommRate.prototype.renderGridAndInput({ ignoreGetDataFromSV: true });
                 });
-
-
-
-                //$('#txtSumAssured,#txtEntryAge,#txtTotalYear').on('keyup', function () {
-                //    e.which === 13 && this.blur();
-                //});
 
             };
 

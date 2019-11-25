@@ -59,9 +59,8 @@ namespace oak.Controllers
         {
             try
             {
-                var x = await model.GetAsync(model, contextFt);
-
-                return Ok(x);
+                var result = await model.GetAsync(model, contextFt);
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -156,12 +155,5 @@ namespace oak.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
-        [AllowAnonymous]
-        public IActionResult AAAA()
-        {
-            return View("Component");
-        }
-
     }
 }
