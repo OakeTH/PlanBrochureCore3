@@ -23,11 +23,15 @@ namespace oak.Controllers
             contextFt = _contextFt;
             contextWeb = _contextWeb;
         }
+
+        //<-- Deliver View to client.
         public IActionResult IndexPartail()
         {
             return View();
         }
 
+
+        //<-- Get plans.
         [HttpGet]
         public async Task<IActionResult> GetPlans()
         {

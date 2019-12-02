@@ -2,7 +2,7 @@
     window.webFn.planFn = {
         //<-- get initial data from server.
         getAsync: function () {
-            return new Promise(function (resolve, reject) {
+            return new Promise(function (resolve) {
                 if (window.webFn.plans)
                     resolve(window.webFn.plans)
                 else
@@ -15,6 +15,7 @@
                     });
             });
         },
+        //<-- Apply CSS to current active menu.
         activeMenu: function () {
             oak.activemenu({
                 buttons: '.content-sub-menu label',
@@ -22,7 +23,6 @@
             });
         },
         addInputEvent: function () {
-
             $(chkOnlyActive).checkboxes({
                 source: [{ text: 'แสดงเฉพาะแผนประกันที่ยังขายอยู่' }],
                 onchange: function () {
@@ -30,16 +30,12 @@
                     $(ddlFindPlans).trigger('focus');
                 }
             });
-
             $(btnClearPlanSearch).on('click', function () {
                 ddlFindPlans.value = '';
                 var e = jQuery.Event("keydown", { keyCode: 20 });
                 $(ddlFindPlans).trigger(e);
                 window.webFn.planFn.reset();
             });
-
-
-
         },
         //<-- set data source and "change event" to searching plan ddl(the large DDL top of page)
         ddlPlanSearch: function (data) {
@@ -126,7 +122,7 @@
 
             this.render();
         },
-        //<-- display data when chosen item in searching plan ddl and fill txtPovAge ,ddlPovGender ,txtEndYear
+        //<-- display data(grid) when chosen item in searching plan ddl and typing (txtPovAge ,ddlPovGender ,txtEndYear)
         //<-- ตารางมูลค่ากรมธรรม์
         divPolicyValue: function () {
             this.setupInputs = function () {
@@ -177,19 +173,28 @@
                         response = response.filter(function (item) { return item.endyear === endYearInt });
                     }
 
-
                     $(divPolicyValue).grid({
                         source: response,
                         hideinternalsearch: true,
                         gridcss: 'align-s-start',
                         fields: [{
-                            fieldname: 'insuresex', css: 'p-0', itemTemplate: function (value) {
-                                return $('<i class="pl-4">')
-                                    .addClass(value === 'M' ? 'fas fa-male' : 'fas fa-female')
-                                    .css('color', value === 'M' ? '#f1af1f' : 'rgb(68, 144, 206)')
-                                    .css('font-size', '1.7rem');
-                            }
-                        }],
+                            fieldname: 'insuresex', hide: true
+                            //, css: 'p-0', itemTemplate: function (value) {
+                            //    return $('<i class="pl-4">')
+                            //        .addClass(value === 'M' ? 'fas fa-male' : 'fas fa-female')
+                            //        .css('color', value === 'M' ? '#f1af1f' : 'rgb(68, 144, 206)')
+                            //        .css('font-size', '1.7rem');
+                            // }
+                        },
+                        { fieldname: 'endyear', title: 'สิ้นปี กธ. ที่' },
+                        { fieldname: 'cvrate', title: 'เงินค่าเวนคืน กธ.' },
+                        { fieldname: 'rpurate', title: 'กธ. ใช้เงินสำเร็จ_มูลค่าใช้เงินสำเร็จ' },
+                        { fieldname: 'etirate', title: 'กธ. ขยายระยะเวลา_เงินจ่ายคืนทันที' },
+                        { fieldname: 'etiyear', title: 'กธ. ขยายระยะเวลา_ปี' },
+                        { fieldname: 'etiday', title: 'กธ. ขยายระยะเวลา_วัน' },
+                        { fieldname: 'rpurefund', title: 'กธ. ใช้เงินสำเร็จ_เงินจ่ายคืนทันที' },
+                        { fieldname: 'etirefund', title: 'กธ. ขยายระยะเวลา_เงินจ่ายคืนทันที' }
+                        ],
                     });
                 });
 
@@ -220,7 +225,7 @@
             };
             this.setupInputs();
         },
-        //<-- display data grid when chosen item in searching plan ddl
+        //<-- display data(grid) when chosen item in searching plan ddl
         //<-- ตารางมูลค่าคอมมิชชั่น
         divCommRate: function () {
             this.divCommRate.prototype.renderGridAndInput = function (args) {
@@ -443,6 +448,7 @@
                     },]
                 });
             };
+
             this.setupInputs = function () {
                 $('#txtSumAssured,#txtEntryAge,#txtTotalYear').on('change', function () {
                     window.webFn.planFn.divCommRate.prototype.renderGrid();
@@ -452,7 +458,7 @@
 
             this.setupInputs();
         },
-        //<-- Reset all elements's value, This will active before user chosen another one item in searching plan DDL       
+        //<-- Reset all elements's value, This function will called before user chosen another one item in searching plan DDL       
         reset: function () {
             divPdfViewer.innerHTML = '';
             divPolicyValue.innerHTML = '';
@@ -465,7 +471,7 @@
             txtEntryAge.value = '';
             txtTotalYear.value = '';
         },
-        //<-- Lanuch first fo all ,When page stared.
+        //<-- Startup function.
         launch: function () {
             this.getAsync().then(function (response) {
                 window.webFn.planFn.activeMenu();
@@ -474,8 +480,6 @@
                 window.webFn.planFn.divPolicyValue();
                 window.webFn.planFn.divCommRate();
             });
-
-
         }
     }
 });
