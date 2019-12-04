@@ -91,8 +91,8 @@ namespace oak.Controllers
             }
         }
 
-        [HttpGet]
-        public IActionResult DeleteDocs([FromQuery] string fileName)
+        [HttpPost]
+        public IActionResult DeleteDocs([FromForm] string fileName)
         {
             try
             {
@@ -159,5 +159,6 @@ namespace oak.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
     }
 }

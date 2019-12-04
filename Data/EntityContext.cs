@@ -47,7 +47,7 @@ namespace oak.Data
         {
             optionsBuilder.UseLazyLoadingProxies();
         }
-        public DbSet<Idoc_department> Idoc_department { get; set; }
+       //public DbSet<Idoc_department> Idoc_department { get; set; }
         public DbSet<Idoc_user> Idoc_user { get; set; }
 
     }

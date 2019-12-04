@@ -106,6 +106,7 @@
                 var remover = function (item) {
                     $.ajax({
                         url: SV.host + "plan/DeleteDocs",
+                        method: 'POST',
                         data: { fileName: item.name },
                         success: function (response) {
                             item.resolve();

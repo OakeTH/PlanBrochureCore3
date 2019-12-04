@@ -9,26 +9,31 @@
 
   <ItemGroup>
     <Compile Remove="Components\**" />
+    <Compile Remove="wwwroot\js\signalr\**" />
     <Compile Remove="wwwroot\lib\bootstrap\dist\js\**" />
     <Compile Remove="wwwroot\lib\jquery-validation-unobtrusive\**" />
     <Compile Remove="wwwroot\lib\jquery-validation\**" />
     <Compile Remove="wwwroot\lib\jquery\**" />
     <Content Remove="Components\**" />
+    <Content Remove="wwwroot\js\signalr\**" />
     <Content Remove="wwwroot\lib\bootstrap\dist\js\**" />
     <Content Remove="wwwroot\lib\jquery-validation-unobtrusive\**" />
     <Content Remove="wwwroot\lib\jquery-validation\**" />
     <Content Remove="wwwroot\lib\jquery\**" />
     <EmbeddedResource Remove="Components\**" />
+    <EmbeddedResource Remove="wwwroot\js\signalr\**" />
     <EmbeddedResource Remove="wwwroot\lib\bootstrap\dist\js\**" />
     <EmbeddedResource Remove="wwwroot\lib\jquery-validation-unobtrusive\**" />
     <EmbeddedResource Remove="wwwroot\lib\jquery-validation\**" />
     <EmbeddedResource Remove="wwwroot\lib\jquery\**" />
     <None Remove="Components\**" />
+    <None Remove="wwwroot\js\signalr\**" />
     <None Remove="wwwroot\lib\bootstrap\dist\js\**" />
     <None Remove="wwwroot\lib\jquery-validation-unobtrusive\**" />
     <None Remove="wwwroot\lib\jquery-validation\**" />
     <None Remove="wwwroot\lib\jquery\**" />
     <TypeScriptCompile Remove="Components\**" />
+    <TypeScriptCompile Remove="wwwroot\js\signalr\**" />
   </ItemGroup>
 
 
@@ -73,6 +78,17 @@
     <Content Include="Logs\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css" />
+    <Content Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map" />
+    <Content Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css" />
+    <Content Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css.map" />
+    <Content Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css" />
+    <Content Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css.map" />
+    <Content Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css" />
+    <Content Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css.map" />
   </ItemGroup>
 
   <ItemGroup>

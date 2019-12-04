@@ -30,6 +30,7 @@ namespace oak.Controllers
 
         public IActionResult IndexPartail() => View();
 
+        [HttpPost]
         [GetCurrentUser]
         public async Task<IActionResult> UploadCommRate([FromForm]FileUpload model)
         {
@@ -48,7 +49,8 @@ namespace oak.Controllers
             return Ok(ds.Tables[0]);
         }
 
-        [GetCurrentUser]
+        [HttpPost]
+       // [GetCurrentUser]
         public async Task<IActionResult> UploadPlanDocs([FromForm]FileUpload model)
         {
             string initialPath = appSettings.File.PB_PlanDocsInitialPath;
@@ -103,6 +105,7 @@ namespace oak.Controllers
         }
 
         [GetCurrentUser]
+        [HttpPost]
         public async Task<IActionResult> UploadAnnounceMathDocs([FromForm]AnnounceMathDocs announce)
         {
             string initialPath = appSettings.File.PB_AnnounceDocsInitialPath;

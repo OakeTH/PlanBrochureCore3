@@ -29,6 +29,7 @@ namespace oak.Controllers
         public IActionResult Login() => View();
 
         [AllowAnonymous]
+        [HttpPost]
         public async Task<IActionResult> LoginMember([FromForm]Users user)
         {
             try
@@ -65,26 +66,5 @@ namespace oak.Controllers
             user.Menu = dbServices.SpCaller(name: "[dbo].[PB_GetMneuByRoldID]", parameters: parameters)?.Tables?[0];
             return Ok(user);
         }
-
-        //public IActionResult AAAA()
-        //{
-
-        //var sds = "Pachara Khawtong 001";
-        //var ssss = sds.Crypt();
-        //var EEEE = ssss.Decrypt();
-
-        //    List<P> parameters = new List<P> { new P { Key = "RoldName", Value = Current.RoldName } };
-        //    //var x = dbServices.SpCaller(name: "[dbo].[PB_GetMneuByRoldID333]", parameters: parameters)?.Tables?[0];
-        //    var x = dbServices.SpCallerV2(opt =>
-        //    {
-        //        opt.Name = "[dbo].[PB_GetMneuByRoldID333]";
-        //        opt.Parameters = parameters;
-        //        opt.CompressPayloadSize = true;
-        //    });
-
-        //    return Ok(x);
-
-        //}
-
     }
 }

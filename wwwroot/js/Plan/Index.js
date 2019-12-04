@@ -105,14 +105,12 @@
             };
             this.divPdfViewer.prototype.getPlanDocsAsync = function () {
                 return new Promise(function (resolve) {
-                    if (!ddlFindPlans.dataset.myvalue)
-                        // if (!ddlFindPlans.value)
+                    if (!ddlFindPlans.dataset.myvalue)             
                         return resolve();
 
                     $.ajax({
                         url: SV.host + "plan/GetFileNameByPlanCode",
-                        data: { planCode: ddlFindPlans.dataset.myvalue },
-                        // data: { planCode: ddlFindPlans.value },
+                        data: { planCode: ddlFindPlans.dataset.myvalue },        
                         success: function (response) {
                             resolve(response)
                         }
