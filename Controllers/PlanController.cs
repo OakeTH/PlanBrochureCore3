@@ -29,8 +29,6 @@ namespace oak.Controllers
         {
             return View();
         }
-
-
         //<-- Get plans.
         [HttpGet]
         public async Task<IActionResult> GetPlans()
