@@ -2,12 +2,9 @@
 
     //<-- check querystring wherever have "externaluser" parametor
     var employeeCode = '';
-    //var externaluser = '';
-    //var getExternaluserFnTemp = function () {
-    //    querystr().externaluser && redirectToIndex();
-    //};
     var getExternaluserFn = function () {
         employeeCode = querystr().employeecode || '';
+        employeeCode = employeeCode.replace("%20%20", "");//<-- Replace spacebar
         roleName = querystr().rolename;
         querystr().rolename && redirectToIndex();
     };

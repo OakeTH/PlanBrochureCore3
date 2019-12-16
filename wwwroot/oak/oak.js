@@ -1211,10 +1211,11 @@ $.fn.grid_then = function (args) {
         return -1 < a.indexOf(",w") ? substr(a, ",w", ",").replace("w", "") : -1 < a.indexOf(",chk") ? "80" : b ? b : oakdef.gridcolumnwidth
     };
     let getColAlign = function (a) {
-        return -1 < a.indexOf(',cen') ? 'center' : -1 < a.indexOf(',chk') ? 'center' : -1 < a.indexOf(',right') ? 'right' : 'left';
+        return -1 < a.indexOf(',center') ? 'center' : -1 < a.indexOf(',chk') ? 'center' : -1 < a.indexOf(',right') ? 'right' : 'left';
     };
     let getCSS = function (a) {
-        if (-1 < a.indexOf(',.')) return substr(a, ',.', ',').replace('.', '');
+        if (-1 < a.indexOf(',.'))
+            return substr(a, ',.', ',').replace('.', '');
     };
     let extendFieldsADJ = function (e) {
         for (i = 0; i < args.fieldsADJ.length; i++) {
@@ -1227,7 +1228,16 @@ $.fn.grid_then = function (args) {
                         field.forhide = true;
                         field.css = 'hide';
                         field.headercss = 'hide';
-                    }
+                    };
+
+                    if (field.align && field.align !== 'left') {
+                        if (!field.css) field.css = '';
+                        else field.css += ' ';
+
+                        if (field.align == 'center') field.css += 'jus-center'
+                        else if (field.align == 'right') field.css += 'jus-end';
+                    };
+
                     $.extend(ajd, field)
                 }
             };
@@ -1253,7 +1263,15 @@ $.fn.grid_then = function (args) {
         i.type = getColType(val, key);
         i.width = getColWidth(val, args.defaulfeildwidth);
         var align = getColAlign(val);
-        align !== 'left' && (i.align = align);
+        //  align !== 'left' && (i.align = align);
+        if (align && align !== 'left') {
+            if (!field.css) field.css = '';
+            else field.css += ' ';
+
+            if (field.align == 'center') field.css += 'jus-center'
+            else if (field.align == 'right') field.css += 'jus-end';
+        }
+
         val.indexOf(',.') > -1 && (i.css = getCSS(val), i.headercss = '');
         args.fieldsADJ.push(i);
     });
@@ -3610,6 +3628,9 @@ $.fn.progressbar = function (args) {
         ele.mybar = bar;
     }
     this.move = function () {
+        if (ele.mybar.style.width !== '0%')
+            return;
+
         ele.mybar.style.display = '';
         window.setTimeout(function () { ele.mybar.style.width = '60%'; }, 100);
     };
@@ -3621,9 +3642,9 @@ $.fn.progressbar = function (args) {
 $.fn.progressbar.clear = function () {
     var ele = $.fn.progressbar.prototype.ele;
     if (ele.mybar) {
-        window.setTimeout(function () { ele.mybar.style.width = '100%'; }, 100);
-        window.setTimeout(function () { $(ele.mybar).fadeOut(300) }, 300);
-        window.setTimeout(function () { ele.mybar.style.width = '0%'; }, 900);
+        window.setTimeout(function () { ele.mybar.style.width = '100%'; }, 400);
+        window.setTimeout(function () { $(ele.mybar).fadeOut(300) }, 800);
+        window.setTimeout(function () { ele.mybar.style.width = '0%'; }, 1100);
     }
 
 };

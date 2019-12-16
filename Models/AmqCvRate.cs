@@ -16,6 +16,7 @@ namespace oak.Models
         [IgnoreDataMember]
         [Column("id")]
         public int? Id { get; set; }
+
         [IgnoreDataMember]
         [Required(ErrorMessage = "ยังไม่ได้ระบุ PlanCode")]
         [Column("prdplan")]
@@ -23,24 +24,32 @@ namespace oak.Models
 
         [Column("insuresex")]
         public string Insuresex { get; set; }
+
         [Required(ErrorMessage = "ยังไม่ได้ระบุ อายุ")]
         [IgnoreDataMember]
         [Column("insureage")]
         public int? Insureage { get; set; }
+
         [Column("endyear")]
         public int? Endyear { get; set; }
+
         [Column("cvrate")]
         public decimal Cvrate { get; set; }
+
         [Column("rpurate", TypeName = "bigint")]
         public int? Rpurate { get; set; }
-        [Column("etirate")]
-        public int? Etirate { get; set; }
+
+        //[Column("etirate")]
+        //public int? Etirate { get; set; }
+
         [Column("etiyear")]
         public int? Etiyear { get; set; }
+
         [Column("etiday")]
         public int? Etiday { get; set; }
         [Column("rpurefund")]
         public decimal Rpurefund { get; set; }
+
         [Column("etirefund")]
         public decimal Etirefund { get; set; }
     }

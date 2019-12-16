@@ -1,5 +1,9 @@
-﻿@using Microsoft.Extensions.Configuration
-@inject IConfiguration Configuration
+﻿@*@using Microsoft.Extensions.Configuration*@
+@using Microsoft.Extensions.Options
+@*@inject IConfiguration Configuration*@
+@inject IOptions<AppSettings> appsettings
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,7 +32,8 @@
     </environment>
     <environment exclude="Development">
         <script>
-            window.myALIAS = "@Configuration.GetSection("AppSettings")["ALIAS"]";
+            window.myALIAS = "@appsettings.Value.ALIAS";
+           @*window.myALIAS = "@Configuration.GetSection("AppSettings")["ALIAS"]";*@
         </script>
 
         <link rel="stylesheet" href="~/oak/oak.min.css" asp-append-version="true" />

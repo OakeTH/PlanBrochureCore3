@@ -105,12 +105,12 @@
             };
             this.divPdfViewer.prototype.getPlanDocsAsync = function () {
                 return new Promise(function (resolve) {
-                    if (!ddlFindPlans.dataset.myvalue)             
+                    if (!ddlFindPlans.dataset.myvalue)
                         return resolve();
 
                     $.ajax({
                         url: SV.host + "plan/GetFileNameByPlanCode",
-                        data: { planCode: ddlFindPlans.dataset.myvalue },        
+                        data: { planCode: ddlFindPlans.dataset.myvalue },
                         success: function (response) {
                             resolve(response)
                         }
@@ -175,23 +175,14 @@
                         source: response,
                         hideinternalsearch: true,
                         gridcss: 'align-s-start',
-                        fields: [{
-                            fieldname: 'insuresex', hide: true
-                            //, css: 'p-0', itemTemplate: function (value) {
-                            //    return $('<i class="pl-4">')
-                            //        .addClass(value === 'M' ? 'fas fa-male' : 'fas fa-female')
-                            //        .css('color', value === 'M' ? '#f1af1f' : 'rgb(68, 144, 206)')
-                            //        .css('font-size', '1.7rem');
-                            // }
-                        },
-                        { fieldname: 'endyear', title: 'สิ้นปี กธ. ที่' },
-                        { fieldname: 'cvrate', title: 'เงินค่าเวนคืน กธ.' },
-                        { fieldname: 'rpurate', title: 'กธ. ใช้เงินสำเร็จ_มูลค่าใช้เงินสำเร็จ' },
-                        { fieldname: 'etirate', title: 'กธ. ขยายระยะเวลา_เงินจ่ายคืนทันที' },
-                        { fieldname: 'etiyear', title: 'กธ. ขยายระยะเวลา_ปี' },
-                        { fieldname: 'etiday', title: 'กธ. ขยายระยะเวลา_วัน' },
-                        { fieldname: 'rpurefund', title: 'กธ. ใช้เงินสำเร็จ_เงินจ่ายคืนทันที' },
-                        { fieldname: 'etirefund', title: 'กธ. ขยายระยะเวลา_เงินจ่ายคืนทันที' }
+                        fields: [{ fieldname: 'insuresex', hide: true },
+                        { fieldname: 'endyear', title: 'สิ้นปี กธ. ที่', align: 'center' },
+                        { fieldname: 'cvrate', title: 'เงินค่าเวนคืน กธ.', align: 'center' },
+                        { fieldname: 'rpurate', title: 'กธ. ใช้เงินสำเร็จ_มูลค่าใช้เงินสำเร็จ', width: 180, align: 'center' },
+                        { fieldname: 'rpurefund', title: 'กธ. ใช้เงินสำเร็จ_เงินจ่ายคืนทันที', width: 180, align: 'center' },
+                        { fieldname: 'etiyear', title: 'กธ. ขยายระยะเวลา_ปี', width: 160, align: 'center' },
+                        { fieldname: 'etiday', title: 'กธ. ขยายระยะเวลา_วัน', width: 160, align: 'center' },
+                        { fieldname: 'etirefund', title: 'กธ. ขยายระยะเวลา_เงินจ่ายคืนทันที', width: 180, align: 'center' }
                         ],
                     });
                 });

@@ -36,7 +36,7 @@ namespace oak
             {
                 if (rolename == "" || rolename.ToLower() == "employee")
                     users = await new Users().EmployeeLoginAsync(employeecode, contextDocpd);
-                else
+                else if (rolename.ToLower() != "admin")
                     users = new Users() { EmployeeCode = employeecode ?? "", RoleName = rolename };
 
             }

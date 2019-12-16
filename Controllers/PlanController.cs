@@ -101,7 +101,6 @@ namespace oak.Controllers
                 if (System.IO.File.Exists(fullPath))
                     System.IO.File.Delete(fullPath);
 
-
                 return Ok();
             }
             catch (Exception ex)
