@@ -9,7 +9,7 @@ namespace PlanBrochureCore3.Models
         [Key]
         [Column("user_employeecode")]
         public string User_employeecode { get; set; }
-
+        
         [ForeignKey("user_departmentcode")]
         public virtual Idoc_department Idoc_Department { get; set; }
 

@@ -1,6 +1,4 @@
-﻿@*@using Microsoft.Extensions.Configuration*@
-@using Microsoft.Extensions.Options
-@*@inject IConfiguration Configuration*@
+﻿@using Microsoft.Extensions.Options
 @inject IOptions<AppSettings> appsettings
 
 
@@ -11,11 +9,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Plan Brochure & Plan value</title>
     <link rel="icon" href="~/img/favicon.ico">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.4/bluebird.min.js"></script>
     <script src="~/oak/libraries/Fontawesome/all.js" data-auto-replace-svg="nest"></script>
     <script src="~/oak/libraries/jsCookie/js.cookie.min.js"></script>
-
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.custom.min.css" />
@@ -33,7 +31,6 @@
     <environment exclude="Development">
         <script>
             window.myALIAS = "@appsettings.Value.ALIAS";
-           @*window.myALIAS = "@Configuration.GetSection("AppSettings")["ALIAS"]";*@
         </script>
 
         <link rel="stylesheet" href="~/oak/oak.min.css" asp-append-version="true" />

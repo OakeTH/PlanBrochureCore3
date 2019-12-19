@@ -50,7 +50,6 @@ namespace oak.Controllers
         }
 
         [HttpPost]
-       // [GetCurrentUser]
         public async Task<IActionResult> UploadPlanDocs([FromForm]FileUpload model)
         {
             string initialPath = appSettings.File.PB_PlanDocsInitialPath;
@@ -89,6 +88,8 @@ namespace oak.Controllers
 
             return File(stream, ContentTypes.excel, model.ExcelName + ".xlsx");
         }
+
+
 
         [HttpGet]
         public IActionResult GetAllPlanDocFilesName()

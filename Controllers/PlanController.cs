@@ -89,6 +89,54 @@ namespace oak.Controllers
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAllCommRate()
+        {
+            try
+            {
+                CommRates rates = new CommRates();
+                return Ok(await rates.GetAsync(contextWeb));
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [GetCurrentUser]
+        public async Task<IActionResult> UpdateCommRate([FromForm]CommRates commRates)
+        {
+            try
+            {
+                await commRates.UpdateAsync(commRates, contextWeb);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteCommRat([FromForm]int id)
+        {
+            try
+            {
+                var commRates = new CommRates
+                {
+                    ID = id
+                };
+                await commRates.DeleteAsync(commRates, contextWeb);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPost]
         public IActionResult DeleteDocs([FromForm] string fileName)
         {

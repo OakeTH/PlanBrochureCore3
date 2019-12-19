@@ -30,19 +30,22 @@ namespace oak
 
         public async Task<Users> Authenticate(string password, string employeecode, string rolename)
         {
+            rolename = rolename.ToLower();
+
+            //<---For Admin
             Users users = await new Users().AdminLoginAsync(employeecode, password, contextWeb);
 
-            if (users == null)
-            {
-                if (rolename == "" || rolename.ToLower() == "employee")
-                    users = await new Users().EmployeeLoginAsync(employeecode, contextDocpd);
-                else if (rolename.ToLower() != "admin")
-                    users = new Users() { EmployeeCode = employeecode ?? "", RoleName = rolename };
+            //<-- For Employee
+            if (users == null && (rolename == "" || rolename == "employee"))
+                users = await new Users().EmployeeLoginAsync(employeecode, contextDocpd);
 
-            }
+            //<-- For Agent
+            if (users == null && rolename != "admin")
+                users = new Users() { EmployeeCode = employeecode ?? "", RoleName = rolename == "employee" ? "Agent" : rolename };
 
             if (users == null)
                 return null;
+
 
             // <--- authentication successful so generate jwt token
             int currentHour = DateTime.Today.Hour;

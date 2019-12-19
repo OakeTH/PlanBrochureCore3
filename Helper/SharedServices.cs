@@ -1079,28 +1079,26 @@ namespace oak
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             try
             {
-                using (var reader = ExcelReaderFactory.CreateReader(MemStream))
+                using var reader = ExcelReaderFactory.CreateReader(MemStream);
+                resultDataset = reader.AsDataSet(new ExcelDataSetConfiguration()
                 {
-                    resultDataset = reader.AsDataSet(new ExcelDataSetConfiguration()
+                    ConfigureDataTable = (tableReader) => new ExcelDataTableConfiguration()
                     {
-                        ConfigureDataTable = (tableReader) => new ExcelDataTableConfiguration()
-                        {
-                            UseHeaderRow = true
-                        }
-                    });
-
-                    if (string.IsNullOrEmpty(model.ExcelSheetName))
-                        return resultDataset;
-
-                    if (resultDataset.Tables.Contains(model.ExcelSheetName))
-                    {
-                        var newDataset = new DataSet();
-                        newDataset.Tables.Add(resultDataset.Tables[model.ExcelSheetName].Copy());
-                        return newDataset;
+                        UseHeaderRow = true
                     }
-                    else
-                        return null;
+                });
+
+                if (string.IsNullOrEmpty(model.ExcelSheetName))
+                    return resultDataset;
+
+                if (resultDataset.Tables.Contains(model.ExcelSheetName))
+                {
+                    var newDataset = new DataSet();
+                    newDataset.Tables.Add(resultDataset.Tables[model.ExcelSheetName].Copy());
+                    return newDataset;
                 }
+                else
+                    return null;
             }
             catch (Exception ex)
             {

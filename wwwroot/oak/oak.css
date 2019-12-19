@@ -83,12 +83,12 @@ textarea {
 
 input:required:invalid {
     animation: required_begin 1.5s;
-    background: url(../images/asterisk.png)no-repeat right center;
+    background: url(../oak/img/asterisk.png)no-repeat right center !important;
 }
 
-select:required {
+.select-2 select:required:invalid {
     animation: required_begin 1.5s;
-    background: url(../images/asterisk.png)no-repeat right center;
+    background: url(../oak/img/asterisk.png)no-repeat right center !important;
 }
 
 @-moz-document url-prefix() {
@@ -172,7 +172,7 @@ input[type="checkbox"] {
 .txt-2 input[type=password],
 .txt-2 input[type=email] {
     border: 0;
-    border-bottom: 1px solid var(--txt-br);
+    border-bottom: 1px solid #b4b4b4;
     padding: 4px 0;
 }
 
@@ -209,22 +209,22 @@ label.btn-upload {
 
 .select-2 select {
     border: 0;
-    border-bottom: 1px solid var(--txt-br);
+    border-bottom: 1px solid #b4b4b4;
     padding: 5px;
     -webkit-appearance: none;
-    background:#fff;
+    background: #fff;
     /*background: var(--select-arrow) no-repeat right;*/
 }
 
     .select-2 select:required {
-        background-image: url(../images/asterisk.png), var(--select-arrow);
+        /*background-image: url(../images/asterisk.png), var(--select-arrow);
         background-position: right center, calc(100% - 10px) center;
-        background-repeat: no-repeat, no-repeat;
+        background-repeat: no-repeat, no-repeat;*/
     }
 
 select.select-2 {
     border: 0;
-    border-bottom: 1px solid var(--txt-br);
+    border-bottom: 1px solid #b4b4b4;
     padding: 5px;
     -webkit-appearance: none;
     background: var(--select-arrow) no-repeat right;
@@ -377,11 +377,11 @@ select.select-2 {
 }
 
 .bottom-line {
-    border-bottom: 1px solid var(--txt-br);
+    border-bottom: 1px solid #b4b4b4;
 }
 
 .top-line {
-    border-top: 1px solid var(--txt-br);
+    border-top: 1px solid #b4b4b4;
 }
 
 .mark-info {
@@ -1096,7 +1096,7 @@ div.jsgrid-pager {
     .jsgrid-dia-upd input[type=email] {
         flex-shrink: 0;
         border: 0;
-        border-bottom: 1px solid var(--txt-br);
+        border-bottom: 1px solid #b4b4b4;
         padding: 3px 0 3px 3px;
     }
 
@@ -1766,7 +1766,7 @@ ul.oak-ddl-options {
 /*<-----------------U p l o a d-----------------------------<<*/
 /*#region <---oak.upload---<<*/
 .uploadinput {
-    border: 1px solid var(--txt-br);
+    border: 1px solid #b4b4b4;
     transition: background 1s;
     cursor: pointer;
     justify-content: center;
@@ -1775,7 +1775,7 @@ ul.oak-ddl-options {
 }
 
     .uploadinput .discription {
-        color: var(--txt-br);
+        color: #b4b4b4;
         font-size: .8em;
         align-self: center;
     }
@@ -1857,7 +1857,7 @@ ul.oak-ddl-options {
         }
 
     .upload-filesLayout .empty {
-        color: var(--txt-br);
+        color: #b4b4b4;
         justify-content: center;
         padding-top: 5px;
         padding-bottom: 5px;
@@ -1876,7 +1876,7 @@ ul.oak-ddl-options {
     .input-field input {
         border: 0;
         height: 2rem;
-        border-bottom: 1px solid var(--txt-br);
+        border-bottom: 1px solid #b4b4b4;
         padding-top: 0;
     }
 

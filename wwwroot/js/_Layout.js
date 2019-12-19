@@ -213,9 +213,7 @@
                     oak.activemenu({
                         buttons: '.btn',
                         activecss: 'btn-accept',
-                        onclick: function () {
-                            //    $(divUserMenu).find('.btn-accept').clone().removeClass('btn btn-accept').appendTo(".content-header");
-                        }
+                        starteffect: 'slidedown'
                     })
                 };
                 this.build = function () {

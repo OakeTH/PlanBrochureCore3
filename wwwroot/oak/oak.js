@@ -1378,8 +1378,6 @@ oak.grid_inserter = function (args) {
                 btn = oak.pureHtml(this.userconf.inserterbutton);
 
             else {
-
-
                 btn = document.createElement('input');
                 btn.type = 'button';
                 btn.value = this.userconf.inserterbuttontext || oakdef.gridinserter_buttontext;
@@ -1389,6 +1387,13 @@ oak.grid_inserter = function (args) {
 
             btn.referFn = this.referFn;
             btn.addEventListener('click', function () {
+                if (this.referFn.inputfileds && this.referFn.inputfileds.length) {
+                    for (i = 0; i < this.referFn.inputfileds.length; i++) {
+                        this.referFn.inputfileds[i].value = '';
+                    }
+
+                }
+
                 $(this.referFn.dialog).dialog({ show: true, title: 'เพิ่มข้อมูล' });
             });
         },
@@ -2875,7 +2880,17 @@ oak.excelimport.core = function (args) {
             dialog.classList.add('p10')
             select.classList.add('select-2');
             select.style.width = '350px';
-            select.addEventListener('change', function () {
+            //select.addEventListener('change', function () {
+            //    window.excelimport.dialogChooseSheet.dialog('hide');
+            //    window.excelimport.args.sheet = this.value;
+
+            //    let evt = document.createEvent("HTMLEvents");
+            //    evt.initEvent("change", false, true);
+            //    window.excelimport.fileInput.dispatchEvent(evt);
+            //    window.excelimport.fileInput.value = '';
+            //});
+
+            $(select).on('change', function () {
                 window.excelimport.dialogChooseSheet.dialog('hide');
                 window.excelimport.args.sheet = this.value;
 
@@ -2883,7 +2898,10 @@ oak.excelimport.core = function (args) {
                 evt.initEvent("change", false, true);
                 window.excelimport.fileInput.dispatchEvent(evt);
                 window.excelimport.fileInput.value = '';
+
             });
+
+
 
             dialog.appendChild(message);
             dialog.appendChild(select);
@@ -2946,8 +2964,6 @@ oak.excelimport.core = function (args) {
             window.excelimport
                 .getExcelSheets(file, args.sheet)
                 .then(function (sheet) {
-
-
                     if (sheet.constructor === Array) {
                         if (sheet.length === 0)//<-- If JSZip.js cannot read the excel file--<<
                             args.sheet = ''
@@ -3687,6 +3703,7 @@ $.fn.activemenu = function (args) {
             });
 
             $(myContatainer).slideDown();
+
             for (i = 0; i < hideContainers.length; i++) {
                 $(hideContainers[i]).slideUp();
             }
@@ -3695,8 +3712,23 @@ $.fn.activemenu = function (args) {
         if (args.onclick)
             args.onclick(this);
     };
-
     var defaultContainer = null;
+    var startEffect = function (effectType) {
+        if (!effectType) return;
+
+        effectType = effectType.toLowerCase();
+        args.buttonsHTML.hide();
+        for (i = 0; i < args.buttonsHTML.length; i++) {
+            if (effectType === 'fadein')
+                $(args.buttonsHTML[i]).delay(i * 300).fadeIn();
+            else if (effectType === 'slidedown')
+                $(args.buttonsHTML[i]).delay(i * 300).slideDown();
+        };
+    };
+
+    if (args.starteffect)
+        startEffect(args.starteffect);
+
     for (i = 0; i < args.buttonsHTML.length; i++) {
         args.buttonsHTML[i].myMember = args.buttonsHTML;
         args.buttonsHTML[i].activecss = args.activecss;
@@ -3708,7 +3740,8 @@ $.fn.activemenu = function (args) {
 
         if (args.buttonsHTML[i].dataset.defaultContainer)
             defaultContainer = args.buttonsHTML[i];
-    }
+    };
+
 
     if (defaultContainer)
         $(defaultContainer).trigger('click');

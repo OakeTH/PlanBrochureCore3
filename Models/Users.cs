@@ -100,6 +100,9 @@ namespace oak.Models
 
         public async Task<Users> EmployeeLoginAsync(string employeeCode, EntityContextDocpd context)
         {
+            if (employeeCode == null)
+                return null;
+
             var payload = await context.Idoc_user
                     .Include(c => c.Idoc_Department)
                     .Where(c => c.User_employeecode == employeeCode)
@@ -113,8 +116,7 @@ namespace oak.Models
 
             string[] availableRoleNames = { "Agency Support", "Actuarial", "Information Technology" };
 
-
-            if (payload == null || Array.FindIndex(availableRoleNames, m => m == payload.RoleName) == -1)
+            if (payload != null && Array.FindIndex(availableRoleNames, m => m == payload.RoleName) == -1)
                 payload.RoleName = "InternalEmployee";
 
             return payload;

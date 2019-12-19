@@ -34,7 +34,7 @@ namespace oak.Controllers
         {
             try
             {
-                if (user.RoleName == null || user.EmployeeCode == null)
+                if (user.RoleName == null)
                     return Unauthorized();
 
                 user = await userService.Authenticate(
