@@ -901,7 +901,7 @@ td {
 }
 
     .jsgrid-header-row .jsgrid-header-sort {
-        background: #f1f1f1;
+    color: #cc5c5c;
     }
 
     .jsgrid-header-row > th {
@@ -920,7 +920,7 @@ td {
     }
 
         .jsgrid-header-row > th:hover {
-            box-shadow: inset 0 90px 0 0 #eaeaea;
+            box-shadow: inset 0 90px 0 0 #f3f3f3;
         }
 
 .jsgrid-filter-row {

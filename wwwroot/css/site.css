@@ -146,8 +146,9 @@ html {
         margin: 0 20px 0 0;
         color: #808080;
         border-bottom: 1px solid transparent;
-        transition: .5s all;
         cursor: pointer;
+        transition-duration: .3s;
+        transition-property: margin,color;
     }
 
         .content-sub-menu label:hover {
@@ -156,8 +157,8 @@ html {
 
         .content-sub-menu label.active {
             color: var(--font-c);
-            border-bottom: 1px solid #b4b4b4;
-            margin-left: 7px;
+            border-bottom: 2px solid #0b99ab;
+            margin-left: 10px;
         }
 
 .wid100 {

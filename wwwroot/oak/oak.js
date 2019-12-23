@@ -50,8 +50,8 @@ var oakdef = {
     dialog_hideafter: 5000,
     dialog_position: 'bottom-center',
     excelimport_choose_sheet_msg: '--- เลือก Sheet ที่ต้องการ ---',
-    save_error: 'เกิดข้อผิดพลาด ไม่สามารถบันทึกข้อมูลได้',
-    import_error: 'เกิดข้อผิดพลาด ไม่สามารถ Import ไฟล์ดังกล่าวได้',
+   // save_error: 'เกิดข้อผิดพลาด ไม่สามารถบันทึกข้อมูลได้',
+    //import_error: 'เกิดข้อผิดพลาด ไม่สามารถ Import ไฟล์ดังกล่าวได้',
     processingButton_value: 'กำลังทำงาน...',
     processingButton_loadingTime: 3000,
     processingButton_timeOut: 30000,
@@ -1011,7 +1011,7 @@ $.fn.downloadfile = function (args) {
     window.location.href = SV.host + SV.Downloadfilefn + objtoquerystr(obj);
 };
 
-oak.pdftemplate = SV.host + 'PDF/GetHTMPTemplate?templatepath=';
+oak.pdftemplate = SV.host + 'PDF/GetHTMPTemplate?templatepath='; 
 
 $.fn.minidialog = function (args) {
     if (!$.toast)

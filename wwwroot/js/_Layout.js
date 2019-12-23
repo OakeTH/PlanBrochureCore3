@@ -118,7 +118,7 @@
                     return i;
                 };
                 //<-- get partailViews from server (Only for the first time which user enter to each page.)
-                //<-- and stored that partailViews to sessionStorage(Clinet side). Next time when user enter back to the same page.
+                //<-- and stored that partailViews to sessionStorage(client side). Next time when user enter back to the same page
                 //<-- partailViews will be get from sessionStorage instant server.
                 this.renderPartailView = function () {
                     var ssPrefix = 'ssAGV_partailOf_';

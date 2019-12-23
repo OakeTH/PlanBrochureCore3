@@ -1,4 +1,0 @@
-sudo find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +
-sudo find . -name 'build' -type d -prune -exec rm -rf '{}' +
-sudo find . -name '.gradle' -type d -prune -exec rm -rf '{}' +
-sudo find . -name 'Pods' -type d -prune -exec rm -rf '{}' +

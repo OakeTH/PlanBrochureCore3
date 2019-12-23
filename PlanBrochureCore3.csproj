@@ -72,12 +72,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="PDF\**">
+    <!--<Content Include="PDF\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Logs\**">
+    </Content>-->
+    <!--<Content Include="Logs\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </Content>-->
   </ItemGroup>
 
   <ItemGroup>
